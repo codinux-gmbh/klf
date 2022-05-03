@@ -1,5 +1,6 @@
-package net.codinux.log
+package net.codinux.log.appender
 
+import net.codinux.log.DelegateToAppenderLogger
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -7,11 +8,11 @@ import java.io.ByteArrayOutputStream
 import java.io.PrintStream
 
 
-class ConsoleLoggerTest {
+class ConsoleAppenderTest {
 
   private val consoleOutputStream = ByteArrayOutputStream()
 
-  private val underTest = ConsoleLogger(ConsoleLoggerTest::class.java.name)
+  private val underTest = DelegateToAppenderLogger(ConsoleAppenderTest::class.java.name, listOf(ConsoleAppender()))
 
 
   @BeforeEach
@@ -27,7 +28,7 @@ class ConsoleLoggerTest {
     underTest.fatal { message }
 
     val logOutput = getWrittenLogOutput()
-    assertThat(logOutput).isEqualTo("[Fatal] net.codinux.log.ConsoleLoggerTest - " + message + System.lineSeparator())
+    assertThat(logOutput).isEqualTo("[Fatal] net.codinux.log.appender.ConsoleAppenderTest - " + message + System.lineSeparator())
   }
 
   @Test
@@ -37,7 +38,7 @@ class ConsoleLoggerTest {
     underTest.error { message }
 
     val logOutput = getWrittenLogOutput()
-    assertThat(logOutput).isEqualTo("[Error] net.codinux.log.ConsoleLoggerTest - " + message + System.lineSeparator())
+    assertThat(logOutput).isEqualTo("[Error] net.codinux.log.appender.ConsoleAppenderTest - " + message + System.lineSeparator())
   }
 
   @Test
@@ -47,7 +48,7 @@ class ConsoleLoggerTest {
     underTest.warn { message }
 
     val logOutput = getWrittenLogOutput()
-    assertThat(logOutput).isEqualTo("[Warn] net.codinux.log.ConsoleLoggerTest - " + message + System.lineSeparator())
+    assertThat(logOutput).isEqualTo("[Warn] net.codinux.log.appender.ConsoleAppenderTest - " + message + System.lineSeparator())
   }
 
   @Test
@@ -57,7 +58,7 @@ class ConsoleLoggerTest {
     underTest.info { message }
 
     val logOutput = getWrittenLogOutput()
-    assertThat(logOutput).isEqualTo("[Info] net.codinux.log.ConsoleLoggerTest - " + message + System.lineSeparator())
+    assertThat(logOutput).isEqualTo("[Info] net.codinux.log.appender.ConsoleAppenderTest - " + message + System.lineSeparator())
   }
 
   @Test

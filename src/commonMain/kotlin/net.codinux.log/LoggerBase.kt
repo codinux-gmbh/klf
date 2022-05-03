@@ -1,13 +1,15 @@
 package net.codinux.log
 
+import net.codinux.log.Logger.Companion.DefaultLevel
+
 
 abstract class LoggerBase(
     override val name: String,
-    open var level: LogLevel = LogLevel.Info
+    open var level: LogLevel = DefaultLevel
 ) : Logger {
 
 
-    abstract fun log(level: LogLevel, message: String)
+    abstract fun log(level: LogLevel, message: String, exception: Throwable?, vararg arguments: Any)
 
 
     override val isFatalEnabled get() = isEnabled(LogLevel.Fatal)
@@ -81,21 +83,8 @@ abstract class LoggerBase(
 
     open fun logIfEnabled(level: LogLevel, exception: Throwable? = null, message: () -> String, vararg arguments: Any) {
         if (isEnabled(level)) {
-            log(level, createMessage(exception, message(), *arguments))
+            log(level, message(), exception, *arguments)
         }
-    }
-
-    open fun createMessage(exception: Throwable?, message: String, vararg arguments: Any): String {
-        if (exception != null) {
-            return "$message: $exception\n${exception.stackTraceToString()}"
-        }
-
-        return message // really, there's not String.format() ?! // TODO: add arguments and exception
-    }
-
-
-    protected open fun createLogOutput(level: LogLevel, message: String): String {
-        return "[$level] $name - $message"
     }
 
 }
