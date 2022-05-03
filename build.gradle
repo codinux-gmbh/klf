@@ -38,6 +38,8 @@ kotlin {
 
         jvmMain.dependencies {
             implementation kotlin("reflect")
+
+            compileOnly "org.slf4j:slf4j-api:$slf4jVersion"
         }
 
         jvmTest.dependencies {
