@@ -36,6 +36,10 @@ kotlin {
         }
 
 
+        jvmMain.dependencies {
+            implementation kotlin("reflect")
+        }
+
         jvmTest.dependencies {
             implementation kotlin("test-junit")
 

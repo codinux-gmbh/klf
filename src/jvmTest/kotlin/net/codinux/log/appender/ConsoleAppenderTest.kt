@@ -1,6 +1,6 @@
 package net.codinux.log.appender
 
-import net.codinux.log.DelegateToAppenderLogger
+import net.codinux.log.logger
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -12,7 +12,7 @@ class ConsoleAppenderTest {
 
   private val consoleOutputStream = ByteArrayOutputStream()
 
-  private val underTest = DelegateToAppenderLogger(ConsoleAppenderTest::class.java.name, listOf(ConsoleAppender()))
+  private val underTest by logger()
 
 
   @BeforeEach
