@@ -13,7 +13,6 @@ out/
 /local.properties
 
 /data/
-**/*.log
 
 
 .DS_Store
