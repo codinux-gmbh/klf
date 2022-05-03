@@ -26,7 +26,7 @@ class Loggers {
     }
 
     fun <T: Any> logger(forClass: Class<T>): Logger {
-      return DelegateToAppenderLogger(unwrapCompanionClass(forClass).name)
+      return LoggerFactory.getLogger(unwrapCompanionClass(forClass).name)
     }
 
     // unwrap companion class to enclosing class given a Java Class
