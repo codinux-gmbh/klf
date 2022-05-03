@@ -34,5 +34,15 @@ kotlin {
                 implementation kotlin('test-annotations-common')
             }
         }
+
+
+        jvmTest.dependencies {
+            implementation kotlin("test-junit")
+
+            implementation "org.junit.jupiter:junit-jupiter:$junit5Version"
+            runtimeOnly "org.junit.jupiter:junit-jupiter-engine:$junit5Version"
+
+            implementation "org.assertj:assertj-core:$assertJVersion"
+        }
     }
 }
