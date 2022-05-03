@@ -4,7 +4,7 @@ class LoggerFactory {
 
     companion object {
 
-        var factory: ILoggerFactory = ConsoleLoggerFactory()
+        var factory: ILoggerFactory = DefaultLoggerFactory().createDefaultLoggerFactory()
 
 
         fun getLogger(name: String): Logger {
