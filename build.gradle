@@ -69,6 +69,7 @@ kotlin {
         commonMain {
             dependencies {
                 implementation kotlin('stdlib-common')
+                implementation kotlin("reflect")
             }
         }
         commonTest {
@@ -79,8 +80,6 @@ kotlin {
 
 
         jvmMain.dependencies {
-            implementation kotlin("reflect")
-
             compileOnly "org.slf4j:slf4j-api:$slf4jVersion"
         }
 

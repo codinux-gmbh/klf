@@ -1,6 +1,6 @@
 package net.codinux.log.appender
 
-import net.codinux.log.logger
+import net.codinux.log.LoggerFactory.logger
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
