@@ -7,6 +7,7 @@ actual class DefaultLoggerFactory {
 
     actual fun createDefaultLoggerFactory(): ILoggerFactory {
         if (isClassAvailable("org.slf4j.Logger")) {
+            // TODO: should we not use slf4j if it's LoggerFactory is org.slf4j.helpers.NOPLoggerFactory = no binding is available for slf4j?
             return Slf4jLoggerFactory()
         }
 
