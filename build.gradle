@@ -1,5 +1,5 @@
 plugins {
-    id 'org.jetbrains.kotlin.multiplatform' version '1.6.21'
+    id 'org.jetbrains.kotlin.multiplatform' version "$kotlinVersion"
 }
 
 group 'net.codinux.log'
@@ -12,12 +12,15 @@ repositories {
 
 kotlin {
     jvm {
-        compilations.all {
-            kotlinOptions.jvmTarget = '1.8'
-        }
+        jvmToolchain(8)
         withJava()
+
         testRuns["test"].executionTask.configure {
             useJUnitPlatform()
+
+            testLogging {     // This is for logging and can be removed.
+                events("passed", "skipped", "failed")
+            }
         }
     }
 
@@ -30,8 +33,7 @@ kotlin {
         }
         commonTest {
             dependencies {
-                implementation kotlin('test-common')
-                implementation kotlin('test-annotations-common')
+                implementation kotlin("test")
             }
         }
 
@@ -43,11 +45,6 @@ kotlin {
         }
 
         jvmTest.dependencies {
-            implementation kotlin("test-junit")
-
-            implementation "org.junit.jupiter:junit-jupiter:$junit5Version"
-            runtimeOnly "org.junit.jupiter:junit-jupiter-engine:$junit5Version"
-
             implementation "org.assertj:assertj-core:$assertJVersion"
         }
     }
