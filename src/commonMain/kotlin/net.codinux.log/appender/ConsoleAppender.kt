@@ -5,12 +5,12 @@ import net.codinux.log.LogLevel
 
 open class ConsoleAppender : Appender {
 
-  override fun append(level: LogLevel, loggerName: String, message: String, exception: Throwable?, vararg arguments: Any) {
-    println(createOutputString(level, loggerName, message, exception, *arguments))
+  override fun append(level: LogLevel, loggerName: String, message: String, exception: Throwable?) {
+    println(createOutputString(level, loggerName, message, exception))
   }
 
 
-  protected open fun createOutputString(level: LogLevel, loggerName: String, message: String, exception: Throwable?, vararg arguments: Any): String {
+  protected open fun createOutputString(level: LogLevel, loggerName: String, message: String, exception: Throwable?): String {
     // really, there's not String.format() ?! // TODO: add arguments
     val formattedMessage = if (exception != null) {
       "$message: $exception\n${exception.stackTraceToString()}"

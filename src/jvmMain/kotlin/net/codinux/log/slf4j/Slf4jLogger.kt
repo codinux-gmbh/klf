@@ -28,8 +28,8 @@ open class Slf4jLogger(protected open val slf4jLogger: org.slf4j.Logger) : Logge
         get() = slf4jLogger.isTraceEnabled
 
 
-    override fun fatal(message: String, exception: Throwable?, vararg arguments: Any) {
-        error(message, exception, *arguments)
+    override fun fatal(message: String, exception: Throwable?) {
+        error(message, exception)
     }
 
     override fun fatal(exception: Throwable?, messageSupplier: () -> String) {
@@ -37,8 +37,8 @@ open class Slf4jLogger(protected open val slf4jLogger: org.slf4j.Logger) : Logge
     }
 
 
-    override fun error(message: String, exception: Throwable?, vararg arguments: Any) {
-        slf4jLogger.error(message, determineArguments(exception, arguments))
+    override fun error(message: String, exception: Throwable?) {
+        slf4jLogger.error(message, exception)
     }
 
     override fun error(exception: Throwable?, messageSupplier: () -> String) {
@@ -48,8 +48,8 @@ open class Slf4jLogger(protected open val slf4jLogger: org.slf4j.Logger) : Logge
     }
 
 
-    override fun warn(message: String, exception: Throwable?, vararg arguments: Any) {
-        slf4jLogger.warn(message, determineArguments(exception, arguments))
+    override fun warn(message: String, exception: Throwable?) {
+        slf4jLogger.warn(message, exception)
     }
 
     override fun warn(exception: Throwable?, messageSupplier: () -> String) {
@@ -59,8 +59,8 @@ open class Slf4jLogger(protected open val slf4jLogger: org.slf4j.Logger) : Logge
     }
 
 
-    override fun info(message: String, exception: Throwable?, vararg arguments: Any) {
-        slf4jLogger.info(message, determineArguments(exception, arguments))
+    override fun info(message: String, exception: Throwable?) {
+        slf4jLogger.info(message, exception)
     }
 
     override fun info(exception: Throwable?, messageSupplier: () -> String) {
@@ -70,8 +70,8 @@ open class Slf4jLogger(protected open val slf4jLogger: org.slf4j.Logger) : Logge
     }
 
 
-    override fun debug(message: String, exception: Throwable?, vararg arguments: Any) {
-        slf4jLogger.debug(message, determineArguments(exception, arguments))
+    override fun debug(message: String, exception: Throwable?) {
+        slf4jLogger.debug(message, exception)
     }
 
     override fun debug(exception: Throwable?, messageSupplier: () -> String) {
@@ -81,29 +81,13 @@ open class Slf4jLogger(protected open val slf4jLogger: org.slf4j.Logger) : Logge
     }
 
 
-    override fun trace(message: String, exception: Throwable?, vararg arguments: Any) {
-        slf4jLogger.trace(message, determineArguments(exception, arguments))
+    override fun trace(message: String, exception: Throwable?) {
+        slf4jLogger.trace(message, exception)
     }
 
     override fun trace(exception: Throwable?, messageSupplier: () -> String) {
         if (slf4jLogger.isTraceEnabled) {
             slf4jLogger.trace(messageSupplier(), exception)
-        }
-    }
-
-
-    protected open fun determineArguments(exception: Throwable?, arguments: Array<out Any>): Array<out Any> {
-        return if (exception != null) {
-            if (arguments.isEmpty()) {
-                arrayOf(exception)
-            } else {
-                val argumentsIncludingException: MutableList<Any> = mutableListOf(exception)
-                argumentsIncludingException.addAll(0, arguments.toList())
-
-                argumentsIncludingException.toTypedArray()
-            }
-        } else {
-            arguments
         }
     }
 

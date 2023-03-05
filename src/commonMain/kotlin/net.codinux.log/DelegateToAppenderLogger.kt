@@ -11,8 +11,8 @@ open class DelegateToAppenderLogger(
   level: LogLevel = DefaultLevel
 ) : LoggerBase(name, level) {
 
-  override fun log(level: LogLevel, message: String, exception: Throwable?, vararg arguments: Any) {
-    appenders.forEach { it.append(level, name, message, exception, *arguments) }
+  override fun log(level: LogLevel, message: String, exception: Throwable?) {
+    appenders.forEach { it.append(level, name, message, exception) }
   }
 
 }

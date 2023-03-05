@@ -9,7 +9,7 @@ abstract class LoggerBase(
 ) : Logger {
 
 
-    abstract fun log(level: LogLevel, message: String, exception: Throwable?, vararg arguments: Any)
+    abstract fun log(level: LogLevel, message: String, exception: Throwable?)
 
 
     override val isFatalEnabled get() = isEnabled(LogLevel.Fatal)
@@ -27,8 +27,8 @@ abstract class LoggerBase(
     open fun isEnabled(level: LogLevel) = level.priority <= this.level.priority
 
 
-    override fun fatal(message: String, exception: Throwable?, vararg arguments: Any) {
-        logIfEnabled(LogLevel.Fatal, exception, { message }, *arguments)
+    override fun fatal(message: String, exception: Throwable?) {
+        logIfEnabled(LogLevel.Fatal, exception, { message })
     }
 
     override fun fatal(exception: Throwable?, messageSupplier: () -> String) {
@@ -36,8 +36,8 @@ abstract class LoggerBase(
     }
 
 
-    override fun error(message: String, exception: Throwable?, vararg arguments: Any) {
-        logIfEnabled(LogLevel.Error, exception, { message }, *arguments)
+    override fun error(message: String, exception: Throwable?) {
+        logIfEnabled(LogLevel.Error, exception, { message })
     }
 
     override fun error(exception: Throwable?, messageSupplier: () -> String) {
@@ -45,8 +45,8 @@ abstract class LoggerBase(
     }
 
 
-    override fun warn(message: String, exception: Throwable?, vararg arguments: Any) {
-        logIfEnabled(LogLevel.Warn, exception, { message }, *arguments)
+    override fun warn(message: String, exception: Throwable?) {
+        logIfEnabled(LogLevel.Warn, exception, { message })
     }
 
     override fun warn(exception: Throwable?, messageSupplier: () -> String) {
@@ -54,8 +54,8 @@ abstract class LoggerBase(
     }
 
 
-    override fun info(message: String, exception: Throwable?, vararg arguments: Any) {
-        logIfEnabled(LogLevel.Info, exception, { message }, *arguments)
+    override fun info(message: String, exception: Throwable?) {
+        logIfEnabled(LogLevel.Info, exception, { message })
     }
 
     override fun info(exception: Throwable?, messageSupplier: () -> String) {
@@ -63,8 +63,8 @@ abstract class LoggerBase(
     }
 
 
-    override fun debug(message: String, exception: Throwable?, vararg arguments: Any) {
-        logIfEnabled(LogLevel.Debug, exception, { message }, *arguments)
+    override fun debug(message: String, exception: Throwable?) {
+        logIfEnabled(LogLevel.Debug, exception, { message })
     }
 
     override fun debug(exception: Throwable?, messageSupplier: () -> String) {
@@ -72,8 +72,8 @@ abstract class LoggerBase(
     }
 
 
-    override fun trace(message: String, exception: Throwable?, vararg arguments: Any) {
-        logIfEnabled(LogLevel.Trace, exception, { message }, *arguments)
+    override fun trace(message: String, exception: Throwable?) {
+        logIfEnabled(LogLevel.Trace, exception, { message })
     }
 
     override fun trace(exception: Throwable?, messageSupplier: () -> String) {
@@ -81,9 +81,9 @@ abstract class LoggerBase(
     }
 
 
-    open fun logIfEnabled(level: LogLevel, exception: Throwable? = null, message: () -> String, vararg arguments: Any) {
+    open fun logIfEnabled(level: LogLevel, exception: Throwable? = null, message: () -> String) {
         if (isEnabled(level)) {
-            log(level, message(), exception, *arguments)
+            log(level, message(), exception)
         }
     }
 

@@ -5,8 +5,8 @@ import platform.Foundation.NSLog
 
 open class NSLogLogger(name: String) : LoggerBase(name) {
 
-    override fun log(level: LogLevel, message: String, exception: Throwable?, vararg arguments: Any) {
-        NSLog("[$level] $message${exception ?: ""}") // TODO: format log output
+    override fun log(level: LogLevel, message: String, exception: Throwable?) {
+        NSLog("[$level] $message${exception ?: ""}")
     }
 
 }

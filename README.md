@@ -4,7 +4,7 @@ Kotlin Multiplatform logging facade with pragmatic Kotlin style interface.
 
 ## Instantiation
 
-Classic way via LoggerFactory:
+#### Classic way via LoggerFactory:
 
 ```kotlin
 private val log = LoggerFactory.getLogger(OrderService::class)
@@ -16,7 +16,7 @@ or:
 private val log = LoggerFactory.getLogger("OrderService")
 ```
 
-More Kotlin idiomatic via delegate.  
+#### More Kotlin idiomatic via delegate.  
 The logger name then automatically gets derived from declaring class.  
 And the logger instance gets instantiated lazily on its first usage (or never if it never gets called).
 
@@ -28,7 +28,8 @@ class OrderService {
 }
 ```
 
-If the logger is declared in a companion object automatically the enclosing class gets used as logger name.  
+If the logger is declared in a companion object automatically the enclosing class gets used as logger name 
+(like in the following example `OrderService` instead of `OrderService.Companion`).  
 Except on JavaScript, there the logger name will always be `"Companion"`.
 
 ```kotlin
@@ -43,22 +44,25 @@ class OrderService {
 
 ## Logging
 
-Classically:
-
+#### Via lazy evaluated closure that is only called if message really gets logged:
 ```kotlin
-log.info("An info message: $detailedMessage") // string get directly concatenated, if info level gets logged or not 
-
-log.error("An error occurred", e) // e is a throwable
-```
-
-Via lambda that is only called if message really gets logged:
-```kotlin
-log.info { "An info message: $detailedMessage" } // gets only concatenated if info level gets logged
+log.info { "An info message: $detailedMessage" } // gets only concatenated if info level is enabled
 
 log.error(e) { "An error occurred" }
 ```
 
-Static / Android style (TODO: do you really want to implement this?)
+#### Classically:
+
+```kotlin
+log.info("An info message: $detailedMessage") // string get directly concatenated whether info level is enabled or not
+
+log.error("An error occurred", e) // e is a throwable
+```
+
+You might ask why is there no overload with format arguments like `fun info(message: String, exception: Throwable? = null, vararg arguments: Any)`.
+This is due to the restrictions of Kotlin multiplatform as there's no `String.format()` available (also the format specifier differ, e.g. `%s` on the JVM and `%@` on iOS and macOS).
+
+#### Static / Android style (TODO: do you really want to implement this?)
 ```kotlin
 Log.i(TAG, "An info message: $detailedMessage")
 Log.i(TAG) { "An info message: $detailedMessage" }
