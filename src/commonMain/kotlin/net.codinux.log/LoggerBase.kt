@@ -8,6 +8,8 @@ abstract class LoggerBase(
     open var level: LogLevel = DefaultLevel
 ) : Logger {
 
+    constructor(name: String) : this(name, DefaultLevel)
+
 
     abstract fun log(level: LogLevel, message: String, exception: Throwable?)
 
