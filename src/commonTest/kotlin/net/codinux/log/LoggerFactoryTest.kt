@@ -9,7 +9,7 @@ class LoggerFactoryTest {
 
   init {
     // otherwise on JVM slf4j's org.slf4j.helpers.NOPLoggerFactory is used. Loggers then have the name "NOP"
-    LoggerFactory.factory = ConsoleLoggerFactory()
+    LoggerFactory.setLoggerFactory(ConsoleLoggerFactory())
   }
 
   // on all other platforms the logger name starts with the package name

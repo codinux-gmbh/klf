@@ -6,7 +6,11 @@ import kotlin.reflect.KProperty
 
 object LoggerFactory {
 
-    var factory: ILoggerFactory = DefaultLoggerFactory().createDefaultLoggerFactory()
+    private var factory: ILoggerFactory = DefaultLoggerFactory().createDefaultLoggerFactory()
+
+    fun setLoggerFactory(factory: ILoggerFactory) {
+        this.factory = factory
+    }
 
 
     inline fun <reified R : Any> logger() = LoggerDelegate<R>()
