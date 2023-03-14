@@ -1,24 +1,14 @@
 # kLogger
 
-Kotlin Multiplatform logging facade with pragmatic Kotlin style interface.
+Idiomatic Kotlin Multiplatform logging facade with simple logger creation:  
+`val log by logger()`
+
+and creating the message string only if log level is enabled:  
+`log.info { "Message with ${heavyCalculation()}" } // heavyCalculation() gets only called if INFO level is enabled`
 
 ## Instantiation
 
-#### Classic way via LoggerFactory:
-
-```kotlin
-private val log = LoggerFactory.getLogger(OrderService::class)
-```
-
-or:
-
-```kotlin
-private val log = LoggerFactory.getLogger("OrderService")
-```
-
-#### More Kotlin idiomatic via delegate.  
-The logger name then automatically gets derived from declaring class.  
-And the logger instance gets instantiated lazily on its first usage (or never if it never gets called).
+### Idiomatic via delegate.
 
 ```kotlin
 import net.codinux.log.LoggerFactory.logger
@@ -28,7 +18,10 @@ class OrderService {
 }
 ```
 
-If the logger is declared in a companion object automatically the enclosing class gets used as logger name 
+The logger name then automatically gets derived from declaring class.  
+And the logger instance gets instantiated lazily on its first usage (or never if it never gets called).
+
+If the logger is declared in a companion object automatically the enclosing class gets used as logger name
 (like in the following example `OrderService` instead of `OrderService.Companion`).  
 Except on JavaScript, there the logger name will always be `"Companion"`.
 
@@ -42,13 +35,25 @@ class OrderService {
 }
 ``` 
 
+### Classically via LoggerFactory:
+
+```kotlin
+private val log = LoggerFactory.getLogger(OrderService::class)
+```
+
+or:
+
+```kotlin
+private val log = LoggerFactory.getLogger("OrderService")
+```
+
 ## Logging
 
-#### Via lazy evaluated closure that is only called if message really gets logged:
+#### Via lazy evaluated closure that is only called if log level is enabled:
 ```kotlin
 log.info { "An info message: $detailedMessage" } // gets only concatenated if info level is enabled
 
-log.error(e) { "An error occurred" }
+log.error(e) { "An error occurred" } // e is a throwable
 ```
 
 #### Classically:
@@ -59,17 +64,8 @@ log.info("An info message: $detailedMessage") // string get directly concatenate
 log.error("An error occurred", e) // e is a throwable
 ```
 
-You might ask why is there no overload with format arguments like `fun info(message: String, exception: Throwable? = null, vararg arguments: Any)`.
+You might ask why is there no overload with format arguments like `fun info(message: String, exception: Throwable? = null, vararg arguments: Any)`.  
 This is due to the restrictions of Kotlin multiplatform as there's no `String.format()` available (also the format specifier differ, e.g. `%s` on the JVM and `%@` on iOS and macOS).
-
-#### Static / Android style (TODO: do you really want to implement this?)
-```kotlin
-Log.i(TAG, "An info message: $detailedMessage")
-Log.i(TAG) { "An info message: $detailedMessage" }
-
-Log.e(TAG, "An error occurred", e)
-Log.e(TAG, e) { "An error occurred" }
-```
 
 ## Logger bindings
 
@@ -81,19 +77,13 @@ If slf4j is on the classpath: slf4j.
 
 Otherwise: Console (`println()` / `System.err.println()`)
 
-### Android (TODO)
-
-If slf4j is on the classpath: slf4j.
-
-Otherwise: Logcat.
-
-### iOS (TODO: also on macOS?)
+### iOS
 
 NSLog
 
 ### JavaScript
 
-`console.log()` // TODO: other console log level?
+`console.log()` / `console.error()` / ...
 
 ### Native
 
