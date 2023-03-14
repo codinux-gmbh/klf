@@ -1,4 +1,4 @@
-# kLogger
+# KMP Log
 
 Idiomatic Kotlin Multiplatform logging facade with simple logger creation:  
 `val log by logger()`

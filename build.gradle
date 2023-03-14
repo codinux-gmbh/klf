@@ -25,6 +25,7 @@ kotlin {
     }
 
     js(IR) {
+        moduleName = "kmplog"
 //        binaries.executable()
 
         browser {
@@ -42,7 +43,7 @@ kotlin {
     ios {
         binaries {
             framework {
-                baseName = "kLogger"
+                baseName = "kmp-log"
             }
         }
     }
