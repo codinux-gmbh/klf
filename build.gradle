@@ -4,6 +4,12 @@ plugins {
 
 group 'net.codinux.log'
 version '1.0.0-SNAPSHOT'
+ext.artifactName = "kmp-log"
+
+ext.groupId = group
+ext.artifactId = ext.artifactName
+ext.artifactVersion = version
+ext.libraryName = ext.artifactName
 
 repositories {
     mavenCentral()
@@ -101,3 +107,21 @@ kotlin {
         }
     }
 }
+
+
+
+ext.sourceCodeRepositoryBaseUrl = "https://github.com/codinux-gmbh/KMP-Log"
+
+ext.useNewSonatypeRepo = true
+ext.packageGroup = "net.codinux"
+
+ext.projectDescription = "Idiomatic Kotlin Multiplatform logging facade"
+
+ext.developerId = "codinux"
+ext.developerName = "codinux GmbH & Co. KG"
+ext.developerMail = "git@codinux.net"
+
+ext.licenseName = "The Apache License, Version 2.0"
+ext.licenseUrl = "http://www.apache.org/licenses/LICENSE-2.0.txt"
+
+apply from: "publish.gradle.kts"
