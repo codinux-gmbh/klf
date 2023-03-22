@@ -3,7 +3,7 @@ plugins {
 }
 
 group 'net.codinux.log'
-version '1.0.1-SNAPSHOT'
+version '1.0.1'
 ext.artifactName = "kmp-log"
 
 ext.groupId = group
