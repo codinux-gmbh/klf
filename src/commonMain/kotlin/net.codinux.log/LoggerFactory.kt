@@ -15,7 +15,7 @@ object LoggerFactory {
     }
 
 
-    inline fun <reified R : Any> logger() = LoggerDelegate<R>()
+    inline fun <reified R : Any> R.logger() = LoggerDelegate<R>()
 
     @JvmStatic
     fun getLogger(name: String): Logger {
