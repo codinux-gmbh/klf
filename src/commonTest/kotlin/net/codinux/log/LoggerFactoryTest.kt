@@ -1,6 +1,5 @@
 package net.codinux.log
 
-import net.codinux.log.LoggerFactory.logger
 import kotlin.js.JsName
 import kotlin.test.Test
 import kotlin.test.assertEquals

@@ -30,11 +30,4 @@ object LoggerFactory {
     fun getLogger(forClass: KClass<*>): Logger =
         getLogger(getLoggerName(forClass))
 
-
-    inline fun <reified R : Any> R.logger() = LoggerDelegate<R>()
-
-    class LoggerDelegate<in R : Any> : ReadOnlyProperty<R, Logger> {
-        override fun getValue(thisRef: R, property: KProperty<*>) = LoggerFactory.getLogger(thisRef::class)
-    }
-
 }
