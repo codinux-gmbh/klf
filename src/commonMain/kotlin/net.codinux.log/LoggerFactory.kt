@@ -7,7 +7,7 @@ import kotlin.reflect.KProperty
 
 object LoggerFactory {
 
-    private var factory: ILoggerFactory = DefaultLoggerFactory().createDefaultLoggerFactory()
+    private var factory: ILoggerFactory = SystemDefaults.createDefaultLoggerFactory()
 
     @JvmStatic
     fun setLoggerFactory(factory: ILoggerFactory) {

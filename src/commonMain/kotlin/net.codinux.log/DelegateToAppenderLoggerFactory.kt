@@ -1,7 +1,6 @@
 package net.codinux.log
 
 import net.codinux.log.appender.Appender
-import net.codinux.log.appender.SystemDefaultAppender
 
 open class DelegateToAppenderLoggerFactory : ILoggerFactory {
 
@@ -9,7 +8,7 @@ open class DelegateToAppenderLoggerFactory : ILoggerFactory {
   protected open val appenders = linkedSetOf<Appender>()
 
   init {
-      addAppender(SystemDefaultAppender.getDefaultAppender())
+      addAppender(SystemDefaults.getDefaultAppender())
   }
 
 
