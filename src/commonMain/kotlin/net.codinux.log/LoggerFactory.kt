@@ -1,5 +1,6 @@
 package net.codinux.log
 
+import net.codinux.log.appender.Appender
 import kotlin.jvm.JvmStatic
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KClass
@@ -12,6 +13,11 @@ object LoggerFactory {
     @JvmStatic
     fun setLoggerFactory(factory: ILoggerFactory) {
         this.factory = factory
+    }
+
+    @JvmStatic
+    fun addAppender(appender: Appender) {
+        this.factory.addAppender(appender)
     }
 
 
