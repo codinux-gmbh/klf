@@ -7,7 +7,7 @@ actual class SystemDefaults {
 
   actual companion object {
 
-    actual fun createDefaultLoggerFactory(): ILoggerFactory = DelegateToAppenderLoggerFactory()
+    actual fun createDefaultLoggerFactory(): ILoggerFactory = DefaultLoggerFactory()
 
     actual fun getDefaultAppender(): Appender = ConsoleAppender.Default
 

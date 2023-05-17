@@ -14,7 +14,7 @@ actual class SystemDefaults {
                 return Slf4jLoggerFactory()
             }
 
-            return DelegateToAppenderLoggerFactory()
+            return DefaultLoggerFactory()
         }
 
         actual fun getDefaultAppender(): Appender = ConsoleAppender.Default

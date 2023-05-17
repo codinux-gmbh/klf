@@ -9,7 +9,7 @@ actual class SystemDefaults {
 
     private val defaultAppender = JsConsoleAppender()
 
-    actual fun createDefaultLoggerFactory(): ILoggerFactory = DelegateToAppenderLoggerFactory()
+    actual fun createDefaultLoggerFactory(): ILoggerFactory = DefaultLoggerFactory()
 
     actual fun getDefaultAppender(): Appender = defaultAppender
 

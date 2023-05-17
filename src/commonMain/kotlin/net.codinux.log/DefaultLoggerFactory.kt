@@ -2,7 +2,7 @@ package net.codinux.log
 
 import net.codinux.log.appender.Appender
 
-open class DelegateToAppenderLoggerFactory : ILoggerFactory {
+open class DefaultLoggerFactory : ILoggerFactory {
 
   // TODO: this structure is not thread safe. But should be ok in most cases as Appender only get added at start and afterwards there will be only read access
   protected open val appenders = linkedSetOf<Appender>()
