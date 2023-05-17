@@ -28,6 +28,6 @@ object LoggerFactory {
 
     @JvmStatic
     fun getLogger(forClass: KClass<*>): Logger =
-        getLogger(getLoggerName(forClass))
+        getLogger(SystemDefaults.getLoggerName(forClass))
 
 }

@@ -3,6 +3,7 @@ package net.codinux.log
 import net.codinux.log.appender.Appender
 import net.codinux.log.appender.ConsoleAppender
 import net.codinux.log.slf4j.Slf4jLoggerFactory
+import kotlin.reflect.KClass
 
 
 actual class SystemDefaults {
@@ -18,6 +19,18 @@ actual class SystemDefaults {
         }
 
         actual fun getDefaultAppender(): Appender = ConsoleAppender.Default
+
+
+        actual fun <T : Any> getLoggerName(forClass: KClass<T>) = getLoggerName(forClass.java)
+
+        fun <T : Any> getLoggerName(forClass: Class<T>): String = unwrapCompanionClass(forClass).name
+
+        // unwrap companion class to enclosing class given a Java Class
+        private fun <T : Any> unwrapCompanionClass(ofClass: Class<T>): Class<*> {
+            return ofClass.enclosingClass?.takeIf {
+                ofClass.enclosingClass.kotlin.isCompanion == false
+            } ?: ofClass
+        }
 
 
         private fun isClassAvailable(qualifiedClassName: String): Boolean {

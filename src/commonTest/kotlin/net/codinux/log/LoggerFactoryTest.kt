@@ -12,7 +12,7 @@ class LoggerFactoryTest {
   }
 
   // on all other platforms the logger name starts with the package name
-  private val isRunningInJs = getLoggerName(this::class) == "LoggerFactoryTest"
+  private val isRunningInJs = SystemDefaults.getLoggerName(this::class) == "LoggerFactoryTest"
 
   @Test
   @JsName("LoggerDeclarationInInstancePropertyLoggerNameIsOfClass")
