@@ -8,7 +8,7 @@ open class DefaultLoggerFactory : ILoggerFactory {
   protected open val appenders = linkedSetOf<Appender>()
 
   init {
-      addAppender(SystemDefaults.getDefaultAppender())
+      addAppender(Platform.getSystemDefaultAppender())
   }
 
 

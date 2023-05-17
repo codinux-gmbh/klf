@@ -4,13 +4,13 @@ import net.codinux.log.appender.Appender
 import net.codinux.log.appender.ConsoleAppender
 import kotlin.reflect.KClass
 
-actual class SystemDefaults {
+actual class Platform {
 
   actual companion object {
 
     actual fun createDefaultLoggerFactory(): ILoggerFactory = DefaultLoggerFactory()
 
-    actual fun getDefaultAppender(): Appender = ConsoleAppender.Default
+    actual fun getSystemDefaultAppender(): Appender = ConsoleAppender.Default
 
 
     actual fun <T : Any> getLoggerName(forClass: KClass<T>): String {

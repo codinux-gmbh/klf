@@ -4,7 +4,7 @@ import net.codinux.log.appender.Appender
 import net.codinux.log.appender.JsConsoleAppender
 import kotlin.reflect.KClass
 
-actual class SystemDefaults {
+actual class Platform {
 
   actual companion object {
 
@@ -12,7 +12,7 @@ actual class SystemDefaults {
 
     actual fun createDefaultLoggerFactory(): ILoggerFactory = DefaultLoggerFactory()
 
-    actual fun getDefaultAppender(): Appender = defaultAppender
+    actual fun getSystemDefaultAppender(): Appender = defaultAppender
 
     actual fun <T : Any> getLoggerName(forClass: KClass<T>): String {
       // unwrapping companion objects is not possible on JS. There as class / logger name "Companion" will be used

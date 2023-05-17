@@ -2,13 +2,11 @@ package net.codinux.log
 
 import net.codinux.log.appender.Appender
 import kotlin.jvm.JvmStatic
-import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KClass
-import kotlin.reflect.KProperty
 
 object LoggerFactory {
 
-    private var factory: ILoggerFactory = SystemDefaults.createDefaultLoggerFactory()
+    private var factory: ILoggerFactory = Platform.createDefaultLoggerFactory()
 
     @JvmStatic
     fun setLoggerFactory(factory: ILoggerFactory) {
@@ -28,6 +26,6 @@ object LoggerFactory {
 
     @JvmStatic
     fun getLogger(forClass: KClass<*>): Logger =
-        getLogger(SystemDefaults.getLoggerName(forClass))
+        getLogger(Platform.getLoggerName(forClass))
 
 }

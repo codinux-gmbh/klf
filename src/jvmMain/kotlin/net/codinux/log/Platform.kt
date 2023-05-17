@@ -6,7 +6,7 @@ import net.codinux.log.slf4j.Slf4jLoggerFactory
 import kotlin.reflect.KClass
 
 
-actual class SystemDefaults {
+actual class Platform {
 
     actual companion object {
         actual fun createDefaultLoggerFactory(): ILoggerFactory {
@@ -18,7 +18,7 @@ actual class SystemDefaults {
             return DefaultLoggerFactory()
         }
 
-        actual fun getDefaultAppender(): Appender = ConsoleAppender.Default
+        actual fun getSystemDefaultAppender(): Appender = ConsoleAppender.Default
 
 
         actual fun <T : Any> getLoggerName(forClass: KClass<T>) = getLoggerName(forClass.java)
