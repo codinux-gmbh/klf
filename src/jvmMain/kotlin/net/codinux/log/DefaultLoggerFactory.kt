@@ -11,7 +11,7 @@ actual class DefaultLoggerFactory {
             return Slf4jLoggerFactory()
         }
 
-        return ConsoleLoggerFactory()
+        return DelegateToAppenderLoggerFactory()
     }
 
     private fun isClassAvailable(qualifiedClassName: String): Boolean {

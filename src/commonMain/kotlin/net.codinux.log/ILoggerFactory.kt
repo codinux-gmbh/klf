@@ -1,6 +1,8 @@
 package net.codinux.log
 
-interface ILoggerFactory {
+import net.codinux.log.appender.AppenderContainer
+
+interface ILoggerFactory : AppenderContainer {
 
     fun getLogger(name: String): Logger
 

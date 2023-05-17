@@ -1,18 +1,19 @@
 package net.codinux.log
 
 import net.codinux.log.Logger.Companion.DefaultLevel
-import net.codinux.log.appender.Appender
-import net.codinux.log.appender.Appenders
+import net.codinux.log.appender.AppenderContainer
 
 
 open class DelegateToAppenderLogger(
   name: String,
-  protected open var appenders: List<Appender> = Appenders.appenders,
+  protected open val container: AppenderContainer, // or use ILoggerFactory implementation directly?
   level: LogLevel = DefaultLevel
 ) : LoggerBase(name, level) {
 
   override fun log(level: LogLevel, message: String, exception: Throwable?) {
-    appenders.forEach { it.append(level, name, message, exception) }
+    container.getAppenders().forEach {
+      it.append(level, name, message, exception)
+    }
   }
 
 }

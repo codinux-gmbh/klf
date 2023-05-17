@@ -1,16 +1,32 @@
 package net.codinux.log;
 
+import net.codinux.log.appender.Appender;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Collection;
+import java.util.Collections;
 
 public class JavaShowcase {
 
     public void showUsageInJava() {
         LoggerFactory.setLoggerFactory(new ILoggerFactory() {
+
             @NotNull
             @Override
             public Logger getLogger(@NotNull String name) {
                 return new MyFancyLogger(name);
+            }
+
+            @NotNull
+            @Override
+            public Collection<Appender> getAppenders() {
+                return Collections.emptyList();
+            }
+
+            @Override
+            public void addAppender(@NotNull Appender appender) {
+                // no-op
             }
         });
     }

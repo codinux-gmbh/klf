@@ -5,6 +5,13 @@ import net.codinux.log.LogLevel
 
 open class ConsoleAppender : Appender {
 
+  companion object {
+
+    val Default = ConsoleAppender()
+
+  }
+
+
   override fun append(level: LogLevel, loggerName: String, message: String, exception: Throwable?) {
     println(createOutputString(level, loggerName, message, exception))
   }

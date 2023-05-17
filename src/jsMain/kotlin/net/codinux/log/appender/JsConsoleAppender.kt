@@ -1,8 +1,10 @@
-package net.codinux.log
+package net.codinux.log.appender
 
-open class JsConsoleLogger(name: String, level: LogLevel = Logger.DefaultLevel) : LoggerBase(name, level) {
+import net.codinux.log.LogLevel
 
-  override fun log(level: LogLevel, message: String, exception: Throwable?) {
+open class JsConsoleAppender : Appender {
+
+  override fun append(level: LogLevel, loggerName: String, message: String, exception: Throwable?) {
     when (level) {
       LogLevel.Fatal, LogLevel.Error -> console.error(message, exception)
       LogLevel.Warn -> console.warn(message, exception)
