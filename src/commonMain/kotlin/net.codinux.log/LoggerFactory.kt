@@ -13,6 +13,7 @@ object LoggerFactory {
      *
      * If slf4j is on the classpath setting this value has no effect. Configure log level via logging backend (logback, log4j, ...) then.
      */
+    @JvmStatic
     var DefaultLevel: LogLevel = LogLevel.Info
 
     private var factory: ILoggerFactory = Platform.createDefaultLoggerFactory()
