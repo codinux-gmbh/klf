@@ -2,8 +2,10 @@ package net.codinux.log
 
 import net.codinux.log.appender.Appender
 import kotlin.jvm.JvmStatic
+import kotlin.native.concurrent.ThreadLocal
 import kotlin.reflect.KClass
 
+@ThreadLocal // actually not needed anymore on Kotlin 1.7 and above but to make compiler happy
 object LoggerFactory {
 
     /**
