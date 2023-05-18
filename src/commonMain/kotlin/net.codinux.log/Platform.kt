@@ -10,7 +10,7 @@ expect class Platform {
 
         fun createDefaultLoggerFactory(): ILoggerFactory
 
-        fun getSystemDefaultAppender(): Appender
+        val systemDefaultAppender: Appender
 
         fun <T : Any> getLoggerName(forClass: KClass<T>): String
 

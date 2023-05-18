@@ -9,6 +9,7 @@ import kotlin.reflect.KClass
 actual class Platform {
 
     actual companion object {
+
         actual fun createDefaultLoggerFactory(): ILoggerFactory {
             if (isClassAvailable("org.slf4j.Logger")) {
                 // TODO: should we not use slf4j if it's LoggerFactory is org.slf4j.helpers.NOPLoggerFactory = no binding is available for slf4j?
@@ -18,7 +19,7 @@ actual class Platform {
             return DefaultLoggerFactory()
         }
 
-        actual fun getSystemDefaultAppender(): Appender = ConsoleAppender.Default
+        actual val systemDefaultAppender: Appender = ConsoleAppender.Default
 
 
         actual fun <T : Any> getLoggerName(forClass: KClass<T>) = getLoggerName(forClass.java)

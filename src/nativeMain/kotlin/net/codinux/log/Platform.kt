@@ -10,7 +10,7 @@ actual class Platform {
 
     actual fun createDefaultLoggerFactory(): ILoggerFactory = DefaultLoggerFactory()
 
-    actual fun getSystemDefaultAppender(): Appender = ConsoleAppender.Default
+    actual val systemDefaultAppender: Appender = ConsoleAppender.Default
 
 
     actual fun <T : Any> getLoggerName(forClass: KClass<T>): String {
