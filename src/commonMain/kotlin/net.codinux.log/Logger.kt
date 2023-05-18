@@ -3,11 +3,6 @@ package net.codinux.log
 
 interface Logger {
 
-    companion object {
-        val DefaultLevel = LogLevel.Info
-    }
-
-
     val name: String
 
 

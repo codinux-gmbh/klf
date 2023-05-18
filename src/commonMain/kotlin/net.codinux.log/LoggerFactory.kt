@@ -6,6 +6,13 @@ import kotlin.reflect.KClass
 
 object LoggerFactory {
 
+    /**
+     * The default log level of the logging system that will be used if no logger specific level is set with [LoggerBase.level].
+     *
+     * If slf4j is on the classpath setting this value has no effect. Configure log level via logging backend (logback, log4j, ...) then.
+     */
+    var DefaultLevel: LogLevel = LogLevel.Info
+
     private var factory: ILoggerFactory = Platform.createDefaultLoggerFactory()
 
     @JvmStatic

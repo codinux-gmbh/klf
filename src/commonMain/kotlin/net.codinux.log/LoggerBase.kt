@@ -1,18 +1,32 @@
 package net.codinux.log
 
-import net.codinux.log.Logger.Companion.DefaultLevel
+import kotlin.jvm.JvmOverloads
 
 
-abstract class LoggerBase(
+abstract class LoggerBase @JvmOverloads constructor(
     override val name: String,
-    open var level: LogLevel = DefaultLevel
+    /**
+     * The logger specific log level. If not set / set to null then default log level set in [LoggerFactory.DefaultLevel] will be used.
+     */
+    open var level: LogLevel? = DefaultLevel
 ) : Logger {
 
-    constructor(name: String) : this(name, DefaultLevel)
+    companion object {
+        /**
+         * The default logger of all [LoggerBase] implementations.
+         *
+         * If [LoggerBase.level] is set to null than [LoggerFactory.DefaultLevel] will be used.
+         */
+        val DefaultLevel: LogLevel? = null
+    }
+
 
 
     abstract fun log(level: LogLevel, message: String, exception: Throwable?)
 
+
+    open fun getEffectiveLevel(): LogLevel =
+        level ?: LoggerFactory.DefaultLevel
 
     override val isFatalEnabled get() = isEnabled(LogLevel.Fatal)
 
@@ -26,7 +40,7 @@ abstract class LoggerBase(
 
     override val isTraceEnabled get() = isEnabled(LogLevel.Trace)
 
-    open fun isEnabled(level: LogLevel) = level.priority <= this.level.priority
+    open fun isEnabled(level: LogLevel) = level.priority <= getEffectiveLevel().priority
 
 
     override fun fatal(message: String, exception: Throwable?) {
