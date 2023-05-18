@@ -11,7 +11,7 @@ actual class Platform {
     actual companion object {
 
         actual fun createDefaultLoggerFactory(): ILoggerFactory {
-            if (isClassAvailable("org.slf4j.Logger")) {
+            if (isSlf4jOnClasspath) {
                 // TODO: should we not use slf4j if it's LoggerFactory is org.slf4j.helpers.NOPLoggerFactory = no binding is available for slf4j?
                 return Slf4jLoggerFactory()
             }
@@ -33,6 +33,8 @@ actual class Platform {
             } ?: ofClass
         }
 
+
+        val isSlf4jOnClasspath = isClassAvailable("org.slf4j.Logger")
 
         private fun isClassAvailable(qualifiedClassName: String): Boolean {
             try {

@@ -92,6 +92,11 @@ kotlin {
 
         jvmTest.dependencies {
             implementation "org.assertj:assertj-core:$assertJVersion"
+            implementation("io.mockk:mockk:1.13.5") {
+                exclude(group: "org.slf4j")
+            }
+
+            implementation "ch.qos.logback:logback-classic:1.2.3"
         }
 
         jsMain.dependencies {
