@@ -44,7 +44,7 @@ abstract class LoggerBase @JvmOverloads constructor(
 
 
     override fun fatal(message: String, exception: Throwable?) {
-        logIfEnabled(LogLevel.Fatal, exception, { message })
+        logIfEnabled(LogLevel.Fatal, exception, message)
     }
 
     override fun fatal(exception: Throwable?, messageSupplier: () -> String) {
@@ -53,7 +53,7 @@ abstract class LoggerBase @JvmOverloads constructor(
 
 
     override fun error(message: String, exception: Throwable?) {
-        logIfEnabled(LogLevel.Error, exception, { message })
+        logIfEnabled(LogLevel.Error, exception, message)
     }
 
     override fun error(exception: Throwable?, messageSupplier: () -> String) {
@@ -62,7 +62,7 @@ abstract class LoggerBase @JvmOverloads constructor(
 
 
     override fun warn(message: String, exception: Throwable?) {
-        logIfEnabled(LogLevel.Warn, exception, { message })
+        logIfEnabled(LogLevel.Warn, exception, message)
     }
 
     override fun warn(exception: Throwable?, messageSupplier: () -> String) {
@@ -71,7 +71,7 @@ abstract class LoggerBase @JvmOverloads constructor(
 
 
     override fun info(message: String, exception: Throwable?) {
-        logIfEnabled(LogLevel.Info, exception, { message })
+        logIfEnabled(LogLevel.Info, exception, message)
     }
 
     override fun info(exception: Throwable?, messageSupplier: () -> String) {
@@ -80,7 +80,7 @@ abstract class LoggerBase @JvmOverloads constructor(
 
 
     override fun debug(message: String, exception: Throwable?) {
-        logIfEnabled(LogLevel.Debug, exception, { message })
+        logIfEnabled(LogLevel.Debug, exception, message)
     }
 
     override fun debug(exception: Throwable?, messageSupplier: () -> String) {
@@ -89,7 +89,7 @@ abstract class LoggerBase @JvmOverloads constructor(
 
 
     override fun trace(message: String, exception: Throwable?) {
-        logIfEnabled(LogLevel.Trace, exception, { message })
+        logIfEnabled(LogLevel.Trace, exception, message)
     }
 
     override fun trace(exception: Throwable?, messageSupplier: () -> String) {
@@ -97,9 +97,15 @@ abstract class LoggerBase @JvmOverloads constructor(
     }
 
 
-    open fun logIfEnabled(level: LogLevel, exception: Throwable? = null, message: () -> String) {
+    open fun logIfEnabled(level: LogLevel, exception: Throwable? = null, message: String) {
         if (isEnabled(level)) {
-            log(level, message(), exception)
+            log(level, message, exception)
+        }
+    }
+
+    open fun logIfEnabled(level: LogLevel, exception: Throwable? = null, messageSupplier: () -> String) {
+        if (isEnabled(level)) {
+            log(level, messageSupplier(), exception)
         }
     }
 
