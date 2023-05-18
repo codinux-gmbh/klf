@@ -4,8 +4,7 @@ import ch.qos.logback.classic.Logger
 import ch.qos.logback.classic.LoggerContext
 import ch.qos.logback.classic.spi.ILoggingEvent
 import ch.qos.logback.core.UnsynchronizedAppenderBase
-import io.mockk.spyk
-import net.codinux.log.LoggerFactory
+import net.codinux.log.logger
 import net.codinux.log.withMdc
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -15,7 +14,7 @@ class LoggerWithMDCTest {
 
     private val appender = CollectLogEventsAppender()
 
-    private val log = spyk(LoggerFactory.getLogger(LoggerWithMDCTest::class))
+    private val log by logger()
 
     init {
         (org.slf4j.LoggerFactory.getILoggerFactory() as? LoggerContext)?.let { context ->
