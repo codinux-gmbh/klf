@@ -1,10 +1,12 @@
-package net.codinux.log
+package net.codinux.log.mdc
 
 import ch.qos.logback.classic.Logger
 import ch.qos.logback.classic.LoggerContext
 import ch.qos.logback.classic.spi.ILoggingEvent
 import ch.qos.logback.core.UnsynchronizedAppenderBase
 import io.mockk.spyk
+import net.codinux.log.LoggerFactory
+import net.codinux.log.withMdc
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.slf4j.MDC

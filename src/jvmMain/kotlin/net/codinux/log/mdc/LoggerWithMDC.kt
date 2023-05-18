@@ -1,4 +1,6 @@
-package net.codinux.log
+package net.codinux.log.mdc
+
+import net.codinux.log.Logger
 
 open class LoggerWithMDC(
     protected open val delegate: Logger,
