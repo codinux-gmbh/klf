@@ -4,7 +4,9 @@ import ch.qos.logback.classic.Logger
 import ch.qos.logback.classic.LoggerContext
 import ch.qos.logback.classic.spi.ILoggingEvent
 import ch.qos.logback.core.UnsynchronizedAppenderBase
+import net.codinux.log.LoggerFactory
 import net.codinux.log.logger
+import net.codinux.log.slf4j.Slf4jLoggerFactory
 import net.codinux.log.withMdc
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -17,6 +19,9 @@ class LoggerWithMDCTest {
     private val log by logger()
 
     init {
+        // ensure slf4j gets used
+        LoggerFactory.setLoggerFactory(Slf4jLoggerFactory())
+
         (org.slf4j.LoggerFactory.getILoggerFactory() as? LoggerContext)?.let { context ->
             context.getLogger(Logger.ROOT_LOGGER_NAME).addAppender(appender)
         }

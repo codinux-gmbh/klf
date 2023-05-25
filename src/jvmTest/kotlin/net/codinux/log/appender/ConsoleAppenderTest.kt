@@ -1,5 +1,7 @@
 package net.codinux.log.appender
 
+import net.codinux.log.DefaultLoggerFactory
+import net.codinux.log.LoggerFactory
 import net.codinux.log.logger
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
@@ -13,6 +15,11 @@ class ConsoleAppenderTest {
   private val consoleOutputStream = ByteArrayOutputStream()
 
   private val underTest by logger()
+
+  init {
+    // otherwise on slf4j is used instead of ConsoleAppender
+    LoggerFactory.setLoggerFactory(DefaultLoggerFactory())
+  }
 
 
   @BeforeEach
