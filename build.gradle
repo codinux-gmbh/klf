@@ -1,5 +1,6 @@
 plugins {
-    id 'org.jetbrains.kotlin.multiplatform' version "$kotlinVersion"
+    id "org.jetbrains.kotlin.multiplatform" version "$kotlinVersion"
+    id "com.android.library" version "7.4.0"
 }
 
 group 'net.codinux.log'
@@ -13,13 +14,14 @@ ext.libraryName = ext.artifactName
 
 repositories {
     mavenCentral()
+    google()
 }
 
 
 kotlin {
     jvm {
         jvmToolchain(8)
-        withJava()
+//        withJava() // not allowed if android { } is present
 
         testRuns["test"].executionTask.configure {
             useJUnitPlatform()
@@ -27,6 +29,12 @@ kotlin {
             testLogging {     // This is for logging and can be removed.
                 events("passed", "skipped", "failed")
             }
+        }
+    }
+
+    android {
+        compilations.all {
+            kotlinOptions.jvmTarget = "1.8"
         }
     }
 
@@ -86,8 +94,16 @@ kotlin {
         }
 
 
-        jvmMain.dependencies {
-            compileOnly "org.slf4j:slf4j-api:$slf4jVersion"
+        javaCommonMain {
+            dependsOn(commonMain)
+
+            dependencies {
+                compileOnly "org.slf4j:slf4j-api:$slf4jVersion"
+            }
+        }
+
+        jvmMain {
+            dependsOn(javaCommonMain)
         }
 
         jvmTest.dependencies {
@@ -97,6 +113,10 @@ kotlin {
             }
 
             implementation "ch.qos.logback:logback-classic:1.2.3"
+        }
+
+        androidMain {
+            dependsOn(javaCommonMain)
         }
 
         jsMain.dependencies {
@@ -110,6 +130,26 @@ kotlin {
         nativeMain.dependencies {
 
         }
+    }
+}
+
+android {
+    namespace = "net.codinux.log"
+    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
+
+    compileSdk(33)
+    defaultConfig {
+        minSdkVersion(21)
+        targetSdkVersion(33)
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    lintOptions {
+        abortOnError false
     }
 }
 

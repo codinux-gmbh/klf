@@ -1,12 +1,12 @@
 package net.codinux.log.mdc
 
-import net.codinux.log.Platform
+import net.codinux.log.JvmDefaults
 import org.slf4j.MDC
 
 object MdcAdapter {
 
     fun addAllToMdc(mdc: Map<String, String?>) {
-        if (Platform.isSlf4jOnClasspath) {
+        if (JvmDefaults.isSlf4jOnClasspath) {
             mdc.forEach { (key, value) ->
                 MDC.put(key, value)
             }
@@ -14,7 +14,7 @@ object MdcAdapter {
     }
 
     fun removeAllToMdc(mdc: Map<String, String?>) {
-        if (Platform.isSlf4jOnClasspath) {
+        if (JvmDefaults.isSlf4jOnClasspath) {
             mdc.forEach { (key, _) ->
                 MDC.remove(key)
             }
