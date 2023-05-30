@@ -1,172 +1,30 @@
-plugins {
-    id "org.jetbrains.kotlin.multiplatform" version "$kotlinVersion"
-    id "com.android.library" version "7.4.0"
+
+allprojects {
+    group 'net.codinux.log'
+    version '1.0.2-SNAPSHOT'
+
+    ext.groupId = group
+    ext.artifactVersion = version
+
+
+    repositories {
+        mavenCentral()
+        google()
+    }
+
+
+    ext.sourceCodeRepositoryBaseUrl = "https://github.com/codinux-gmbh/KMP-Log"
+
+    ext.useNewSonatypeRepo = true
+    ext.packageGroup = "net.codinux"
+
+    ext.projectDescription = "Idiomatic Kotlin Multiplatform logging facade"
+
+    ext.developerId = "codinux"
+    ext.developerName = "codinux GmbH & Co. KG"
+    ext.developerMail = "git@codinux.net"
+
+    ext.licenseName = "The Apache License, Version 2.0"
+    ext.licenseUrl = "http://www.apache.org/licenses/LICENSE-2.0.txt"
+
 }
-
-group 'net.codinux.log'
-version '1.0.2-SNAPSHOT'
-ext.artifactName = "kmp-log"
-
-ext.groupId = group
-ext.artifactId = ext.artifactName
-ext.artifactVersion = version
-ext.libraryName = ext.artifactName
-
-repositories {
-    mavenCentral()
-    google()
-}
-
-
-kotlin {
-    jvm {
-        jvmToolchain(8)
-//        withJava() // not allowed if android { } is present
-
-        testRuns["test"].executionTask.configure {
-            useJUnitPlatform()
-
-            testLogging {     // This is for logging and can be removed.
-                events("passed", "skipped", "failed")
-            }
-        }
-    }
-
-    android {
-        compilations.all {
-            kotlinOptions.jvmTarget = "1.8"
-        }
-    }
-
-    js(IR) {
-        moduleName = "kmplog"
-//        binaries.executable()
-
-        browser {
-            testTask {
-                useKarma {
-                    useChromeHeadless()
-                    useFirefoxHeadless()
-                }
-            }
-        }
-
-        nodejs()
-    }
-
-    ios {
-        binaries {
-            framework {
-                baseName = "kmp-log"
-            }
-        }
-    }
-
-
-    def hostOs = System.getProperty("os.name")
-    def isMingwX64 = hostOs.startsWith("Windows")
-    def nativeTarget
-        if (hostOs == "Mac OS X") nativeTarget = macosX64('native')
-        else if (hostOs == "Linux") nativeTarget = linuxX64("native")
-        else if (isMingwX64) nativeTarget = mingwX64("native")
-        else throw new FileNotFoundException("Host OS is not supported in Kotlin/Native.")
-
-//    nativeTarget.with {
-//        binaries {
-//            executable {
-//                entryPoint = 'main'
-//            }
-//        }
-//    }
-
-
-    sourceSets {
-        commonMain {
-            dependencies {
-                implementation kotlin('stdlib-common')
-                implementation kotlin("reflect")
-            }
-        }
-        commonTest {
-            dependencies {
-                implementation kotlin("test")
-            }
-        }
-
-
-        javaCommonMain {
-            dependsOn(commonMain)
-
-            dependencies {
-                compileOnly "org.slf4j:slf4j-api:$slf4jVersion"
-            }
-        }
-
-        jvmMain {
-            dependsOn(javaCommonMain)
-        }
-
-        jvmTest.dependencies {
-            implementation "org.assertj:assertj-core:$assertJVersion"
-            implementation("io.mockk:mockk:1.13.5") {
-                exclude(group: "org.slf4j")
-            }
-
-            implementation "ch.qos.logback:logback-classic:1.2.3"
-        }
-
-        androidMain {
-            dependsOn(javaCommonMain)
-        }
-
-        jsMain.dependencies {
-
-        }
-
-        iosMain.dependencies {
-
-        }
-
-        nativeMain.dependencies {
-
-        }
-    }
-}
-
-android {
-    namespace = "net.codinux.log"
-    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
-
-    compileSdk(33)
-    defaultConfig {
-        minSdkVersion(21)
-        targetSdkVersion(33)
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-
-    lintOptions {
-        abortOnError false
-    }
-}
-
-
-
-ext.sourceCodeRepositoryBaseUrl = "https://github.com/codinux-gmbh/KMP-Log"
-
-ext.useNewSonatypeRepo = true
-ext.packageGroup = "net.codinux"
-
-ext.projectDescription = "Idiomatic Kotlin Multiplatform logging facade"
-
-ext.developerId = "codinux"
-ext.developerName = "codinux GmbH & Co. KG"
-ext.developerMail = "git@codinux.net"
-
-ext.licenseName = "The Apache License, Version 2.0"
-ext.licenseUrl = "http://www.apache.org/licenses/LICENSE-2.0.txt"
-
-apply from: "publish.gradle.kts"

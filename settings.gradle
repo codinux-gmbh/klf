@@ -6,5 +6,5 @@ pluginManagement {
     }
 }
 
-rootProject.name = 'kmp-log'
+include 'kmp-log'
 
