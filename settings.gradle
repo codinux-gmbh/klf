@@ -1,10 +1,6 @@
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        google()
-        mavenCentral()
-    }
-}
+
+rootProject.name = 'KMP-Log-Project'
 
 include 'kmp-log'
+include 'sampleApps:NativeSampleApp'
 

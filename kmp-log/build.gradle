@@ -1,6 +1,6 @@
 plugins {
-    id "org.jetbrains.kotlin.multiplatform" version "$kotlinVersion"
-    id "com.android.library" version "7.4.0"
+    id "org.jetbrains.kotlin.multiplatform"
+    id "com.android.library"
 }
 
 
@@ -8,12 +8,6 @@ ext.artifactName = "kmp-log"
 
 ext.artifactId = ext.artifactName
 ext.libraryName = ext.artifactName
-
-
-repositories {
-    mavenCentral()
-    google()
-}
 
 
 kotlin {
@@ -68,14 +62,6 @@ kotlin {
         else if (hostOs == "Linux") nativeTarget = linuxX64("native")
         else if (isMingwX64) nativeTarget = mingwX64("native")
         else throw new FileNotFoundException("Host OS is not supported in Kotlin/Native.")
-
-//    nativeTarget.with {
-//        binaries {
-//            executable {
-//                entryPoint = 'main'
-//            }
-//        }
-//    }
 
 
     sourceSets {
