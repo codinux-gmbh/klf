@@ -2,11 +2,14 @@ package net.codinux.log.oslog
 
 import kotlinx.cinterop.ptr
 import net.codinux.log.LogLevel
+import net.codinux.log.Cache
 import net.codinux.log.appender.Appender
 import platform.Foundation.NSBundle
 import platform.darwin.*
 
 open class OSLogAppender : Appender {
+
+    protected open val loggerCache = Cache<os_log_t>()
 
     override fun append(level: LogLevel, loggerName: String, message: String, exception: Throwable?) {
         val type = getType(level)
@@ -14,6 +17,12 @@ open class OSLogAppender : Appender {
             return
         }
 
+        val logger = loggerCache.getOrCreate(loggerName) { createLogger(loggerName) }
+
+        _os_log_internal(__dso_handle.ptr, logger, type, message) // TODO: append exception to message
+    }
+
+    private fun createLogger(loggerName: String): os_log_t {
         val bundleIdentifier = NSBundle.mainBundle.bundleIdentifier
         val indexOfLastDot = loggerName.lastIndexOf('.')
 
@@ -24,9 +33,8 @@ open class OSLogAppender : Appender {
         } else {
             loggerName to ""
         }
-        val logger = os_log_create(subsystem, category) // TODO: cache loggers
 
-        _os_log_internal(__dso_handle.ptr, logger, type, message) // TODO: append exception to message
+        return os_log_create(subsystem, category)
     }
 
     protected open fun getType(level: LogLevel): os_log_type_t? = when (level) {

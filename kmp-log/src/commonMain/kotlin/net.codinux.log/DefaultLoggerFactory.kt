@@ -7,13 +7,15 @@ open class DefaultLoggerFactory : ILoggerFactory {
   // TODO: this structure is not thread safe. But should be ok in most cases as Appender only get added at start and afterwards there will be only read access
   protected open val appenders = linkedSetOf<Appender>()
 
+  protected open val loggerCache = Cache<Logger>()
+
   init {
       addAppender(Platform.systemDefaultAppender)
   }
 
 
   override fun getLogger(name: String): Logger {
-    return DelegateToAppenderLogger(name, this)
+    return loggerCache.getOrCreate(name) { DelegateToAppenderLogger(name, this) }
   }
 
   override fun addAppender(appender: Appender) {
