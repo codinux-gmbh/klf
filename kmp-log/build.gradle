@@ -123,14 +123,6 @@ kotlin {
         mingwX64Main {
             dependsOn(linuxAndMingwMain)
         }
-
-        iosMain.dependencies {
-
-        }
-
-        nativeMain.dependencies {
-
-        }
     }
 }
 
