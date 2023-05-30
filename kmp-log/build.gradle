@@ -10,7 +10,11 @@ ext.artifactId = ext.artifactName
 ext.libraryName = ext.artifactName
 
 
+//@OptIn(ExperimentalKotlinGradlePluginApi::class)
 kotlin {
+    // Enable the default target hierarchy:
+    targetHierarchy.default()
+
     jvm {
         jvmToolchain(8)
 //        withJava() // not allowed if android { } is present
@@ -46,6 +50,11 @@ kotlin {
         nodejs()
     }
 
+
+    linuxX64()
+    mingwX64()
+
+
     ios {
         binaries {
             framework {
@@ -53,15 +62,13 @@ kotlin {
             }
         }
     }
-
-
-    def hostOs = System.getProperty("os.name")
-    def isMingwX64 = hostOs.startsWith("Windows")
-    def nativeTarget
-        if (hostOs == "Mac OS X") nativeTarget = macosX64('native')
-        else if (hostOs == "Linux") nativeTarget = linuxX64("native")
-        else if (isMingwX64) nativeTarget = mingwX64("native")
-        else throw new FileNotFoundException("Host OS is not supported in Kotlin/Native.")
+    iosSimulatorArm64()
+    macosX64()
+    macosArm64()
+    watchos()
+    watchosSimulatorArm64()
+    tvos()
+    tvosSimulatorArm64()
 
 
     sourceSets {
@@ -105,6 +112,16 @@ kotlin {
 
         jsMain.dependencies {
 
+        }
+
+        linuxAndMingwMain {
+            dependsOn(nativeMain)
+        }
+        linuxX64Main {
+            dependsOn(linuxAndMingwMain)
+        }
+        mingwX64Main {
+            dependsOn(linuxAndMingwMain)
         }
 
         iosMain.dependencies {
