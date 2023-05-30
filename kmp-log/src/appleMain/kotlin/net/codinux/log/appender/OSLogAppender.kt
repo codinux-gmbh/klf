@@ -1,10 +1,8 @@
-package net.codinux.log.oslog
+package net.codinux.log.appender
 
 import kotlinx.cinterop.ptr
 import net.codinux.log.LogLevel
 import net.codinux.log.Cache
-import net.codinux.log.appender.Appender
-import net.codinux.log.appender.MessageFormatter
 import platform.Foundation.NSBundle
 import platform.darwin.*
 

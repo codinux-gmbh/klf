@@ -4,7 +4,7 @@ import kotlinx.cinterop.UnsafeNumber
 import kotlinx.cinterop.useContents
 import net.codinux.log.appender.Appender
 import net.codinux.log.appender.NSLogAppender
-import net.codinux.log.oslog.OSLogAppender
+import net.codinux.log.appender.OSLogAppender
 import platform.Foundation.NSProcessInfo
 import kotlin.native.Platform
 import kotlin.reflect.KClass
