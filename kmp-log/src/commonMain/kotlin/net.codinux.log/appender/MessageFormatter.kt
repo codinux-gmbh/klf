@@ -4,14 +4,16 @@ import net.codinux.log.LogLevel
 
 open class MessageFormatter {
 
-    open fun formatMessage(level: LogLevel, loggerName: String, message: String, exception: Throwable?): String {
-        val formattedMessage = StringBuilder("[$level] $loggerName - $message")
-
-        if (exception != null) {
-            formattedMessage.append(": $exception\n${exception.stackTraceToString()}")
+    open fun formatMessage(message: String, exception: Throwable?): String {
+        return if (exception != null) {
+            "$message: ${exception.stackTraceToString()}"
+        } else {
+            message
         }
+    }
 
-        return formattedMessage.toString()
+    open fun formatMessage(level: LogLevel, loggerName: String, message: String, exception: Throwable?): String {
+        return "[$level] $loggerName - ${formatMessage(message, exception)}"
     }
 
 }

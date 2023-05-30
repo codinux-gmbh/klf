@@ -4,12 +4,15 @@ import kotlinx.cinterop.ptr
 import net.codinux.log.LogLevel
 import net.codinux.log.Cache
 import net.codinux.log.appender.Appender
+import net.codinux.log.appender.MessageFormatter
 import platform.Foundation.NSBundle
 import platform.darwin.*
 
 open class OSLogAppender : Appender {
 
     protected open val loggerCache = Cache<os_log_t>()
+
+    protected open val formatter = MessageFormatter()
 
     override fun append(level: LogLevel, loggerName: String, message: String, exception: Throwable?) {
         val type = getType(level)
@@ -19,7 +22,7 @@ open class OSLogAppender : Appender {
 
         val logger = loggerCache.getOrCreate(loggerName) { createLogger(loggerName) }
 
-        _os_log_internal(__dso_handle.ptr, logger, type, message) // TODO: append exception to message
+        _os_log_internal(__dso_handle.ptr, logger, type, formatter.formatMessage(message, exception))
     }
 
     private fun createLogger(loggerName: String): os_log_t {
