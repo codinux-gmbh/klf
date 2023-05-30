@@ -20,7 +20,7 @@ actual class Platform {
     actual val systemDefaultAppender: Appender = if (supportsOsLog) OSLogAppender() else NSLogAppender()
 
     actual fun <T : Any> getLoggerName(forClass: KClass<T>) =
-      forClass.qualifiedName ?: forClass.simpleName ?: forClass.toString().replace("class ", "")
+      net.codinux.log.Platform.getLoggerNameForKClassesWithQualifiedName(forClass)
 
 
     @OptIn(UnsafeNumber::class)

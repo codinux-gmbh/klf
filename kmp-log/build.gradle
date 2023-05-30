@@ -85,8 +85,13 @@ kotlin {
         }
 
 
-        javaCommonMain {
+        javaAndNativeCommonMain {
             dependsOn(commonMain)
+        }
+
+
+        javaCommonMain {
+            dependsOn(javaAndNativeCommonMain)
 
             dependencies {
                 compileOnly "org.slf4j:slf4j-api:$slf4jVersion"
@@ -114,6 +119,9 @@ kotlin {
 
         }
 
+        nativeMain {
+            dependsOn(javaAndNativeCommonMain)
+        }
         linuxAndMingwMain {
             dependsOn(nativeMain)
         }
