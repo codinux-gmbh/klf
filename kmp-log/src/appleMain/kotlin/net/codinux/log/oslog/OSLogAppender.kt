@@ -14,7 +14,17 @@ open class OSLogAppender : Appender {
             return
         }
 
-        val logger = os_log_create(NSBundle.mainBundle.bundleIdentifier, loggerName) // TODO: cache loggers
+        val bundleIdentifier = NSBundle.mainBundle.bundleIdentifier
+        val indexOfLastDot = loggerName.lastIndexOf('.')
+
+        val (subsystem, category) = if (bundleIdentifier != null) { // in tests, ... bundleIdentifier is null
+            bundleIdentifier to loggerName
+        } else if (indexOfLastDot > -1) {
+            loggerName.substring(0, indexOfLastDot) to loggerName.substring(indexOfLastDot + 1)
+        } else {
+            loggerName to ""
+        }
+        val logger = os_log_create(subsystem, category) // TODO: cache loggers
 
         _os_log_internal(__dso_handle.ptr, logger, type, message) // TODO: append exception to message
     }
