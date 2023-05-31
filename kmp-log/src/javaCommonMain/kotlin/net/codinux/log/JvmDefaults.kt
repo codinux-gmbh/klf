@@ -27,6 +27,10 @@ object JvmDefaults {
   }
 
 
+  fun getCurrentThreadName(): String? =
+    Thread.currentThread().name
+
+
   val isSlf4jOnClasspath = isClassAvailable("org.slf4j.Logger")
 
   private fun isClassAvailable(qualifiedClassName: String): Boolean {

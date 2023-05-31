@@ -18,6 +18,8 @@ actual class Platform {
       return forClass.js.name
     }
 
+    actual fun getCurrentThreadName(): String? = "main"
+
   }
 
 }

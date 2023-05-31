@@ -14,6 +14,8 @@ expect class Platform {
 
         fun <T : Any> getLoggerName(forClass: KClass<T>): String
 
+        fun getCurrentThreadName(): String?
+
     }
 
 }

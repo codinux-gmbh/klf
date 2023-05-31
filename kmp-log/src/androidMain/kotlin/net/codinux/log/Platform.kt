@@ -14,5 +14,8 @@ actual class Platform {
 
     actual fun <T : Any> getLoggerName(forClass: KClass<T>): String = JvmDefaults.getLoggerName(forClass)
 
+    actual fun getCurrentThreadName() =
+      JvmDefaults.getCurrentThreadName()
+
   }
 }

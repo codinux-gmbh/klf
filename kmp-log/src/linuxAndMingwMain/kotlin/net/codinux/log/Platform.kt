@@ -2,6 +2,7 @@ package net.codinux.log
 
 import net.codinux.log.appender.Appender
 import net.codinux.log.appender.ConsoleAppender
+import kotlin.native.concurrent.Worker
 import kotlin.reflect.KClass
 
 actual class Platform {
@@ -14,6 +15,9 @@ actual class Platform {
 
     actual fun <T : Any> getLoggerName(forClass: KClass<T>) =
       Platform.getLoggerNameForKClassesWithQualifiedName(forClass)
+
+    actual fun getCurrentThreadName(): String? =
+      Worker.current.name // TODO: use native C implementation
 
   }
 

@@ -6,6 +6,7 @@ import net.codinux.log.appender.Appender
 import net.codinux.log.appender.NSLogAppender
 import net.codinux.log.appender.OSLogAppender
 import platform.Foundation.NSProcessInfo
+import platform.Foundation.NSThread
 import kotlin.native.Platform
 import kotlin.reflect.KClass
 
@@ -21,6 +22,9 @@ actual class Platform {
 
     actual fun <T : Any> getLoggerName(forClass: KClass<T>) =
       net.codinux.log.Platform.getLoggerNameForKClassesWithQualifiedName(forClass)
+
+    actual fun getCurrentThreadName() =
+      NSThread.currentThread.name
 
 
     @OptIn(UnsafeNumber::class)
