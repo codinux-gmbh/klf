@@ -10,7 +10,7 @@ actual class Platform {
 
     actual fun createDefaultLoggerFactory() = JvmDefaults.createDefaultLoggerFactory()
 
-    actual val systemDefaultAppender: Appender = LogcatAppender()
+    actual val systemDefaultAppender: Appender = LogcatAppender.Default
 
     actual fun <T : Any> getLoggerName(forClass: KClass<T>): String = JvmDefaults.getLoggerName(forClass)
 
