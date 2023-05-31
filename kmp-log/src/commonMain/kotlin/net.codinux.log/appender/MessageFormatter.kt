@@ -13,7 +13,7 @@ open class MessageFormatter {
     }
 
     open fun formatMessage(level: LogLevel, message: String, loggerName: String, threadName: String? = null, exception: Throwable? = null): String {
-        return "[$level] $loggerName - ${formatMessage(message, exception)}"
+        return "${threadName?.let { "[$it] " } ?: ""}$level $loggerName - ${formatMessage(message, exception)}"
     }
 
 }
