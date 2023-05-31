@@ -1,4 +1,5 @@
 # KMP Log
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/net.codinux.log/kmp-log/badge.svg)](https://maven-badges.herokuapp.com/maven-central/net.codinux.log/kmp-log)
 
 Idiomatic Kotlin Multiplatform logging facade with appenders for all supported KMP platforms.
 
@@ -7,7 +8,7 @@ Idiomatic Kotlin Multiplatform logging facade with appenders for all supported K
 ### Gradle
 
 ```
-implementation("net.codinux.log:kmp-log:1.0.2-SNAPSHOT")
+implementation("net.codinux.log:kmp-log:1.1.0")
 ```
 
 ## Usage
