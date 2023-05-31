@@ -28,6 +28,11 @@ public class JavaShowcase {
             public void addAppender(@NotNull Appender appender) {
                 // no-op
             }
+
+            @Override
+            public boolean getDoesAnyAppenderLogThreadName() {
+                return false;
+            }
         });
     }
 
