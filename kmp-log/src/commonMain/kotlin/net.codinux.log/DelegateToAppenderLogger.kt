@@ -11,8 +11,16 @@ open class DelegateToAppenderLogger @JvmOverloads constructor(
 ) : LoggerBase(name, level) {
 
   override fun log(level: LogLevel, message: String, exception: Throwable?) {
-    container.getAppenders().forEach {
-      it.append(level, name, message, exception)
+    val threadName = if (container.doesAnyAppenderLogThreadName) Platform.getCurrentThreadName() else null
+
+    container.getAppenders().forEach { appender ->
+      appender.append(
+        level,
+        message,
+        name,
+        if (appender.logsThreadName) threadName else null,
+        if (appender.logsException) exception else null
+      )
     }
   }
 

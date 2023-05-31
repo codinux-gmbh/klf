@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory
 
 open class Slf4jLoggerFactory : ILoggerFactory {
 
+    override val doesAnyAppenderLogThreadName = false
+
     override fun getLogger(name: String): Logger {
         return Slf4jLogger(LoggerFactory.getLogger(name))
     }

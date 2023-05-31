@@ -9,6 +9,9 @@ open class DefaultLoggerFactory : ILoggerFactory {
 
   protected open val loggerCache = Cache<Logger>()
 
+  override var doesAnyAppenderLogThreadName: Boolean = false
+    protected set
+
   init {
       addAppender(Platform.systemDefaultAppender)
   }
@@ -20,6 +23,8 @@ open class DefaultLoggerFactory : ILoggerFactory {
 
   override fun addAppender(appender: Appender) {
     appenders.add(appender)
+
+    this.doesAnyAppenderLogThreadName = appenders.any { it.logsThreadName }
   }
 
   override fun getAppenders(): Collection<Appender> =

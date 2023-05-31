@@ -4,12 +4,21 @@ import net.codinux.log.LogLevel
 
 open class JsConsoleAppender : Appender {
 
-  override fun append(level: LogLevel, loggerName: String, message: String, exception: Throwable?) {
+  protected open val formatter = MessageFormatter()
+
+
+  override val logsThreadName = true
+
+  override val logsException = true
+
+  override fun append(level: LogLevel, message: String, loggerName: String, threadName: String?, exception: Throwable?) {
+    val formattedMessage = formatter.formatMessage(level, message, loggerName, threadName, exception)
+
     when (level) {
-      LogLevel.Fatal, LogLevel.Error -> console.error(message, exception)
-      LogLevel.Warn -> console.warn(message, exception)
-      LogLevel.Info -> console.info(message, exception)
-      LogLevel.Debug, LogLevel.Trace -> console.log(message, exception)
+      LogLevel.Fatal, LogLevel.Error -> console.error(formattedMessage, exception)
+      LogLevel.Warn -> console.warn(formattedMessage, exception)
+      LogLevel.Info -> console.info(formattedMessage, exception)
+      LogLevel.Debug, LogLevel.Trace -> console.log(formattedMessage, exception)
       LogLevel.Off -> { }
     }
   }

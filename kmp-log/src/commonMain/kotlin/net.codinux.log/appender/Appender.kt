@@ -5,6 +5,10 @@ import net.codinux.log.LogLevel
 
 interface Appender {
 
-  fun append(level: LogLevel, loggerName: String, message: String, exception: Throwable?)
+  val logsThreadName: Boolean
+
+  val logsException: Boolean
+
+  fun append(level: LogLevel, message: String, loggerName: String, threadName: String? = null, exception: Throwable? = null)
 
 }

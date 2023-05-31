@@ -12,7 +12,12 @@ open class OSLogAppender : Appender {
 
     protected open val formatter = MessageFormatter()
 
-    override fun append(level: LogLevel, loggerName: String, message: String, exception: Throwable?) {
+
+    override val logsThreadName = false
+
+    override val logsException = true
+
+    override fun append(level: LogLevel, message: String, loggerName: String, threadName: String?, exception: Throwable?) {
         val type = getType(level)
         if (type == null) {
             return

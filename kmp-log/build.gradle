@@ -152,6 +152,14 @@ android {
     lintOptions {
         abortOnError false
     }
+
+    testOptions {
+        unitTests {
+            // Otherwise we get this exception in tests:
+            // Method e in android.util.Log not mocked. See https://developer.android.com/r/studio-ui/build/not-mocked for details.
+            setReturnDefaultValues(true)
+        }
+    }
 }
 
 

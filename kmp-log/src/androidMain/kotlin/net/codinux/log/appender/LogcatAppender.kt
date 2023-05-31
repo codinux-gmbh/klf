@@ -12,7 +12,11 @@ class LogcatAppender : Appender {
   }
 
 
-  override fun append(level: LogLevel, loggerName: String, message: String, exception: Throwable?) {
+  override val logsThreadName = false
+
+  override val logsException = true
+
+  override fun append(level: LogLevel, message: String, loggerName: String, threadName: String?, exception: Throwable?) {
     when (level) {
       LogLevel.Fatal, LogLevel.Error -> Log.e(loggerName, message, exception)
       LogLevel.Warn -> Log.w(loggerName, message, exception)

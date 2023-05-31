@@ -4,7 +4,7 @@ import net.codinux.log.LogLevel
 
 open class MessageFormatter {
 
-    open fun formatMessage(message: String, exception: Throwable?): String {
+    open fun formatMessage(message: String, exception: Throwable? = null): String {
         return if (exception != null) {
             "$message: ${exception.stackTraceToString()}"
         } else {
@@ -12,7 +12,7 @@ open class MessageFormatter {
         }
     }
 
-    open fun formatMessage(level: LogLevel, loggerName: String, message: String, exception: Throwable?): String {
+    open fun formatMessage(level: LogLevel, message: String, loggerName: String, threadName: String? = null, exception: Throwable? = null): String {
         return "[$level] $loggerName - ${formatMessage(message, exception)}"
     }
 
