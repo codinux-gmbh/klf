@@ -28,11 +28,12 @@ actual class Platform {
       val osVersion = NSProcessInfo.processInfo.operatingSystemVersion
 
       return osVersion.useContents {
-        val majorVersion = this.majorVersion
+        val majorVersion = this.majorVersion.toInt()
 
         // os_log is available for: iOS 10.0+, iPadOS 10.0+, macOS 10.12+, Mac Catalyst 13.1+, tvOS 10.0+, watchOS 3.0+ (https://developer.apple.com/documentation/os/1643744-os_log_create)
         when (Platform.osFamily) {
-          OsFamily.IOS, OsFamily.MACOSX, OsFamily.TVOS -> majorVersion >= 10
+          OsFamily.MACOSX -> majorVersion > 10 || (majorVersion == 10 && this.minorVersion >= 12)
+          OsFamily.IOS, OsFamily.TVOS -> majorVersion >= 10
           OsFamily.WATCHOS -> majorVersion >= 3
           else -> false
         }
