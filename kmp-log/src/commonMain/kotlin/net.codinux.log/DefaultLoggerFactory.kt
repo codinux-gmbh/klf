@@ -1,11 +1,11 @@
 package net.codinux.log
 
 import net.codinux.log.appender.Appender
+import net.codinux.log.concurrent.ConcurrentSet
 
 open class DefaultLoggerFactory : ILoggerFactory {
 
-  // TODO: this structure is not thread safe. But should be ok in most cases as Appender only get added at start and afterwards there will be only read access
-  protected open val appenders = linkedSetOf<Appender>()
+  protected open val appenders = ConcurrentSet<Appender>()
 
   protected open val loggerCache = Cache<Logger>()
 
@@ -18,7 +18,9 @@ open class DefaultLoggerFactory : ILoggerFactory {
 
 
   override fun getLogger(name: String): Logger {
-    return loggerCache.getOrPut(name) { DelegateToAppenderLogger(name, this) }
+    return loggerCache.getOrPut(name) {
+      DelegateToAppenderLogger(name, this)
+    }
   }
 
   override fun addAppender(appender: Appender) {
