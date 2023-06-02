@@ -1,11 +1,13 @@
 package net.codinux.log
 
+import net.codinux.log.concurrent.ConcurrentMap
+import net.codinux.log.concurrent.getOrPut
+
 open class Cache<T> {
 
-    // TODO: this structure is not thread-safe
-    protected open val cache = hashMapOf<String, T>()
+    protected open val cache = ConcurrentMap<String, T>()
 
-    open fun getOrCreate(key: String, createObject: (String) -> T): T {
+    open fun getOrPut(key: String, createObject: (String) -> T): T {
         return cache.getOrPut(key) { createObject(key) }
     }
 

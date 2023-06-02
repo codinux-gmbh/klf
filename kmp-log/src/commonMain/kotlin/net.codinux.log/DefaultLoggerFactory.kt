@@ -18,7 +18,7 @@ open class DefaultLoggerFactory : ILoggerFactory {
 
 
   override fun getLogger(name: String): Logger {
-    return loggerCache.getOrCreate(name) { DelegateToAppenderLogger(name, this) }
+    return loggerCache.getOrPut(name) { DelegateToAppenderLogger(name, this) }
   }
 
   override fun addAppender(appender: Appender) {
