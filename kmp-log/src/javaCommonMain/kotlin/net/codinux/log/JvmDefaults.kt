@@ -7,8 +7,7 @@ import kotlin.reflect.KClass
 object JvmDefaults {
 
   fun createDefaultLoggerFactory(): ILoggerFactory {
-    if (Slf4jUtil.isSlf4jOnClasspath) {
-      // TODO: should we not use slf4j if it's LoggerFactory is org.slf4j.helpers.NOPLoggerFactory = no binding is available for slf4j?
+    if (Slf4jUtil.useSlf4j) {
       return Slf4jLoggerFactory()
     }
 
