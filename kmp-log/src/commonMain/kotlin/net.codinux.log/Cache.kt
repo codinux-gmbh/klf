@@ -1,7 +1,7 @@
 package net.codinux.log
 
-import net.codinux.log.concurrent.ConcurrentMap
-import net.codinux.log.concurrent.getOrPut
+import net.codinux.log.collection.ConcurrentMap
+import net.codinux.log.collection.getOrPut
 
 open class Cache<T> {
 

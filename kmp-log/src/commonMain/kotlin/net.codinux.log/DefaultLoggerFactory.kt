@@ -1,9 +1,9 @@
 package net.codinux.log
 
 import net.codinux.log.appender.Appender
-import net.codinux.log.concurrent.ConcurrentSet
-import net.codinux.log.concurrent.ImmutableCollection
-import net.codinux.log.concurrent.toImmutableCollection
+import net.codinux.log.collection.ConcurrentSet
+import net.codinux.log.collection.ImmutableCollection
+import net.codinux.log.collection.toImmutableCollection
 
 open class DefaultLoggerFactory : ILoggerFactory {
 

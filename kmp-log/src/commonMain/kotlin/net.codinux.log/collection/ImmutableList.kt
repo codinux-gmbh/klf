@@ -1,4 +1,4 @@
-package net.codinux.log.concurrent
+package net.codinux.log.collection
 
 open class ImmutableList<E>(protected open val wrappedList: List<E>) : ImmutableCollection<E>(wrappedList), List<E> {
 

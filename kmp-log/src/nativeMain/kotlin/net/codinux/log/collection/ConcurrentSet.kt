@@ -1,4 +1,4 @@
-package net.codinux.log.concurrent
+package net.codinux.log.collection
 
 import kotlin.native.concurrent.AtomicReference
 
