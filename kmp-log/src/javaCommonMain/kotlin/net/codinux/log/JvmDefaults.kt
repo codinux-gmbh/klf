@@ -1,12 +1,13 @@
 package net.codinux.log
 
 import net.codinux.log.slf4j.Slf4jLoggerFactory
+import net.codinux.log.slf4j.Slf4jUtil
 import kotlin.reflect.KClass
 
 object JvmDefaults {
 
   fun createDefaultLoggerFactory(): ILoggerFactory {
-    if (isSlf4jOnClasspath) {
+    if (Slf4jUtil.isSlf4jOnClasspath) {
       // TODO: should we not use slf4j if it's LoggerFactory is org.slf4j.helpers.NOPLoggerFactory = no binding is available for slf4j?
       return Slf4jLoggerFactory()
     }
@@ -30,16 +31,4 @@ object JvmDefaults {
   fun getCurrentThreadName(): String? =
     Thread.currentThread().name
 
-
-  val isSlf4jOnClasspath = isClassAvailable("org.slf4j.Logger")
-
-  private fun isClassAvailable(qualifiedClassName: String): Boolean {
-    try {
-      Class.forName(qualifiedClassName)
-
-      return true
-    } catch (ignored: Exception) { }
-
-    return false
-  }
 }
