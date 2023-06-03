@@ -6,11 +6,11 @@ import org.slf4j.helpers.NOPLoggerFactory
 
 object Slf4jUtil {
 
-    val isSlf4jOnClasspath = isClassAvailable("org.slf4j.Logger")
+    val isSlf4jOnClasspath: Boolean by lazy { isClassAvailable("org.slf4j.Logger") }
 
-    val slf4jLoggerFactory: ILoggerFactory = LoggerFactory.getILoggerFactory()
+    val slf4jLoggerFactory: ILoggerFactory by lazy { LoggerFactory.getILoggerFactory() }
 
-    val useSlf4j = isSlf4jOnClasspath && slf4jLoggerFactory !is NOPLoggerFactory
+    val useSlf4j: Boolean by lazy { isSlf4jOnClasspath && slf4jLoggerFactory !is NOPLoggerFactory }
 
 
     private fun isClassAvailable(qualifiedClassName: String): Boolean {
