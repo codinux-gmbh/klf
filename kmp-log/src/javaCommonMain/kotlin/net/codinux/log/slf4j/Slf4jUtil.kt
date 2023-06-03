@@ -10,8 +10,38 @@ object Slf4jUtil {
 
     val slf4jLoggerFactory: ILoggerFactory by lazy { LoggerFactory.getILoggerFactory() }
 
-    val useSlf4j: Boolean by lazy { isSlf4jOnClasspath && slf4jLoggerFactory !is NOPLoggerFactory }
+    val boundLoggingFramework: Slf4jBinding by lazy { determineSlf4jBinding() }
 
+    val useSlf4j: Boolean by lazy { isSlf4jOnClasspath && boundLoggingFramework != Slf4jBinding.NOP && boundLoggingFramework != Slf4jBinding.Unknown }
+
+
+    private fun determineSlf4jBinding(): Slf4jBinding {
+        return try {
+            val loggerFactory = slf4jLoggerFactory
+            if (loggerFactory is NOPLoggerFactory) {
+                return Slf4jBinding.NOP
+            }
+
+            val loggerFactoryClass = loggerFactory::class
+            when (loggerFactoryClass.qualifiedName) {
+                "ch.qos.logback.classic.LoggerContext" -> Slf4jBinding.Logback
+                "org.apache.logging.slf4j.Log4jLoggerFactory" -> Slf4jBinding.Log4j2
+                "org.slf4j.impl.Log4jLoggerFactory" -> Slf4jBinding.Log4j1
+                "org.slf4j.reload4j.Reload4jLoggerFactory" -> Slf4jBinding.Reload4j
+                "org.slf4j.impl.JDK14LoggerFactory" -> Slf4jBinding.JUL
+                "org.slf4j.impl.SimpleLoggerFactory" -> Slf4jBinding.Slf4jSimple
+                "org.slf4j.impl.AndroidLoggerFactory" -> Slf4jBinding.Android // removed in slf4j 2.x
+                "org.slf4j.impl.JCLLoggerFactory" -> Slf4jBinding.JCL // removed in slf4j 2.x
+                "org.slf4j.helpers.SubstituteLoggerFactory" -> Slf4jBinding.SubstituteLogger // SubstituteLogger in most cases binds to NOP, but we cannot know to which logger it really binds
+                else -> Slf4jBinding.Unknown
+            }
+        } catch (e: Exception) {
+            // TODO: add an ErrorHandler
+            println("Could not determine logging framework that slf4j binds to: $e")
+
+            Slf4jBinding.Unknown
+        }
+    }
 
     private fun isClassAvailable(qualifiedClassName: String): Boolean {
         try {

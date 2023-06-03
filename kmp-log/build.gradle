@@ -88,6 +88,9 @@ kotlin {
         javaAndNativeCommonMain {
             dependsOn(commonMain)
         }
+        javaAndNativeCommonTest {
+            dependsOn(commonTest)
+        }
 
 
         javaCommonMain {
@@ -97,22 +100,31 @@ kotlin {
                 compileOnly "org.slf4j:slf4j-api:$slf4jVersion"
             }
         }
+        javaCommonTest {
+            dependsOn(javaAndNativeCommonTest)
+
+            dependencies {
+                implementation "org.assertj:assertj-core:$assertJVersion"
+                implementation("io.mockk:mockk:1.13.5") {
+                    exclude(group: "org.slf4j")
+                }
+
+                implementation "ch.qos.logback:logback-classic:1.2.3"
+            }
+        }
 
         jvmMain {
             dependsOn(javaCommonMain)
         }
-
-        jvmTest.dependencies {
-            implementation "org.assertj:assertj-core:$assertJVersion"
-            implementation("io.mockk:mockk:1.13.5") {
-                exclude(group: "org.slf4j")
-            }
-
-            implementation "ch.qos.logback:logback-classic:1.2.3"
+        jvmTest {
+            dependsOn(javaCommonTest)
         }
 
         androidMain {
             dependsOn(javaCommonMain)
+        }
+        androidTest {
+            dependsOn(javaCommonTest)
         }
 
         jsMain.dependencies {
