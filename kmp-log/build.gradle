@@ -99,6 +99,8 @@ kotlin {
             dependencies {
                 compileOnly "org.slf4j:slf4j-api:$slf4jVersion"
                 compileOnly "ch.qos.logback:logback-classic:$logbackVersion"
+                compileOnly "org.apache.logging.log4j:log4j-core:$log4j2Version"
+                compileOnly "org.apache.logging.log4j:log4j-slf4j-impl:$log4j2Version"
             }
         }
         javaCommonTest {
