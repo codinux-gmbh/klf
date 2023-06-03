@@ -19,6 +19,8 @@ interface Logger {
     val isTraceEnabled: Boolean
 
 
+    // TODO: add overloads for programming languages that don't support default parameters - but in an extra artefact like kmp-log-java to not ruin API
+
     fun fatal(message: String, exception: Throwable? = null)
 
     fun fatal(exception: Throwable? = null, messageSupplier: () -> String)
