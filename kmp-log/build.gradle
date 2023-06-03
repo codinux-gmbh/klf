@@ -98,6 +98,7 @@ kotlin {
 
             dependencies {
                 compileOnly "org.slf4j:slf4j-api:$slf4jVersion"
+                compileOnly "ch.qos.logback:logback-classic:$logbackVersion"
             }
         }
         javaCommonTest {
@@ -109,7 +110,7 @@ kotlin {
                     exclude(group: "org.slf4j")
                 }
 
-                implementation "ch.qos.logback:logback-classic:1.2.3"
+                implementation "ch.qos.logback:logback-classic:$logbackVersion"
             }
         }
 
