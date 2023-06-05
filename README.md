@@ -119,7 +119,7 @@ If you dislike above default appenders and want to control logger creation entir
 
 ## MDC (Java only)
 
-KMP-Log has some convenience functions if MDC (Mapped Diagnostic Context) values should get added only for the next log message:
+KMP-Log has some convenience functions if values should get added to MDC (Mapped Diagnostic Context) only for the next log message and should then automatically get cleared again:
 
 ```kotlin
   log.withMdc("key1" to "value1", "key2" to "value2").info { "Info" }
@@ -131,6 +131,33 @@ Or
     log.info { "Info" }
   }
 ```
+
+## Terminology
+
+The terminology is mostly identical with slf4j / logback.
+
+### LoggerFactory
+
+Primary facade to create a [Logger](#logger), e.g.  
+`private val log = LoggerFactory.getLogger(OrderService::class)`.
+
+KMP-Log ships with two LoggerFactories:
+- [Slf4jLoggerFactory](kmp-log/src/javaCommonMain/kotlin/net/codinux/log/slf4j/Slf4jLoggerFactory.kt) that delegates logging to slf4j, so that on JVM any logging framework that implements slf4j can be used. 
+Gets automatically used if slf4j is on the classpath and its ILoggerFactory implementation is any other than [NOPLoggerFactory](https://www.slf4j.org/apidocs/org/slf4j/helpers/NOPLoggerFactory.html).
+- [DefaultLoggerFactory](kmp-log/src/commonMain/kotlin/net.codinux.log/DefaultLoggerFactory.kt) that delegates logging to system's default log appender (see [Log appenders](#log-appenders)).
+
+### Logger
+
+Interface to log messages at different levels (Info, Error, ...) , e.g.  
+`log.error(e) { "Calculating Fibonacci numbers for $number failed" }`.
+
+### Appender
+
+- If a messages gets accepted by a Logger, Appender do the actual work of 'writing' log messages.
+- Multiple appender can be defined so that one logged messages e.g. gets written to console, to a file (only available via a slf4j compatible logging framework), to [Elasticsearch](https://github.com/codinux-gmbh/ElasticsearchLogger), [Loki](https://github.com/codinux-gmbh/LokiLogAppender), ...
+- All Loggers use the same appenders. (It's not possible to set an appender for a specific Logger like as logback.)
+- Except ConsoleAppender KMP-Log doesn't implement any Appender itself but delegates on to native loggers like Logcat, OSLog, JavaScript Console, slf4j, ...
+
 
 # License
 
