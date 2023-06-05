@@ -18,9 +18,6 @@ open class Slf4jLogger(
         get() = slf4jLogger.name
 
 
-    override val isFatalEnabled: Boolean
-        get() = isErrorEnabled
-
     override val isErrorEnabled: Boolean
         get() = slf4jLogger.isErrorEnabled
 
@@ -35,15 +32,6 @@ open class Slf4jLogger(
 
     override val isTraceEnabled: Boolean
         get() = slf4jLogger.isTraceEnabled
-
-
-    override fun fatal(message: String, exception: Throwable?) {
-        error(message, exception)
-    }
-
-    override fun fatal(exception: Throwable?, messageSupplier: () -> String) {
-        error(exception, messageSupplier)
-    }
 
 
     override fun error(message: String, exception: Throwable?) {

@@ -28,8 +28,6 @@ abstract class LoggerBase @JvmOverloads constructor(
     open fun getEffectiveLevel(): LogLevel =
         level ?: LoggerFactory.DefaultLevel
 
-    override val isFatalEnabled get() = isEnabled(LogLevel.Fatal)
-
     override val isErrorEnabled get() = isEnabled(LogLevel.Error)
 
     override val isWarnEnabled get() = isEnabled(LogLevel.Warn)
@@ -41,15 +39,6 @@ abstract class LoggerBase @JvmOverloads constructor(
     override val isTraceEnabled get() = isEnabled(LogLevel.Trace)
 
     open fun isEnabled(level: LogLevel) = level.priority <= getEffectiveLevel().priority
-
-
-    override fun fatal(message: String, exception: Throwable?) {
-        logIfEnabled(LogLevel.Fatal, exception, message)
-    }
-
-    override fun fatal(exception: Throwable?, messageSupplier: () -> String) {
-        logIfEnabled(LogLevel.Fatal, exception, messageSupplier)
-    }
 
 
     override fun error(message: String, exception: Throwable?) {

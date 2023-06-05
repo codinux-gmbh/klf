@@ -82,7 +82,6 @@ class MessageFormatterTest {
         assertFalse(result.contains(LogLevel.Info.name))
         assertFalse(result.contains(LogLevel.Warn.name))
         assertFalse(result.contains(LogLevel.Error.name))
-        assertFalse(result.contains(LogLevel.Fatal.name))
     }
 
     @Test
@@ -94,7 +93,6 @@ class MessageFormatterTest {
         assertFalse(result.contains(LogLevel.Info.name))
         assertFalse(result.contains(LogLevel.Warn.name))
         assertFalse(result.contains(LogLevel.Error.name))
-        assertFalse(result.contains(LogLevel.Fatal.name))
     }
 
     @Test
@@ -106,7 +104,6 @@ class MessageFormatterTest {
         assertTrue(result.contains(LogLevel.Info.name))
         assertFalse(result.contains(LogLevel.Warn.name))
         assertFalse(result.contains(LogLevel.Error.name))
-        assertFalse(result.contains(LogLevel.Fatal.name))
     }
 
     @Test
@@ -118,7 +115,6 @@ class MessageFormatterTest {
         assertFalse(result.contains(LogLevel.Info.name))
         assertTrue(result.contains(LogLevel.Warn.name))
         assertFalse(result.contains(LogLevel.Error.name))
-        assertFalse(result.contains(LogLevel.Fatal.name))
     }
 
     @Test
@@ -130,19 +126,6 @@ class MessageFormatterTest {
         assertFalse(result.contains(LogLevel.Info.name))
         assertFalse(result.contains(LogLevel.Warn.name))
         assertTrue(result.contains(LogLevel.Error.name))
-        assertFalse(result.contains(LogLevel.Fatal.name))
-    }
-
-    @Test
-    fun levelFatal() {
-        val result = underTest.formatMessage(LogLevel.Fatal, Message, LoggerName)
-
-        assertFalse(result.contains(LogLevel.Trace.name))
-        assertFalse(result.contains(LogLevel.Debug.name))
-        assertFalse(result.contains(LogLevel.Info.name))
-        assertFalse(result.contains(LogLevel.Warn.name))
-        assertFalse(result.contains(LogLevel.Error.name))
-        assertTrue(result.contains(LogLevel.Fatal.name))
     }
 
 }

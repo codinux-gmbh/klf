@@ -18,7 +18,7 @@ class LogcatAppender : Appender {
 
   override fun append(level: LogLevel, message: String, loggerName: String, threadName: String?, exception: Throwable?) {
     when (level) {
-      LogLevel.Fatal, LogLevel.Error -> Log.e(loggerName, message, exception)
+      LogLevel.Error -> Log.e(loggerName, message, exception)
       LogLevel.Warn -> Log.w(loggerName, message, exception)
       LogLevel.Info -> Log.i(loggerName, message, exception)
       LogLevel.Debug -> Log.d(loggerName, message, exception)

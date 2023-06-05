@@ -29,16 +29,6 @@ class ConsoleAppenderTest {
 
 
   @Test
-  fun fatalEnabled() {
-    val message = "Fatal Message"
-
-    underTest.fatal { message }
-
-    val logOutput = getWrittenLogOutput()
-    assertThat(logOutput).isEqualTo("[Test worker] Fatal net.codinux.log.appender.ConsoleAppenderTest - " + message + System.lineSeparator())
-  }
-
-  @Test
   fun errorEnabled() {
     val message = "Error Message"
 

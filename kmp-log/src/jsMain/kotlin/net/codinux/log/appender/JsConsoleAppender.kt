@@ -15,7 +15,7 @@ open class JsConsoleAppender : Appender {
     val formattedMessage = formatter.formatMessage(level, message, loggerName, threadName, exception)
 
     when (level) {
-      LogLevel.Fatal, LogLevel.Error -> console.error(formattedMessage, exception)
+      LogLevel.Error -> console.error(formattedMessage, exception)
       LogLevel.Warn -> console.warn(formattedMessage, exception)
       LogLevel.Info -> console.info(formattedMessage, exception)
       LogLevel.Debug, LogLevel.Trace -> console.log(formattedMessage, exception)

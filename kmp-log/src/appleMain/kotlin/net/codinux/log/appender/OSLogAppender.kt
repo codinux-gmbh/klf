@@ -44,7 +44,6 @@ open class OSLogAppender : Appender {
     }
 
     protected open fun getType(level: LogLevel): os_log_type_t? = when (level) {
-        LogLevel.Fatal -> OS_LOG_TYPE_FAULT
         LogLevel.Error -> OS_LOG_TYPE_ERROR
         LogLevel.Warn -> OS_LOG_TYPE_DEFAULT
         LogLevel.Info -> OS_LOG_TYPE_INFO

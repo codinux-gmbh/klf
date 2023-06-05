@@ -8,23 +8,6 @@ open class LoggerWithMDC(
 ) : Logger by delegate {
 
 
-    override fun fatal(message: String, exception: Throwable?) {
-        if (isFatalEnabled) {
-            runWithMdc(mdc) {
-                delegate.fatal(message, exception)
-            }
-        }
-    }
-
-    override fun fatal(exception: Throwable?, messageSupplier: () -> String) {
-        if (isFatalEnabled) {
-            runWithMdc(mdc) {
-                delegate.fatal(exception, messageSupplier)
-            }
-        }
-    }
-
-
     override fun error(message: String, exception: Throwable?) {
         if (isErrorEnabled) {
             runWithMdc(mdc) {
