@@ -5,6 +5,11 @@ interface Logger {
 
     val name: String
 
+    /**
+     * The logger specific log level. If not set / set to null then default log level set in [LoggerFactory.DefaultLevel] will be used.
+     */
+    var level: LogLevel?
+
 
     val isErrorEnabled: Boolean
 
@@ -15,6 +20,11 @@ interface Logger {
     val isDebugEnabled: Boolean
 
     val isTraceEnabled: Boolean
+
+    fun getEffectiveLevel(): LogLevel =
+        level ?: LoggerFactory.DefaultLevel
+
+    fun isEnabled(level: LogLevel) = level.priority >= getEffectiveLevel().priority
 
 
     // TODO: add overloads for programming languages that don't support default parameters - but in an extra artefact like kmp-log-java to not ruin API

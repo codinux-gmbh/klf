@@ -8,7 +8,8 @@ import org.slf4j.LoggerFactory
 
 open class Slf4jLogger(
     protected open val slf4jLogger: org.slf4j.Logger,
-    protected open val appenderContainer: AppenderContainer
+    protected open val appenderContainer: AppenderContainer,
+    override var level: LogLevel? = null
 ) : Logger {
 
     constructor(name: String, appenderContainer: AppenderContainer) : this(LoggerFactory.getLogger(name), appenderContainer)
@@ -19,19 +20,23 @@ open class Slf4jLogger(
 
 
     override val isErrorEnabled: Boolean
-        get() = slf4jLogger.isErrorEnabled
+        get() = isEnabledNullable(LogLevel.Error) ?: slf4jLogger.isErrorEnabled
 
     override val isWarnEnabled: Boolean
-        get() = slf4jLogger.isWarnEnabled
+        get() = isEnabledNullable(LogLevel.Warn) ?: slf4jLogger.isWarnEnabled
 
     override val isInfoEnabled: Boolean
-        get() = slf4jLogger.isInfoEnabled
+        get() = isEnabledNullable(LogLevel.Info) ?: slf4jLogger.isInfoEnabled
 
     override val isDebugEnabled: Boolean
-        get() = slf4jLogger.isDebugEnabled
+        get() = isEnabledNullable(LogLevel.Debug) ?: slf4jLogger.isDebugEnabled
 
     override val isTraceEnabled: Boolean
-        get() = slf4jLogger.isTraceEnabled
+        get() = isEnabledNullable(LogLevel.Trace) ?: slf4jLogger.isTraceEnabled
+
+    open fun isEnabledNullable(level: LogLevel?) = level?.let {
+        isEnabled(level)
+    }
 
 
     override fun error(message: String, exception: Throwable?) {

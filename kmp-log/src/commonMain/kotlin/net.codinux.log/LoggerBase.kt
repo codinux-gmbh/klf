@@ -5,10 +5,7 @@ import kotlin.jvm.JvmOverloads
 
 abstract class LoggerBase @JvmOverloads constructor(
     override val name: String,
-    /**
-     * The logger specific log level. If not set / set to null then default log level set in [LoggerFactory.DefaultLevel] will be used.
-     */
-    open var level: LogLevel? = DefaultLevel
+    override var level: LogLevel? = null
 ) : Logger {
 
     companion object {
@@ -25,9 +22,6 @@ abstract class LoggerBase @JvmOverloads constructor(
     abstract fun log(level: LogLevel, message: String, exception: Throwable?)
 
 
-    open fun getEffectiveLevel(): LogLevel =
-        level ?: LoggerFactory.DefaultLevel
-
     override val isErrorEnabled get() = isEnabled(LogLevel.Error)
 
     override val isWarnEnabled get() = isEnabled(LogLevel.Warn)
@@ -37,8 +31,6 @@ abstract class LoggerBase @JvmOverloads constructor(
     override val isDebugEnabled get() = isEnabled(LogLevel.Debug)
 
     override val isTraceEnabled get() = isEnabled(LogLevel.Trace)
-
-    open fun isEnabled(level: LogLevel) = level.priority >= getEffectiveLevel().priority
 
 
     override fun error(message: String, exception: Throwable?) {
