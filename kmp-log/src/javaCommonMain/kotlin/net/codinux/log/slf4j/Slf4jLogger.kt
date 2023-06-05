@@ -1,9 +1,14 @@
 package net.codinux.log.slf4j
 
+import net.codinux.log.LogLevel
 import net.codinux.log.Logger
+import net.codinux.log.appender.AppenderContainer
 
 
-open class Slf4jLogger(protected open val slf4jLogger: org.slf4j.Logger) : Logger {
+open class Slf4jLogger(
+    protected open val slf4jLogger: org.slf4j.Logger,
+    protected open val appenderContainer: AppenderContainer
+) : Logger {
 
     override val name: String
         get() = slf4jLogger.name
@@ -38,56 +43,83 @@ open class Slf4jLogger(protected open val slf4jLogger: org.slf4j.Logger) : Logge
 
 
     override fun error(message: String, exception: Throwable?) {
-        slf4jLogger.error(message, exception)
+        if (isErrorEnabled) {
+            slf4jLogger.error(message, exception)
+
+            callAdditionalAppenders(LogLevel.Error, message, exception)
+        }
     }
 
     override fun error(exception: Throwable?, messageSupplier: () -> String) {
-        if (slf4jLogger.isErrorEnabled) {
-            slf4jLogger.error(messageSupplier(), exception)
+        if (isErrorEnabled) {
+            error(messageSupplier(), exception)
         }
     }
 
 
     override fun warn(message: String, exception: Throwable?) {
-        slf4jLogger.warn(message, exception)
+        if (isWarnEnabled) {
+            slf4jLogger.warn(message, exception)
+
+            callAdditionalAppenders(LogLevel.Warn, message, exception)
+        }
     }
 
     override fun warn(exception: Throwable?, messageSupplier: () -> String) {
-        if (slf4jLogger.isWarnEnabled) {
-            slf4jLogger.warn(messageSupplier(), exception)
+        if (isWarnEnabled) {
+            warn(messageSupplier(), exception)
         }
     }
 
 
     override fun info(message: String, exception: Throwable?) {
-        slf4jLogger.info(message, exception)
+        if (isInfoEnabled) {
+            slf4jLogger.info(message, exception)
+
+            callAdditionalAppenders(LogLevel.Info, message, exception)
+        }
     }
 
     override fun info(exception: Throwable?, messageSupplier: () -> String) {
-        if (slf4jLogger.isInfoEnabled) {
-            slf4jLogger.info(messageSupplier(), exception)
+        if (isInfoEnabled) {
+            info(messageSupplier(), exception)
         }
     }
 
 
     override fun debug(message: String, exception: Throwable?) {
-        slf4jLogger.debug(message, exception)
+        if (isDebugEnabled) {
+            slf4jLogger.debug(message, exception)
+
+            callAdditionalAppenders(LogLevel.Debug, message, exception)
+        }
     }
 
     override fun debug(exception: Throwable?, messageSupplier: () -> String) {
-        if (slf4jLogger.isDebugEnabled) {
-            slf4jLogger.debug(messageSupplier(), exception)
+        if (isDebugEnabled) {
+            debug(messageSupplier(), exception)
         }
     }
 
 
     override fun trace(message: String, exception: Throwable?) {
-        slf4jLogger.trace(message, exception)
+        if (isTraceEnabled) {
+            slf4jLogger.trace(message, exception)
+
+            callAdditionalAppenders(LogLevel.Trace, message, exception)
+        }
     }
 
     override fun trace(exception: Throwable?, messageSupplier: () -> String) {
-        if (slf4jLogger.isTraceEnabled) {
-            slf4jLogger.trace(messageSupplier(), exception)
+        if (isTraceEnabled) {
+            trace(messageSupplier(), exception)
+        }
+    }
+
+
+    protected open fun callAdditionalAppenders(level: LogLevel, message: String, exception: Throwable?) {
+        appenderContainer.getAppenders().forEach { appender ->
+            appender.append(level, message, name, null, exception)
         }
     }
 

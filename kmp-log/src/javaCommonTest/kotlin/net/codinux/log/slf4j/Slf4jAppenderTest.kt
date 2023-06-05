@@ -1,4 +1,4 @@
-package net.codinux.log.slf4j.binding
+package net.codinux.log.slf4j
 
 import io.mockk.every
 import io.mockk.mockk
@@ -6,15 +6,14 @@ import io.mockk.verify
 import net.codinux.log.LogLevel
 import net.codinux.log.LoggerFactory
 import net.codinux.log.appender.Appender
-import net.codinux.log.slf4j.Slf4jLoggerFactory
 import org.junit.jupiter.api.Test
 import kotlin.reflect.jvm.jvmName
 
-class LogbackAppenderTest {
+class Slf4jAppenderTest {
 
     companion object {
         private const val Message = "Info message"
-        private val LoggerName = LogbackAppenderTest::class.jvmName
+        private val LoggerName = Slf4jAppenderTest::class.jvmName
     }
 
 
@@ -27,6 +26,7 @@ class LogbackAppenderTest {
         val mockAppender = mockk<Appender>()
         every { mockAppender.logsThreadName } returns false
         every { mockAppender.logsException } returns false
+        every { mockAppender.append(any(), any(), any(), any(), any()) } returns Unit
 
         LoggerFactory.addAppender(mockAppender)
         val log = LoggerFactory.getLogger(LoggerName)
