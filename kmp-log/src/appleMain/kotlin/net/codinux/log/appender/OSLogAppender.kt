@@ -23,7 +23,7 @@ open class OSLogAppender : Appender {
             return
         }
 
-        val logger = loggerCache.getOrCreate(loggerName) { createLogger(loggerName) }
+        val logger = loggerCache.getOrPut(loggerName) { createLogger(loggerName) }
 
         _os_log_internal(__dso_handle.ptr, logger, type, formatter.formatMessage(message, exception))
     }
