@@ -16,19 +16,19 @@ implementation("net.codinux.log:kmp-log:1.1.0")
 ### Kotlin style
 
 ```kotlin
-package com.example.service
-
-import net.codinux.log.logger
-
-class OrderService {
-    private val log by logger() // automatically uses declaring class / OrderService::class.name as logger name
-  
-    fun showUsage() {
-        log.info { "Message with ${heavyCalculation()}" } // lambda and therefor heavyCalculation() gets only called if INFO level is enabled
-
-        log.error(e) { "An error occurred" } // e is a throwable
+    package com.example.service
+    
+    import net.codinux.log.logger
+    
+    class OrderService {
+        private val log by logger() // automatically uses declaring class / OrderService::class.name as logger name
+      
+        fun showUsage() {
+            log.info { "Message with ${heavyCalculation()}" } // lambda and therefor heavyCalculation() gets only called if INFO level is enabled
+    
+            log.error(e) { "An error occurred" } // e is a throwable
+        }
     }
-}
 ```
 
 The log lambdas like `info { }`, `warn { }`, ... are only called if the according log level is enabled.  
@@ -42,13 +42,13 @@ If the logger is declared in a companion object automatically the enclosing clas
 Except on JavaScript, there the logger name will always be `"Companion"`.
 
 ```kotlin
-import net.codinux.log.logger
-
-class OrderService {
-  companion object {
-    private val log by logger() // automatically uses enclosing class = OrderService::class.name as logger name (except on JavaScript)
-  }
-}
+    import net.codinux.log.logger
+    
+    class OrderService {
+      companion object {
+        private val log by logger() // automatically uses enclosing class = OrderService::class.name as logger name (except on JavaScript)
+      }
+    }
 ``` 
 
 ### Classically:
@@ -108,12 +108,12 @@ Otherwise: **NSLog**
 You can also use add your custom log appender by implementing Appender interface:
 
 ```kotlin
-LoggerFactory.addAppender(CustomAppender()) // CustomAppender implements Appender interface
+  LoggerFactory.addAppender(CustomAppender()) // CustomAppender implements Appender interface
 ```
 
 If you dislike above default appenders and want to control logger creation entirely implement ILoggerFactory and call:
 ```kotlin
-LoggerFactory.setLoggerFactory(MyCustomLoggerFactory())
+  LoggerFactory.setLoggerFactory(MyCustomLoggerFactory())
 ```
 
 
