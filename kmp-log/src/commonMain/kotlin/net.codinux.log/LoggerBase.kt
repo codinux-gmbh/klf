@@ -38,7 +38,7 @@ abstract class LoggerBase @JvmOverloads constructor(
 
     override val isTraceEnabled get() = isEnabled(LogLevel.Trace)
 
-    open fun isEnabled(level: LogLevel) = level.priority <= getEffectiveLevel().priority
+    open fun isEnabled(level: LogLevel) = level.priority >= getEffectiveLevel().priority
 
 
     override fun error(message: String, exception: Throwable?) {

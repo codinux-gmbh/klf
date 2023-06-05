@@ -3,19 +3,19 @@ package net.codinux.log
 
 enum class LogLevel(val priority: Int) {
 
-    // as in slf4j we don't support Fatal:
+    // as in slf4j we don't support log level Fatal:
     // "slf4j drops the FATAL logging level (introduced in Log4j) based on the premise that in a logging framework we should not decide when to terminate an application."
 
-    Error(0),
+    Off(Int.MAX_VALUE),
 
-    Warn(1),
+    Error(900),
 
-    Info(2),
+    Warn(800),
 
-    Debug(3),
+    Info(700),
 
-    Trace(4),
+    Debug(600),
 
-    Off(5)
+    Trace(500)
 
 }
