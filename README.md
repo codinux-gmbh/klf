@@ -117,6 +117,21 @@ LoggerFactory.setLoggerFactory(MyCustomLoggerFactory())
 ```
 
 
+## MDC (Java only)
+
+KMP-Log has some convenience functions if MDC (Mapped Diagnostic Context) values should get added only for the next log message:
+
+```kotlin
+  log.withMdc("key1" to "value1", "key2" to "value2").info { "Info" }
+```
+
+Or
+```kotlin
+  runWithMdc("key1" to "value1") {
+    log.info { "Info" }
+  }
+```
+
 # License
 
     Copyright 2023 codinux GmbH & Co. KG
