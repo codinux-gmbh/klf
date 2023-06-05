@@ -17,6 +17,6 @@ open class Slf4jLoggerFactory : LoggerFactoryBase() {
 
 
     override fun createLogger(name: String) =
-        Slf4jLogger(LoggerFactory.getLogger(name), this)
+        Slf4jLogger(name, this)
 
 }
