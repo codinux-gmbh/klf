@@ -26,6 +26,15 @@ kotlin {
                 events("passed", "skipped", "failed")
             }
         }
+
+        // register additional compilations and test tasks for slf4j bindings tests
+        compilations { compilations ->
+            createCompilation("logbackTest", compilations, "ch.qos.logback:logback-classic:$logbackVersion")
+            createCompilation("log4j2Test", compilations, "org.apache.logging.log4j:log4j-slf4j-impl:$log4j2Version")
+            createCompilation("log4j1Test", compilations, "org.slf4j:slf4j-log4j12:$slf4jVersion")
+            createCompilation("julTest", compilations, "org.slf4j:slf4j-jdk14:$slf4jVersion")
+            createCompilation("slf4jSimpleTest", compilations, "org.slf4j:slf4j-simple:$slf4jVersion")
+        }
     }
 
     android {
@@ -171,6 +180,45 @@ android {
             // Otherwise we get this exception in tests:
             // Method e in android.util.Log not mocked. See https://developer.android.com/r/studio-ui/build/not-mocked for details.
             setReturnDefaultValues(true)
+        }
+    }
+}
+
+
+def createCompilation(String name, NamedDomainObjectContainer compilations, String... mavenDependencies) {
+    def main = compilations.main
+    def test = compilations.test
+
+    // see https://kotlinlang.org/docs/multiplatform-configure-compilations.html#create-a-custom-compilation
+    compilations.create(name) {
+        defaultSourceSet {
+            dependencies {
+                // Compile against the main compilation's compile classpath and outputs:
+                implementation(main.compileDependencyFiles + main.output.classesDirs + test.output.classesDirs)
+                implementation project(":kmp-log")
+                implementation kotlin('test-junit')
+                implementation("org.junit.jupiter:junit-jupiter-api:5.6.0")
+                runtimeOnly("org.junit.jupiter:junit-jupiter-engine")
+                for (String dependency : mavenDependencies) {
+                    implementation dependency
+                }
+            }
+        }
+
+        tasks.register("jvm${name[0].toUpperCase()}${name.substring(1)}", Test) {
+            group = "verification"
+
+            useJUnitPlatform()
+
+            // Run the tests with the classpath containing the compile dependencies (including 'main'),
+            // runtime dependencies, and the outputs of this compilation:
+            classpath = compileDependencyFiles + runtimeDependencyFiles + output.allOutputs
+
+            // Run only the tests from this compilation's outputs:
+            testClassesDirs = output.classesDirs
+
+            // configure that this tasks runs with 'jvmTest' task
+            tasks.named("jvmTest").get().dependsOn(it)
         }
     }
 }
