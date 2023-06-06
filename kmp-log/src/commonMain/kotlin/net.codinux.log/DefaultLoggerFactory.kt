@@ -7,6 +7,8 @@ open class DefaultLoggerFactory : LoggerFactoryBase() {
   }
 
 
+  override val rootLogger = DelegateToAppenderLogger("", this, LoggerFactory.DefaultLevel)
+
   override fun createLogger(name: String) =
     DelegateToAppenderLogger(name, this)
 

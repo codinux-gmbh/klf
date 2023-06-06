@@ -1,8 +1,8 @@
 package net.codinux.log.slf4j
 
+import net.codinux.log.LoggerFactory
 import net.codinux.log.LoggerFactoryBase
 import net.codinux.log.slf4j.binding.Log4j2Configurator
-import org.slf4j.LoggerFactory
 
 open class Slf4jLoggerFactory : LoggerFactoryBase() {
 
@@ -11,10 +11,12 @@ open class Slf4jLoggerFactory : LoggerFactoryBase() {
 
     init {
         if (Slf4jUtil.boundLoggingFramework == Slf4jBinding.Log4j2) {
-            log4j2Configurator.setRootLevel(net.codinux.log.LoggerFactory.DefaultLevel)
+            log4j2Configurator.setRootLevel(LoggerFactory.DefaultLevel)
         }
     }
 
+
+    override val rootLogger = Slf4jLogger(org.slf4j.Logger.ROOT_LOGGER_NAME, this, LoggerFactory.DefaultLevel)
 
     override fun createLogger(name: String) =
         Slf4jLogger(name, this)

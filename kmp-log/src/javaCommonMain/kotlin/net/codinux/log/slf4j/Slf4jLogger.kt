@@ -12,7 +12,8 @@ open class Slf4jLogger(
     override var level: LogLevel? = null
 ) : Logger {
 
-    constructor(name: String, appenderContainer: AppenderContainer) : this(LoggerFactory.getLogger(name), appenderContainer)
+    constructor(name: String, appenderContainer: AppenderContainer, level: LogLevel? = null)
+            : this(LoggerFactory.getLogger(name), appenderContainer, level)
 
 
     override val name: String

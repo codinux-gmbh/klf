@@ -24,6 +24,10 @@ object LoggerFactory {
     }
 
     @JvmStatic
+    val rootLogger: Logger
+        get() = factory.rootLogger
+
+    @JvmStatic
     fun addAppender(appender: Appender) {
         this.factory.addAppender(appender)
     }
