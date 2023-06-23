@@ -29,6 +29,7 @@ object Slf4jUtil {
                 "org.slf4j.impl.Log4jLoggerFactory" -> Slf4jBinding.Log4j1
                 "org.slf4j.reload4j.Reload4jLoggerFactory" -> Slf4jBinding.Reload4j
                 "org.slf4j.impl.JDK14LoggerFactory" -> Slf4jBinding.JUL
+                "org.slf4j.impl.Slf4jLoggerFactory" -> Slf4jBinding.JBossLogging // defined in org.jboss.slf4j:slf4j-jboss-logmanager
                 "org.slf4j.impl.SimpleLoggerFactory" -> Slf4jBinding.Slf4jSimple
                 "org.slf4j.impl.AndroidLoggerFactory" -> Slf4jBinding.Android // removed in slf4j 2.x
                 "org.slf4j.impl.JCLLoggerFactory" -> Slf4jBinding.JCL // removed in slf4j 2.x

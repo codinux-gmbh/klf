@@ -34,6 +34,8 @@ enum class Slf4jBinding {
      */
     JUL,
 
+    JBossLogging,
+
     Android,
 
     /**
