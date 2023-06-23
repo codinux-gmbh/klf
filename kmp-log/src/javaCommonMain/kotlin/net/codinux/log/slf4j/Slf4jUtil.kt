@@ -12,7 +12,7 @@ object Slf4jUtil {
 
     val boundLoggingFramework: Slf4jBinding by lazy { determineSlf4jBinding() }
 
-    val useSlf4j: Boolean by lazy { isSlf4jOnClasspath && boundLoggingFramework != Slf4jBinding.NOP && boundLoggingFramework != Slf4jBinding.Unknown }
+    val useSlf4j: Boolean by lazy { isSlf4jOnClasspath && boundLoggingFramework != Slf4jBinding.NOP }
 
     val boundLoggingFrameworkRootLoggerName: String by lazy {
         getLoggingFrameworkRootLoggerName(boundLoggingFramework)
