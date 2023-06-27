@@ -22,7 +22,7 @@ object JvmDefaults {
   // unwrap companion class to enclosing class given a Java Class
   private fun <T : Any> unwrapCompanionClass(ofClass: Class<T>): Class<*> {
     return ofClass.enclosingClass?.takeIf {
-      ofClass.enclosingClass.kotlin.isCompanion == false
+      ofClass.kotlin.isCompanion
     } ?: ofClass
   }
 
