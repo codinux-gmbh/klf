@@ -12,9 +12,9 @@ abstract class LoggerBase @JvmOverloads constructor(
         /**
          * The default logger of all [LoggerBase] implementations.
          *
-         * If [LoggerBase.level] is set to null than [LoggerFactory.DefaultLevel] will be used.
+         * If [LoggerBase.level] is set to null than [LoggerFactory.RootLevel] will be used.
          */
-        val DefaultLevel: LogLevel? = null
+        val RootLevel: LogLevel? = null
     }
 
 

@@ -13,7 +13,7 @@ class MessageFormatterTest {
 
         private const val ExceptionMessage = "Just a test, no animals have been harmed"
 
-        private val DefaultLevel = LogLevel.Info
+        private val RootLevel = LogLevel.Info
 
         private const val LoggerName = "com.example.TestLogger"
 
@@ -52,7 +52,7 @@ class MessageFormatterTest {
 
     @Test
     fun loggerName() {
-        val result = underTest.formatMessage(DefaultLevel, Message, LoggerName)
+        val result = underTest.formatMessage(RootLevel, Message, LoggerName)
 
         assertTrue(result.contains(LoggerName))
     }
@@ -60,14 +60,14 @@ class MessageFormatterTest {
 
     @Test
     fun withoutThreadName() {
-        val result = underTest.formatMessage(DefaultLevel, Message, LoggerName, null)
+        val result = underTest.formatMessage(RootLevel, Message, LoggerName, null)
 
         assertFalse(result.contains(ThreadName))
     }
 
     @Test
     fun withThreadName() {
-        val result = underTest.formatMessage(DefaultLevel, Message, LoggerName, ThreadName)
+        val result = underTest.formatMessage(RootLevel, Message, LoggerName, ThreadName)
 
         assertTrue(result.contains(ThreadName))
     }
