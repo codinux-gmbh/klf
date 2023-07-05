@@ -14,17 +14,18 @@ object Slf4jUtil {
 
     val useSlf4j: Boolean by lazy { isSlf4jOnClasspath && boundLoggingFramework != Slf4jBinding.NOP }
 
-    val boundLoggingFrameworkRootLoggerName: String by lazy {
+    val boundLoggingFrameworkRootLoggerName: String? by lazy {
         getLoggingFrameworkRootLoggerName(boundLoggingFramework)
     }
 
 
-    fun getLoggingFrameworkRootLoggerName(loggingFramework: Slf4jBinding): String = when (loggingFramework) {
+    fun getLoggingFrameworkRootLoggerName(loggingFramework: Slf4jBinding): String? = when (loggingFramework) {
         Slf4jBinding.Logback -> "ROOT"
         Slf4jBinding.Log4j2 -> ""
         Slf4jBinding.Log4j1, Slf4jBinding.Reload4j -> "root"
         Slf4jBinding.JUL, Slf4jBinding.JBossLogging -> ""
-        else -> ""
+        // slf4j Simple and slf4j Android don't have a root logger (TODO: what about JCL?)
+        else -> null
     }
 
     private fun determineSlf4jBinding(): Slf4jBinding {
