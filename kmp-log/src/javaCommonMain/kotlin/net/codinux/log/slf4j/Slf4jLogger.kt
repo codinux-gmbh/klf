@@ -21,21 +21,24 @@ open class Slf4jLogger(
 
 
     override val isErrorEnabled: Boolean
-        get() = isEnabledNullable(LogLevel.Error) ?: slf4jLogger.isErrorEnabled
+        get() = isLevelSetAndEnabled(LogLevel.Error) ?: slf4jLogger.isErrorEnabled
 
     override val isWarnEnabled: Boolean
-        get() = isEnabledNullable(LogLevel.Warn) ?: slf4jLogger.isWarnEnabled
+        get() = isLevelSetAndEnabled(LogLevel.Warn) ?: slf4jLogger.isWarnEnabled
 
     override val isInfoEnabled: Boolean
-        get() = isEnabledNullable(LogLevel.Info) ?: slf4jLogger.isInfoEnabled
+        get() = isLevelSetAndEnabled(LogLevel.Info) ?: slf4jLogger.isInfoEnabled
 
     override val isDebugEnabled: Boolean
-        get() = isEnabledNullable(LogLevel.Debug) ?: slf4jLogger.isDebugEnabled
+        get() = isLevelSetAndEnabled(LogLevel.Debug) ?: slf4jLogger.isDebugEnabled
 
     override val isTraceEnabled: Boolean
-        get() = isEnabledNullable(LogLevel.Trace) ?: slf4jLogger.isTraceEnabled
+        get() = isLevelSetAndEnabled(LogLevel.Trace) ?: slf4jLogger.isTraceEnabled
 
-    open fun isEnabledNullable(level: LogLevel?) = level?.let {
+    /**
+     * Only calls [isEnabled] if [level] is set.
+     */
+    protected open fun isLevelSetAndEnabled(level: LogLevel) = this.level?.let {
         isEnabled(level)
     }
 
