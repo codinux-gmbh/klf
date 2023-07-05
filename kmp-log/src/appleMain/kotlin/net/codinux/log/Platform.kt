@@ -26,6 +26,9 @@ actual class Platform {
     actual fun getCurrentThreadName() =
       NSThread.currentThread.name
 
+    actual val isRunningInDebugMode: Boolean =
+      NativeDefaults.isRunningInDebugMode
+
 
     @OptIn(UnsafeNumber::class)
     private fun isOsLogSupported(): Boolean {

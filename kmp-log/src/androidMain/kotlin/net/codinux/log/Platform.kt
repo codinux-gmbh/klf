@@ -20,6 +20,9 @@ actual class Platform {
     actual fun getCurrentThreadName() =
       JvmDefaults.getCurrentThreadName()
 
+    actual val isRunningInDebugMode =
+      BuildConfig.DEBUG
+
 
     /**
      * Before API 26 there was a max log tag length of 23:
