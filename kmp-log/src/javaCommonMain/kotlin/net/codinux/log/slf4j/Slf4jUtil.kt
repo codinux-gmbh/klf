@@ -22,9 +22,8 @@ object Slf4jUtil {
     fun getLoggingFrameworkRootLoggerName(loggingFramework: Slf4jBinding): String = when (loggingFramework) {
         Slf4jBinding.Logback -> "ROOT"
         Slf4jBinding.Log4j2 -> ""
-        Slf4jBinding.Log4j1 -> "root"
-        Slf4jBinding.Reload4j -> "root"
-        Slf4jBinding.JUL -> ""
+        Slf4jBinding.Log4j1, Slf4jBinding.Reload4j -> "root"
+        Slf4jBinding.JUL, Slf4jBinding.JBossLogging -> ""
         else -> ""
     }
 
