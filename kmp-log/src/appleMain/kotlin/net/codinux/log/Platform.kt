@@ -5,6 +5,7 @@ import kotlinx.cinterop.useContents
 import net.codinux.log.appender.Appender
 import net.codinux.log.appender.NSLogAppender
 import net.codinux.log.appender.OSLogAppender
+import platform.Foundation.NSOperationQueue
 import platform.Foundation.NSProcessInfo
 import platform.Foundation.NSThread
 import kotlin.native.Platform
@@ -23,8 +24,19 @@ actual class Platform {
     actual fun <T : Any> getLoggerName(forClass: KClass<T>) =
       net.codinux.log.Platform.getLoggerNameForKClassesWithQualifiedName(forClass)
 
-    actual fun getCurrentThreadName() =
-      NSThread.currentThread.name
+    actual fun getCurrentThreadName(): String? {
+      val currentThread = NSThread.currentThread
+
+      return currentThread.name?.takeIf { it.isNotBlank() }
+        ?: currentThread.description
+        ?: NSOperationQueue.currentQueue?.underlyingQueue?.description
+    }
+
+    fun printStackTrace() {
+      NSThread.callStackSymbols.forEach { callStackSymbol ->
+        println(callStackSymbol)
+      }
+    }
 
     actual val isRunningInDebugMode: Boolean =
       NativeDefaults.isRunningInDebugMode
