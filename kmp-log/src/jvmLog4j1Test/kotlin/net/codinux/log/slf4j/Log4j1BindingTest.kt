@@ -1,7 +1,7 @@
 package net.codinux.log.slf4j
 
 import org.apache.log4j.Logger
-import org.slf4j.impl.Log4jLoggerAdapter
+import org.slf4j.impl.Reload4jLoggerAdapter
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 
@@ -12,7 +12,7 @@ class Log4j1BindingTest : Slf4jBindingTestBase() {
 
     @Test
     fun assertSlf4jBinding() {
-        assertSlf4jBinding(Log4jLoggerAdapter::class)
+        assertSlf4jBinding(Reload4jLoggerAdapter::class)
     }
 
     @Test
