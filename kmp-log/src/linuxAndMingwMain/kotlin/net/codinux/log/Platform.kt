@@ -19,6 +19,9 @@ actual class Platform {
     actual fun getCurrentThreadName(): String? =
       Worker.current.name // TODO: use native C implementation
 
+    actual fun lineSeparator(): String =
+      LinuxAndMingwPlatform.lineSeparator()
+
     actual val isRunningInDebugMode: Boolean =
       NativeDefaults.isRunningInDebugMode
 

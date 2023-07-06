@@ -38,15 +38,17 @@ class MessageFormatterTest {
         assertTrue(result.contains(Message))
         assertTrue(result.contains("IllegalArgumentException"))
         assertTrue(result.contains(ExceptionMessage))
+        assertTrue(result.contains(Platform.lineSeparator()))
     }
 
     @Test
-    fun messageWithCheckedException() {
+    fun messageWithThrowable() {
         val result = underTest.formatMessage(Message, Error(ExceptionMessage))
 
         assertTrue(result.contains(Message))
         assertTrue(result.contains("Error"))
         assertTrue(result.contains(ExceptionMessage))
+        assertTrue(result.contains(Platform.lineSeparator()))
     }
 
 
@@ -55,6 +57,7 @@ class MessageFormatterTest {
         val result = underTest.formatMessage(RootLevel, Message, LoggerName)
 
         assertTrue(result.contains(LoggerName))
+        assertFalse(result.contains(Platform.lineSeparator()))
     }
 
 
@@ -63,6 +66,7 @@ class MessageFormatterTest {
         val result = underTest.formatMessage(RootLevel, Message, LoggerName, null)
 
         assertFalse(result.contains(ThreadName))
+        assertFalse(result.contains(Platform.lineSeparator()))
     }
 
     @Test
@@ -70,6 +74,20 @@ class MessageFormatterTest {
         val result = underTest.formatMessage(RootLevel, Message, LoggerName, ThreadName)
 
         assertTrue(result.contains(ThreadName))
+        assertFalse(result.contains(Platform.lineSeparator()))
+    }
+
+    @Test
+    fun withAllData() {
+        val result = underTest.formatMessage(RootLevel, Message, LoggerName, ThreadName, IllegalArgumentException(ExceptionMessage))
+
+        assertTrue(result.contains(RootLevel.name))
+        assertTrue(result.contains(ThreadName))
+        assertTrue(result.contains(LoggerName))
+        assertTrue(result.contains(Message))
+        assertTrue(result.contains("IllegalArgumentException"))
+        assertTrue(result.contains(ExceptionMessage))
+        assertTrue(result.contains(Platform.lineSeparator()))
     }
 
 

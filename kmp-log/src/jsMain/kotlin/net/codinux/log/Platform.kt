@@ -20,6 +20,9 @@ actual class Platform {
 
     actual fun getCurrentThreadName(): String? = "main"
 
+    actual fun lineSeparator(): String =
+      "\n"
+
     actual val isRunningInDebugMode: Boolean = false // TODO: don't know how to do this in JS
 
   }

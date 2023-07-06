@@ -20,6 +20,9 @@ actual class Platform {
     actual fun getCurrentThreadName() =
       JvmDefaults.getCurrentThreadName()
 
+    actual fun lineSeparator(): String =
+      System.lineSeparator()
+
     actual val isRunningInDebugMode =
       BuildConfig.DEBUG
 

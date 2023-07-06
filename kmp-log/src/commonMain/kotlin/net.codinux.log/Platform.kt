@@ -16,6 +16,8 @@ expect class Platform {
 
         fun getCurrentThreadName(): String?
 
+        fun lineSeparator(): String
+
         val isRunningInDebugMode: Boolean
 
     }

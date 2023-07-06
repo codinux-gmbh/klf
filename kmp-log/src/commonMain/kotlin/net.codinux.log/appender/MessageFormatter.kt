@@ -1,12 +1,15 @@
 package net.codinux.log.appender
 
 import net.codinux.log.LogLevel
+import net.codinux.log.Platform
 
 open class MessageFormatter {
 
+    private val lineSeparator = Platform.lineSeparator()
+
     open fun formatMessage(message: String, exception: Throwable? = null): String {
         return if (exception != null) {
-            "$message: ${exception.stackTraceToString()}"
+            "$message:$lineSeparator${exception.stackTraceToString()}"
         } else {
             message
         }
@@ -21,6 +24,13 @@ open class MessageFormatter {
         // s = Simple message (Renders just the log message, with no exception trace)
         // e = Exception
         // n = Newline
+
+        // Default format of most logging implementations:
+        // 19:10:48.547 [Test worker] INFO net.codinux.log.slf4j.LogbackBindingTest - Just a test
+        // java.lang.Exception: No animals have been harmed
+        //   at net.codinux.log.slf4j.LogbackBindingTest.simpleLoggerOutput(LogbackBindingTest.kt:11)
+        //   at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ...
+        // be aware that we should localize time!
         return "${threadName?.let { "[$it] " } ?: ""}$level $loggerName - ${formatMessage(message, exception)}"
     }
 
