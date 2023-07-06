@@ -36,4 +36,18 @@ abstract class LoggerFactoryBase : ILoggerFactory {
     override fun getAppenders(): Collection<Appender> =
         immutableAppenders
 
+    override fun appendToAppenders(level: LogLevel, loggerName: String, message: String, exception: Throwable?) {
+        val threadName = if (doesAnyAppenderLogThreadName) Platform.getCurrentThreadName() else null
+
+        appenders.forEach { appender ->
+            appender.append(
+                level,
+                message,
+                loggerName,
+                if (appender.logsThreadName) threadName else null,
+                if (appender.logsException) exception else null
+            )
+        }
+    }
+
 }

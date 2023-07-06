@@ -119,9 +119,7 @@ open class Slf4jLogger(
 
 
     protected open fun callAdditionalAppenders(level: LogLevel, message: String, exception: Throwable?) {
-        appenderContainer.getAppenders().forEach { appender ->
-            appender.append(level, message, name, null, exception)
-        }
+        appenderContainer.appendToAppenders(level, name, message, exception)
     }
 
 }
