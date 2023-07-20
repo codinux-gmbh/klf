@@ -37,6 +37,30 @@ class LoggerFactoryTest {
       assertEquals("net.codinux.log.ClassDeclaringLoggerInCompanionObject", actualName)
     }
   }
+
+  @Test
+  @JsName("LoggerDeclarationInObjectLoggerNameIsOfObject")
+  fun `Logger declaration in object - logger name is of object`() {
+    val actualName = ObjectDeclaringLoggerAsInstanceProperty.log.name
+
+    if (isRunningInJs) {
+      assertEquals("ObjectDeclaringLoggerAsInstanceProperty", actualName)
+    } else {
+      assertEquals("net.codinux.log.ObjectDeclaringLoggerAsInstanceProperty", actualName)
+    }
+  }
+
+  @Test
+  @JsName("LoggerDeclarationInInnerClassLoggerNameIsOfInnerClass")
+  fun `Logger declaration in inner class - logger name is of inner class`() {
+    val actualName = OuterClass.InnerClass().log.name
+
+    if (isRunningInJs) {
+      assertEquals("InnerClass", actualName)
+    } else {
+      assertEquals("net.codinux.log.OuterClass.InnerClass", actualName)
+    }
+  }
 }
 
 class ClassDeclaringLoggerInCompanionObject {
@@ -47,4 +71,14 @@ class ClassDeclaringLoggerInCompanionObject {
 
 class ClassDeclaringLoggerAsInstanceProperty {
   val log by logger()
+}
+
+object ObjectDeclaringLoggerAsInstanceProperty {
+  val log by logger()
+}
+
+class OuterClass {
+  class InnerClass {
+    val log by logger()
+  }
 }

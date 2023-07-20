@@ -17,6 +17,7 @@ object JvmDefaults {
 
 
   fun <T : Any> getLoggerName(forClass: KClass<T>) = getLoggerClass(forClass).jvmName
+    .replace('$', '.') // for inner classes replace '$' with '.'
 
   fun <T : Any> getLoggerName(forClass: Class<T>): String = getLoggerName(forClass.kotlin)
 

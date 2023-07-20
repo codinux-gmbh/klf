@@ -36,7 +36,8 @@ actual class Platform {
     private fun <T : Any> getAndroidLogTag(forClass: KClass<T>): String {
       val defaultLogTag = JvmDefaults.getLoggerName(forClass)
 
-      return if (Build.VERSION.SDK_INT <= 25 && defaultLogTag.length > MaxAndroidLogTagSizeBeforeApi26) {
+      // >= 1 as for tests SDK_INT is 0
+      return if (Build.VERSION.SDK_INT in 1 .. 25 && defaultLogTag.length > MaxAndroidLogTagSizeBeforeApi26) {
         getAndroidLogTagOfLogTagMaxLength(forClass)
       } else {
         defaultLogTag
