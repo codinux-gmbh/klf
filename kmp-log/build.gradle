@@ -227,7 +227,4 @@ def createCompilation(String name, NamedDomainObjectContainer compilations, Stri
 }
 
 
-def publishingScript = new File(new File(project.gradle.gradleUserHomeDir, "scripts"), "publish-codinux.gradle.kts")
-if (publishingScript.exists()) {
-    apply from: publishingScript
-}
+apply(from: "../gradle/scripts/publish-codinux.gradle.kts")
