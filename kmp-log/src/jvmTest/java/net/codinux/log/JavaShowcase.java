@@ -14,6 +14,12 @@ public class JavaShowcase {
 
             @NotNull
             @Override
+            public Logger getRootLogger() {
+                return getLogger("root");
+            }
+
+            @NotNull
+            @Override
             public Logger getLogger(@NotNull String name) {
                 return new MyFancyLogger(name);
             }
@@ -27,6 +33,11 @@ public class JavaShowcase {
             @Override
             public void addAppender(@NotNull Appender appender) {
                 // no-op
+            }
+
+            @Override
+            public void appendToAppenders(@NotNull LogLevel level, @NotNull String loggerName, @NotNull String message, @Nullable Throwable exception) {
+
             }
 
             @Override
