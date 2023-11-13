@@ -21,8 +21,8 @@ object JvmDefaults {
 
   fun <T : Any> getLoggerName(forClass: Class<T>): String = getLoggerName(forClass.kotlin)
 
-  fun <T : Any> getLoggerClass(ofClass: KClass<T>): KClass<*> {
-    return unwrapCompanionClass(ofClass)
+  fun <T : Any> getLoggerClass(forClass: KClass<T>): KClass<*> {
+    return unwrapCompanionClass(forClass)
   }
 
   // so that it can be substituted in native image generation
