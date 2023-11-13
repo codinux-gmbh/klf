@@ -17,7 +17,6 @@ object JvmDefaults {
 
 
   fun <T : Any> getLoggerName(forClass: KClass<T>): String = getUnwrappedLoggerClassName(forClass)
-    .replace('$', '.') // for inner classes replace '$' with '.'
 
   fun <T : Any> getLoggerName(forClass: Class<T>): String = getLoggerName(forClass.kotlin)
 
@@ -27,7 +26,10 @@ object JvmDefaults {
 
   // so that it can be substituted in native image generation
   private fun <T : Any> getUnwrappedLoggerClassName(forClass: KClass<T>): String =
-    getLoggerClass(forClass).jvmName
+    getLoggerClass(forClass).let {
+      it.qualifiedName // os opposed to jvmName qualifiedName for inner classes already replaces '$' with '.'
+        ?: it.jvmName.replace('$', '.')
+    }
 
   // unwrap companion class to enclosing class given a Java Class
   private fun <T : Any> unwrapCompanionClass(ofClass: KClass<T>): KClass<*> {
