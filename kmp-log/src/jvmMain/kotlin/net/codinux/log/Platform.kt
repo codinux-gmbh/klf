@@ -15,7 +15,7 @@ actual class Platform {
         actual val systemDefaultAppender: Appender = ConsoleAppender.Default
 
 
-        actual fun <T : Any> getLoggerName(forClass: KClass<T>) = JvmDefaults.getLoggerName(forClass.java)
+        actual fun <T : Any> getLoggerName(forClass: KClass<T>) = JvmDefaults.getLoggerName(forClass)
 
         actual fun getCurrentThreadName() =
             JvmDefaults.getCurrentThreadName()
