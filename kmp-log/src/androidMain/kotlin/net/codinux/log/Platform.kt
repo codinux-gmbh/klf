@@ -46,7 +46,7 @@ actual class Platform {
 
     // visible for testing
     internal fun <T : Any> getAndroidLogTagOfLogTagMaxLength(forClass: KClass<T>): String {
-      val loggerClass = JvmDefaults.getLoggerClass(forClass)
+      val loggerClass = JvmDefaults.unwrapCompanionClass(forClass)
       val className = loggerClass.simpleName!!
       val classNameLength = className.length
 
