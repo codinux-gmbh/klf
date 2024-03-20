@@ -50,6 +50,27 @@ kotlin {
         nodejs()
     }
 
+    // wasmJs { // name in Kotlin 1.9.2x
+    wasm {
+        browser {
+            commonWebpackConfig {
+                experiments.add("topLevelAwait")
+            }
+
+            testTask {
+                useKarma {
+                    useChromeHeadless()
+                    useFirefoxHeadless()
+                }
+            }
+
+            // Uncomment the next line to apply Binaryen and get optimized wasm binaries
+            // applyBinaryen()
+        }
+
+        //nodejs() // WASM Node.js does currently not work
+    }
+
 
     linuxX64()
     mingwX64()
