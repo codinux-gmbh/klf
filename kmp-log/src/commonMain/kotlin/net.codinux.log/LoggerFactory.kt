@@ -8,6 +8,8 @@ import kotlin.reflect.KClass
 @ThreadLocal // actually not needed anymore on Kotlin 1.7 and above but to make compiler happy
 object LoggerFactory {
 
+    var defaultLoggerName: String = "klf" // TODO: get app name
+
     /**
      * The default log level of the logging system that will be used if no logger specific level is set with [LoggerBase.level].
      *
@@ -34,8 +36,8 @@ object LoggerFactory {
 
 
     @JvmStatic
-    fun getLogger(name: String): Logger {
-        return factory.getLogger(name)
+    fun getLogger(name: String?): Logger {
+        return factory.getLogger(name ?: defaultLoggerName)
     }
 
     @JvmStatic
