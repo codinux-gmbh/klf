@@ -1,5 +1,6 @@
 package net.codinux.log
 
+import kotlinx.browser.window
 import net.codinux.log.appender.Appender
 import net.codinux.log.appender.JsConsoleAppender
 import kotlin.reflect.KClass
@@ -20,10 +21,17 @@ actual class Platform {
 
     actual fun getCurrentThreadName(): String? = "main"
 
-    actual fun lineSeparator(): String =
-      "\n"
+    actual fun lineSeparator(): String = "\n"
 
     actual val isRunningInDebugMode: Boolean = false // TODO: don't know how to do this in JS
+
+    actual val appName: String? by lazy {
+      try {
+        window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/'))
+      } catch (e: Throwable) { // on Node.js window is not defined
+        null
+      }
+    }
 
   }
 

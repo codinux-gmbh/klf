@@ -27,6 +27,16 @@ actual class Platform {
             // not 100 % reliable, but the best i could find, see e.g. https://stackoverflow.com/questions/28754627/check-whether-we-are-in-intellij-idea-debugger
             ManagementFactory.getRuntimeMXBean().inputArguments.any { it.contains("jdwp", true) }
 
+        actual val appName: String? by lazy {
+            val jarPath = Platform::class.java.protectionDomain
+                .codeSource
+                .location
+                .toURI()
+                .path
+
+            jarPath.split('/').last { it.isNotBlank() }
+        }
+
     }
 
 }

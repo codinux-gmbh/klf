@@ -25,6 +25,8 @@ actual class Platform {
     actual val isRunningInDebugMode: Boolean =
       NativeDefaults.isRunningInDebugMode
 
+    actual val appName: String? = null
+
   }
 
 }

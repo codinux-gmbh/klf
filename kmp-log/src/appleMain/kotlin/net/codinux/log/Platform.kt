@@ -5,6 +5,8 @@ import kotlinx.cinterop.useContents
 import net.codinux.log.appender.Appender
 import net.codinux.log.appender.NSLogAppender
 import net.codinux.log.appender.OSLogAppender
+import platform.CoreFoundation.kCFBundleNameKey
+import platform.Foundation.NSBundle
 import platform.Foundation.NSOperationQueue
 import platform.Foundation.NSProcessInfo
 import platform.Foundation.NSThread
@@ -43,6 +45,12 @@ actual class Platform {
 
     actual val isRunningInDebugMode: Boolean =
       NativeDefaults.isRunningInDebugMode
+
+    actual val appName: String? by lazy {
+//      val info = NSBundle.mainBundle.infoDictionary!!
+//      println("appName: ${info["CFBundleName"]}, displayName: ${info["CFBundleDisplayName"]}, identifier: ${info["CFBundleIdentifier"]}, appBuild: ${info["CFBundleVersion"]}, appVersion: ${info["CFBundleShortVersionString"]}")
+      NSBundle.mainBundle.infoDictionary?.get(kCFBundleNameKey) as? String
+    }
 
 
     @OptIn(UnsafeNumber::class)

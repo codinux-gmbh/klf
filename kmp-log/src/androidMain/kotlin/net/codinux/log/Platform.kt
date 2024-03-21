@@ -26,6 +26,17 @@ actual class Platform {
     actual val isRunningInDebugMode =
       BuildConfig.DEBUG
 
+    actual val appName: String? by lazy {
+//      try {
+//        context.packageManager.getApplicationInfo(context.applicationInfo.packageName, 0)?.let {
+//          packageManager.getApplicationLabel(applicationInfo)
+//        }
+//      } catch (e: Throwable) {
+//
+//      }
+      BuildConfig.LIBRARY_PACKAGE_NAME // it's not the app name, for this we need the applicationContext, but at least the package name
+    }
+
 
     /**
      * Before API 26 there was a max log tag length of 23:

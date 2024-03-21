@@ -20,6 +20,8 @@ expect class Platform {
 
         val isRunningInDebugMode: Boolean
 
+        val appName: String?
+
     }
 
 }

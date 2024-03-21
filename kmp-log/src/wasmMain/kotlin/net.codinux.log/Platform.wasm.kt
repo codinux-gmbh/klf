@@ -4,6 +4,10 @@ import net.codinux.log.appender.Appender
 import net.codinux.log.appender.ConsoleAppender
 import kotlin.reflect.KClass
 
+// calls to js() have to be declared on package level (https://kotlinlang.org/docs/wasm-js-interop.html#kotlin-functions-with-javascript-code)
+internal fun getCurrentPathname(): String =
+    js("window.location.pathname") as String
+
 actual class Platform {
 
     actual companion object {
@@ -23,6 +27,13 @@ actual class Platform {
         actual fun lineSeparator(): String = "\n"
 
         actual val isRunningInDebugMode: Boolean = false // TODO: don't know how to do this in JS
+
+        actual val appName: String? = try {
+            val pathname = getCurrentPathname()
+            pathname.substring(0, pathname.lastIndexOf('/'))
+        } catch (e: Throwable) { // on Node.js window is not defined
+            null
+        }
 
     }
 
