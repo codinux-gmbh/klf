@@ -1,6 +1,7 @@
 package net.codinux.log.appender
 
 import net.codinux.log.DefaultLoggerFactory
+import net.codinux.log.LogLevel
 import net.codinux.log.LoggerFactory
 import net.codinux.log.logger
 import org.assertj.core.api.Assertions.assertThat
@@ -61,6 +62,7 @@ class ConsoleAppenderTest {
   @Test
   fun debugDisabled() {
     val message = "Debug Message"
+    LoggerFactory.RootLevel = LogLevel.Info
 
     underTest.debug { message }
 
