@@ -14,6 +14,8 @@ actual class Platform {
 
         actual val systemDefaultAppender: Appender = ConsoleAppender.Default
 
+        private val isRunningOnAndroid by lazy { isClassAvailable("android.content.Context") }
+
 
         actual fun <T : Any> getLoggerName(forClass: KClass<T>) = JvmDefaults.getLoggerName(forClass)
 
@@ -24,6 +26,7 @@ actual class Platform {
             System.lineSeparator()
 
         actual val isRunningInDebugMode: Boolean =
+            isRunningOnAndroid == false && // due to a bug in Gradle(?) Android library doesn't get published so that Android calls this JVM code leading to crashes when running on an Android device
             // not 100 % reliable, but the best i could find, see e.g. https://stackoverflow.com/questions/28754627/check-whether-we-are-in-intellij-idea-debugger
             ManagementFactory.getRuntimeMXBean().inputArguments.any { it.contains("jdwp", true) }
 
@@ -35,6 +38,17 @@ actual class Platform {
                 .path
 
             jarPath.split('/').last { it.isNotBlank() }
+        }
+
+
+        private fun isClassAvailable(qualifiedClassName: String): Boolean {
+            try {
+                Class.forName(qualifiedClassName)
+
+                return true
+            } catch (ignored: Exception) { }
+
+            return false
         }
 
     }
