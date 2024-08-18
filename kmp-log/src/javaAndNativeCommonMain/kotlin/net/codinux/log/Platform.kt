@@ -2,14 +2,9 @@ package net.codinux.log
 
 import kotlin.reflect.KClass
 
-fun <T : Any> Platform.Companion.getLoggerNameForKClassesWithQualifiedName(forClass: KClass<T>): String {
+fun Platform.Companion.getLoggerNameForKClassesWithQualifiedName(forClass: KClass<*>): String {
     forClass.qualifiedName?.let { qualifiedName ->
-        // unwrap companion object
-        return if (qualifiedName.endsWith(".Companion")) { // ok, someone could name a class 'Companion', but in this case i have no pity that his/her logger name is wrong then
-            qualifiedName.substring(0, qualifiedName.length - ".Companion".length)
-        } else {
-            qualifiedName
-        }
+        removeCompanionAndInnerClassSeparatorFromName(qualifiedName)
     }
 
     forClass.simpleName?.let {
@@ -22,4 +17,14 @@ fun <T : Any> Platform.Companion.getLoggerNameForKClassesWithQualifiedName(forCl
     } else {
         asString
     }
+}
+
+fun Platform.Companion.removeCompanionAndInnerClassSeparatorFromName(loggerName: String): String {
+    // unwrap companion object
+    return if (loggerName.endsWith(".Companion")) { // ok, someone could name a class 'Companion', but in this case i have no pity that his/her logger name is wrong then
+        loggerName.substring(0, loggerName.length - ".Companion".length)
+    } else {
+        loggerName
+    }
+        .replace('$', '.') // os opposed to jvmName qualifiedName for inner classes already replaces '$' with '.'
 }

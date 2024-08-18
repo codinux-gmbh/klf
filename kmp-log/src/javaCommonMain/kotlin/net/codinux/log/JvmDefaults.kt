@@ -30,9 +30,12 @@ object JvmDefaults {
     }
   }
 
-  fun <T : Any> getClassName(forClass: KClass<T>): String =
+  private fun <T : Any> getClassName(forClass: KClass<T>): String =
     forClass.qualifiedName // os opposed to jvmName qualifiedName for inner classes already replaces '$' with '.'
       ?: forClass.jvmName.replace('$', '.')
+
+  fun <T : Any> getClassNameWithUnwrappingCompanion(forClass: KClass<T>): String =
+    Platform.removeCompanionAndInnerClassSeparatorFromName(forClass.qualifiedName ?: forClass.jvmName)
 
 
   fun getCurrentThreadName(): String? =

@@ -10,8 +10,10 @@ final class Target_net_codinux_log_LoggerFactory {
     // This is the same as Quarkus does for org.slf4j.LoggerFactory.getLogger(Class<?>).
     @Substitute
     public static Logger getLogger(kotlin.reflect.KClass<?> forClass) {
-        // TODO: but in this way companion objects are not unwrapped
-        return LoggerFactory.getLogger(JvmDefaults.INSTANCE.getClassName(forClass));
+        // unwrapping Companion objects does not work reliably yet, but at least does a primitive approach by removing '.Companion' from end of class name
+        String loggerName = JvmDefaults.INSTANCE.getClassNameWithUnwrappingCompanion(forClass);
+
+        return LoggerFactory.getLogger(loggerName);
     }
 
 }
