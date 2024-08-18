@@ -31,3 +31,19 @@ allprojects {
     }
 
 }
+
+tasks.register("publishAllToMavenLocal") {
+    dependsOn(
+            ":kmp-log:publishToMavenLocal",
+
+            ":kmp-log-graal:publishToMavenLocal"
+    )
+}
+
+tasks.register("publishAll") {
+    dependsOn(
+            ":kmp-log:publish",
+
+            ":kmp-log-graal:publish"
+    )
+}

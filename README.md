@@ -8,8 +8,18 @@ Idiomatic Kotlin Multiplatform logging facade with appenders for all supported K
 ### Gradle
 
 ```
-implementation("net.codinux.log:kmp-log:1.1.0")
+implementation("net.codinux.log:kmp-log:1.5.1")
 ```
+
+### Native Images (e.g. Quarkus native)
+
+For native images use
+
+```
+implementation("net.codinux.log:kmp-log-graal:1.5.1")
+```
+
+which substitutes calls to reflection. (As otherwise each class for which a Logger gets created would need to be annotated with `@RegisterForReflection`.)
 
 ## Usage
 
@@ -115,6 +125,12 @@ If you dislike above default appenders and want to control logger creation entir
 ```kotlin
   LoggerFactory.setLoggerFactory(MyCustomLoggerFactory())
 ```
+
+
+## WebAssembly (experimental)
+
+Version 1.1.3 added experimental support for WASM Browser. While it should work in most circumstances, there is explicitly
+currently no support for multithreaded applications due to lack of synchronization mechanisms in Kotlin WASM.
 
 
 ## MDC (Java only)

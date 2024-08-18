@@ -30,7 +30,7 @@ object JvmDefaults {
     }
   }
 
-  private fun <T : Any> getClassName(forClass: KClass<T>): String =
+  fun <T : Any> getClassName(forClass: KClass<T>): String =
     forClass.qualifiedName // os opposed to jvmName qualifiedName for inner classes already replaces '$' with '.'
       ?: forClass.jvmName.replace('$', '.')
 
