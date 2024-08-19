@@ -4,7 +4,7 @@ class NativeSampleApp {
 
     private val log by logger()
 
-    private val logByName by logger("Liebe")
+    private val logByName by logger("LoggerByName")
 
 
     fun runSample() {
