@@ -30,4 +30,8 @@ class WatchableAppender : Appender {
                     this.level == level && this.message == message && this.loggerName == loggerName && this.exception == exception
                 }
 
+    fun reset() {
+        _appendedLogEvents.clear()
+    }
+
 }
