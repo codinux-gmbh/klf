@@ -11,9 +11,9 @@ class WatchableAppender : Appender {
     val appendedLogEvents: List<LogEvent>
         get() = _appendedLogEvents.toImmutableList()
 
-    override val logsThreadName = false // we ignore the threadName
+    override var logsThreadName = false
 
-    override val logsException = true
+    override var logsException = true
 
 
     override fun append(level: LogLevel, message: String, loggerName: String, threadName: String?, exception: Throwable?) {

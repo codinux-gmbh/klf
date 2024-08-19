@@ -3,48 +3,58 @@ package net.codinux.log.appender
 import net.codinux.log.DefaultLoggerFactory
 import net.codinux.log.LogLevel
 import net.codinux.log.LoggerFactory
-import net.codinux.log.test.LogEvent
+import net.codinux.log.test.WatchableAppender
 import kotlin.js.JsName
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertNotNull
-import kotlin.test.assertNull
+import kotlin.test.*
 
 class AppenderTest {
 
-    init {
-        // otherwise on JVM slf4j gets used
-        LoggerFactory.setLoggerFactory(DefaultLoggerFactory())
+    companion object {
+
+        private val appender: WatchableAppender
+
+        init {
+            // otherwise on JVM slf4j's org.slf4j.helpers.NOPLoggerFactory is used. Loggers then have the name "NOP"
+            LoggerFactory.setLoggerFactory(DefaultLoggerFactory())
+
+            LoggerFactory.RootLevel = LogLevel.Trace // so that by default all logs get written
+
+            appender = WatchableAppender().apply {
+                LoggerFactory.addAppender(this)
+            }
+        }
+    }
+
+
+    @BeforeTest
+    fun setUp() {
+        appender.reset()
     }
 
 
     @Test
     @JsName("logsThreadName_disabled")
     fun `logsThreadName disabled`() {
-        val appendedLogs = mutableListOf<LogEvent>()
-        val appender = createAppender(appendedLogs, false)
-        LoggerFactory.addAppender(appender)
+        configureAppender(false)
 
         LoggerFactory.getLogger("test").info { "Info" }
 
-        assertEquals(1, appendedLogs.size)
+        assertEquals(1, appender.appendedLogEvents.size)
 
-        val appendedLog = appendedLogs.first()
+        val appendedLog = appender.appendedLogEvents.first()
         assertNull(appendedLog.threadName)
     }
 
     @Test
     @JsName("logsThreadName_enabled")
     fun `logsThreadName enabled`() {
-        val appendedLogs = mutableListOf<LogEvent>()
-        val appender = createAppender(appendedLogs, true)
-        LoggerFactory.addAppender(appender)
+        configureAppender(true)
 
         LoggerFactory.getLogger("test").info { "Info" }
 
-        assertEquals(1, appendedLogs.size)
+        assertEquals(1, appender.appendedLogEvents.size)
 
-        val appendedLog = appendedLogs.first()
+        val appendedLog = appender.appendedLogEvents.first()
         assertNotNull(appendedLog.threadName)
     }
 
@@ -52,43 +62,32 @@ class AppenderTest {
     @Test
     @JsName("logsException_disabled")
     fun `logsException disabled`() {
-        val appendedLogs = mutableListOf<LogEvent>()
-        val appender = createAppender(appendedLogs, logsException = false)
-        LoggerFactory.addAppender(appender)
+        configureAppender(logsException = false)
 
         LoggerFactory.getLogger("test").error(Exception()) { "Error" }
 
-        assertEquals(1, appendedLogs.size)
+        assertEquals(1, appender.appendedLogEvents.size)
 
-        val appendedLog = appendedLogs.first()
+        val appendedLog = appender.appendedLogEvents.first()
         assertNull(appendedLog.exception)
     }
 
     @Test
     @JsName("logsException_enabled")
     fun `logsException enabled`() {
-        val appendedLogs = mutableListOf<LogEvent>()
-        val appender = createAppender(appendedLogs, logsException = true)
-        LoggerFactory.addAppender(appender)
+        configureAppender(logsException = true)
 
         LoggerFactory.getLogger("test").error(Exception()) { "Error" }
 
-        assertEquals(1, appendedLogs.size)
+        assertEquals(1, appender.appendedLogEvents.size)
 
-        val appendedLog = appendedLogs.first()
+        val appendedLog = appender.appendedLogEvents.first()
         assertNotNull(appendedLog.exception)
     }
 
 
-    private fun createAppender(appendedLogs: MutableList<LogEvent>, logsThreadName: Boolean = false, logsException: Boolean = false) = object : Appender {
-
-        override val logsThreadName = logsThreadName
-
-        override val logsException = logsException
-
-        override fun append(level: LogLevel, message: String, loggerName: String, threadName: String?, exception: Throwable?) {
-            appendedLogs.add(LogEvent(level, message, loggerName, threadName, exception))
-        }
-
+    private fun configureAppender(logsThreadName: Boolean = false, logsException: Boolean = false) = appender.apply {
+        this.logsThreadName = logsThreadName
+        this.logsException = logsException
     }
 }
