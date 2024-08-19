@@ -89,5 +89,8 @@ class AppenderTest {
     private fun configureAppender(logsThreadName: Boolean = false, logsException: Boolean = false) = appender.apply {
         this.logsThreadName = logsThreadName
         this.logsException = logsException
+
+        // add it so that LoggerFactoryBase.doesAnyAppenderLogThreadName gets set
+        LoggerFactory.addAppender(appender)
     }
 }
