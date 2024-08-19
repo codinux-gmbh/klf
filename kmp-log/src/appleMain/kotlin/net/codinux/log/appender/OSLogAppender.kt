@@ -8,7 +8,7 @@ import platform.darwin.*
 
 open class OSLogAppender : Appender {
 
-    protected open val loggerCache = Cache<os_log_t>()
+    protected open val loggerCache = Cache<String, os_log_t>()
 
     protected open val formatter = MessageFormatter()
 

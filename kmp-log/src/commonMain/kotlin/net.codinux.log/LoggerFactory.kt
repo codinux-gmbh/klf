@@ -8,6 +8,10 @@ import kotlin.reflect.KClass
 @ThreadLocal // actually not needed anymore on Kotlin 1.7 and above but to make compiler happy
 object LoggerFactory {
 
+    private val loggerCache = Cache<KClass<*>, Logger>()
+
+    private val loggerCacheForName = Cache<String, Logger>()
+
     private var customDefaultLoggerName: String? = null
 
     var defaultLoggerName: String
@@ -43,11 +47,17 @@ object LoggerFactory {
 
     @JvmStatic
     fun getLogger(name: String?): Logger {
-        return factory.getLogger(name ?: defaultLoggerName)
+        val actualName = name ?: defaultLoggerName
+
+        return loggerCacheForName.getOrPut(actualName) {
+            factory.createLogger(actualName)
+        }
     }
 
     @JvmStatic
     fun getLogger(forClass: KClass<*>): Logger =
-        getLogger(Platform.getLoggerName(forClass))
+        loggerCache.getOrPut(forClass) {
+            getLogger(Platform.getLoggerName(forClass))
+        }
 
 }

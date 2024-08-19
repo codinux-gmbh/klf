@@ -6,6 +6,6 @@ interface ILoggerFactory : AppenderContainer {
 
     val rootLogger: Logger
 
-    fun getLogger(name: String): Logger
+    fun createLogger(name: String): Logger
 
 }

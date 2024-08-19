@@ -7,11 +7,6 @@ import net.codinux.log.collection.toImmutableCollection
 
 abstract class LoggerFactoryBase : ILoggerFactory {
 
-    abstract fun createLogger(name: String): Logger
-
-
-    protected open val loggerCache = Cache<Logger>()
-
     protected open val appenders = ConcurrentSet<Appender>()
 
     protected open var immutableAppenders = ImmutableCollection<Appender>()
@@ -19,12 +14,6 @@ abstract class LoggerFactoryBase : ILoggerFactory {
     override var doesAnyAppenderLogThreadName: Boolean = false
         protected set
 
-
-    override fun getLogger(name: String): Logger {
-        return loggerCache.getOrPut(name) {
-            createLogger(name)
-        }
-    }
 
     override fun addAppender(appender: Appender) {
         appenders.add(appender)
