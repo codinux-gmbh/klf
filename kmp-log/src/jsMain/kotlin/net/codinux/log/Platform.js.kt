@@ -16,7 +16,7 @@ actual class Platform {
     actual fun <T : Any> getLoggerName(forClass: KClass<T>): String {
       // unwrapping companion objects is not possible on JS. There as class / logger name "Companion" will be used
       // do not use forClass.qualifiedName on JS, it will produce an error
-      return forClass.js.name
+      return forClass.simpleName ?: forClass.js.name
     }
 
     actual fun getCurrentThreadName(): String? = "main"
