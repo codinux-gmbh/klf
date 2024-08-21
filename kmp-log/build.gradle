@@ -9,11 +9,15 @@ ext.artifactName = "kmp-log"
 
 //@OptIn(ExperimentalKotlinGradlePluginApi::class)
 kotlin {
-    // Enable the default target hierarchy:
-    targetHierarchy.default()
+    jvmToolchain(11)
+
+    compilerOptions {
+        // suppresses compiler warning: [EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING] 'expect'/'actual' classes (including interfaces, objects, annotations, enums, and 'actual' typealiases) are in Beta.
+        freeCompilerArgs.add("-Xexpect-actual-classes")
+    }
+
 
     jvm {
-        jvmToolchain(8)
 //        withJava() // not allowed if android { } is present
 
         testRuns["test"].executionTask.configure {
@@ -34,15 +38,17 @@ kotlin {
         }
     }
 
-    android {
+    androidTarget { // name in Kotlin 1.9
+        publishLibraryVariants("release")
+
         compilations.all {
             kotlinOptions.jvmTarget = "1.8"
         }
     }
 
-    js(IR) {
+    js {
         moduleName = "kmplog"
-//        binaries.executable()
+        binaries.executable()
 
         browser {
             testTask {
@@ -53,11 +59,17 @@ kotlin {
             }
         }
 
-        nodejs()
+
+        nodejs {
+            testTask {
+                useMocha {
+                    timeout = "20s" // Mocha times out after 2 s, which may is too short for same tests
+                }
+            }
+        }
     }
 
-    // wasmJs { // name in Kotlin 1.9.2x
-    wasm {
+    wasmJs {
         browser {
             commonWebpackConfig {
                 experiments.add("topLevelAwait")
@@ -71,7 +83,7 @@ kotlin {
             }
 
             // Uncomment the next line to apply Binaryen and get optimized wasm binaries
-            // applyBinaryen()
+             applyBinaryen()
         }
 
         //nodejs() // WASM Node.js does currently not work
@@ -82,20 +94,16 @@ kotlin {
     mingwX64()
 
 
-    ios {
-        binaries {
-            framework {
-                baseName = "kmp-log"
-            }
-        }
-    }
+    iosArm64()
     iosSimulatorArm64()
     macosX64()
     macosArm64()
-    watchos()
+    watchosArm64()
     watchosSimulatorArm64()
-    tvos()
+    tvosArm64()
     tvosSimulatorArm64()
+
+    applyDefaultHierarchyTemplate()
 
 
     sourceSets {

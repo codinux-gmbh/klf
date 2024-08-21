@@ -4,6 +4,7 @@ import kotlin.native.Platform
 
 object NativeDefaults {
 
+    @kotlin.experimental.ExperimentalNativeApi
     val isRunningInDebugMode: Boolean =
         Platform.isDebugBinary
 

@@ -1,6 +1,6 @@
 package net.codinux.log.collection
 
-import kotlin.native.concurrent.AtomicReference
+import kotlin.concurrent.AtomicReference
 
 actual open class ConcurrentSet<E> : Set<E> {
 

@@ -6,7 +6,7 @@ import kotlin.reflect.KClass
 
 // calls to js() have to be declared on package level (https://kotlinlang.org/docs/wasm-js-interop.html#kotlin-functions-with-javascript-code)
 internal fun getCurrentPathname(): String =
-    js("window.location.pathname") as String
+    js("window.location.pathname")
 
 actual class Platform {
 
@@ -28,12 +28,7 @@ actual class Platform {
 
         actual val isRunningInDebugMode: Boolean = false // TODO: don't know how to do this in JS
 
-        actual val appName: String? = try {
-            val pathname = getCurrentPathname()
-            pathname.substring(0, pathname.lastIndexOf('/'))
-        } catch (e: Throwable) { // on Node.js window is not defined
-            null
-        }
+        actual val appName: String?  = null
 
     }
 

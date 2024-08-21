@@ -1,6 +1,6 @@
 package net.codinux.log.collection
 
-expect class ConcurrentMap<K, V> actual constructor() {
+expect class ConcurrentMap<K, V>() {
 
     fun get(key: K): V?
 

@@ -1,6 +1,6 @@
 package net.codinux.log.collection
 
-expect class ConcurrentSet<E> actual constructor() : Set<E> {
+expect class ConcurrentSet<E>() : Set<E> {
 
     /**
      * Adds the specified element to the set.
