@@ -4,7 +4,7 @@ plugins {
 }
 
 
-ext.artifactName = "kmp-log"
+ext.artifactName = "klf"
 
 
 //@OptIn(ExperimentalKotlinGradlePluginApi::class)
@@ -47,7 +47,7 @@ kotlin {
     }
 
     js {
-        moduleName = "kmplog"
+        moduleName = "klf"
         binaries.executable()
 
         browser {
@@ -224,7 +224,7 @@ def createCompilation(String name, NamedDomainObjectContainer compilations, Stri
             dependencies {
                 // Compile against the main compilation's compile classpath and outputs:
                 implementation(main.compileDependencyFiles + main.output.classesDirs + test.output.classesDirs)
-                implementation project(":kmp-log")
+                implementation project(":klf")
                 implementation kotlin('test-junit')
                 implementation("org.junit.jupiter:junit-jupiter-api:5.6.0")
                 runtimeOnly("org.junit.jupiter:junit-jupiter-engine")

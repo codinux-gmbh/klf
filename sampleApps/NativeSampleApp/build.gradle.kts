@@ -28,7 +28,7 @@ kotlin {
 
         commonMain {
             dependencies {
-                implementation(project(":kmp-log"))
+                implementation(project(":klf"))
             }
         }
 

@@ -1,14 +1,14 @@
-# KMP Log
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/net.codinux.log/kmp-log/badge.svg)](https://maven-badges.herokuapp.com/maven-central/net.codinux.log/kmp-log)
+# Kotlin Logging Facade (klf)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/net.codinux.log/klf/badge.svg)](https://maven-badges.herokuapp.com/maven-central/net.codinux.log/klf)
 
-Idiomatic Kotlin Multiplatform logging facade with appenders for all supported KMP platforms.
+Kotlin (Multiplatform) logging facade for idiomatic logging in Kotlin with appenders for all supported KMP platforms.
 
 ## Setup
 
 ### Gradle
 
 ```
-implementation("net.codinux.log:kmp-log:1.5.1")
+implementation("net.codinux.log:klf:1.5.2-SNAPSHOT")
 ```
 
 ### Native Images (e.g. Quarkus native)
@@ -16,10 +16,15 @@ implementation("net.codinux.log:kmp-log:1.5.1")
 For native images use
 
 ```
-implementation("net.codinux.log:kmp-log-graal:1.5.1")
+implementation("net.codinux.log:klf-graal:1.5.2-SNAPSHOT")
 ```
 
 which substitutes calls to reflection. (As otherwise each class for which a Logger gets created would need to be annotated with `@RegisterForReflection`.)
+
+### Compatibility note
+
+With version 2.0.0 the project has been renamed from `kmp-log` to `klf` and the Kotlin version changed from 1.8 to 2.0.
+For projects targeting Kotlin < 2.0 therefore use `net.codinux.log:kmp-log:1.5.1`.
 
 ## Usage
 
@@ -87,7 +92,7 @@ So if you like to format the log message, please use lambda variants.
 
 ## Static Loggers
 
-Since version 1.5.0 kmp-log also supports static Loggers:
+Since version 1.5.0 klf also supports static Loggers:
 
 ```kotlin
 package com.example.service
@@ -109,7 +114,7 @@ class OrderService {
 
 ## Log appenders
 
-KMP-Log by ships with a lot of log appenders. Depending on the platform by default these appenders are used:
+klf by ships with a lot of log appenders. Depending on the platform by default these appenders are used:
 
 ### JVM
 
@@ -157,7 +162,7 @@ currently no support for multithreaded applications due to lack of synchronizati
 
 ## MDC (Java only)
 
-KMP-Log has some convenience functions if values should get added to MDC (Mapped Diagnostic Context) only for the next log message and should then automatically get cleared again:
+klf has some convenience functions if values should get added to MDC (Mapped Diagnostic Context) only for the next log message and should then automatically get cleared again:
 
 ```kotlin
   log.withMdc("key1" to "value1", "key2" to "value2").info { "Info" }
@@ -179,10 +184,10 @@ The terminology is mostly identical with slf4j / logback.
 Primary facade to create a [Logger](#logger), e.g.  
 `private val log = LoggerFactory.getLogger(OrderService::class)`.
 
-KMP-Log ships with two LoggerFactories:
-- [Slf4jLoggerFactory](kmp-log/src/javaCommonMain/kotlin/net/codinux/log/slf4j/Slf4jLoggerFactory.kt) that delegates logging to slf4j, so that on JVM any logging framework that implements slf4j can be used. 
+klf ships with two LoggerFactories:
+- [Slf4jLoggerFactory](klf/src/javaCommonMain/kotlin/net/codinux/log/slf4j/Slf4jLoggerFactory.kt) that delegates logging to slf4j, so that on JVM any logging framework that implements slf4j can be used. 
 Gets automatically used if slf4j is on the classpath and its ILoggerFactory implementation is any other than [NOPLoggerFactory](https://www.slf4j.org/apidocs/org/slf4j/helpers/NOPLoggerFactory.html).
-- [DefaultLoggerFactory](kmp-log/src/commonMain/kotlin/net.codinux.log/DefaultLoggerFactory.kt) that delegates logging to system's default log appender (see [Log appenders](#log-appenders)).
+- [DefaultLoggerFactory](klf/src/commonMain/kotlin/net.codinux.log/DefaultLoggerFactory.kt) that delegates logging to system's default log appender (see [Log appenders](#log-appenders)).
 
 ### Logger
 
@@ -194,7 +199,7 @@ Interface to log messages at different levels (Info, Error, ...) , e.g.
 - If a messages gets accepted by a Logger, Appender do the actual work of 'writing' log messages.
 - Multiple appender can be defined so that one logged messages e.g. gets written to console, to a file (only available via a slf4j compatible logging framework), to [Elasticsearch](https://github.com/codinux-gmbh/ElasticsearchLogger), [Loki](https://github.com/codinux-gmbh/LokiLogAppender), ...
 - All Loggers use the same appenders. (It's not possible to set an appender for a specific Logger like as logback.)
-- Except ConsoleAppender KMP-Log doesn't implement any Appender itself but delegates on to native loggers like Logcat, OSLog, JavaScript Console, slf4j, ...
+- Except ConsoleAppender klf doesn't implement any Appender itself but delegates on to native loggers like Logcat, OSLog, JavaScript Console, slf4j, ...
 
 
 # License

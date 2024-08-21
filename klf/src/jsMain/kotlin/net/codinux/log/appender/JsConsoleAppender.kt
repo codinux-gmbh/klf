@@ -18,7 +18,7 @@ open class JsConsoleAppender : Appender {
       LogLevel.Error -> console.error(formattedMessage, exception)
       LogLevel.Warn -> console.warn(formattedMessage, exception)
       LogLevel.Info -> console.info(formattedMessage, exception)
-      LogLevel.Debug, LogLevel.Trace -> console.log(formattedMessage, exception)
+      LogLevel.Debug, LogLevel.Trace -> console.log(formattedMessage, exception) // why is there no console.debug() method?
       LogLevel.Off -> { }
     }
   }

@@ -21,8 +21,8 @@ allprojects {
     group 'net.codinux.log'
     version '1.5.2-SNAPSHOT'
 
-    ext.projectDescription = "Idiomatic Kotlin Multiplatform logging facade"
-    ext.sourceCodeRepositoryBaseUrl = "github.com/codinux-gmbh/KMP-Log"
+    ext.projectDescription = "Kotlin (Multiplatform) logging facade for idiomatic logging in Kotlin"
+    ext.sourceCodeRepositoryBaseUrl = "github.com/codinux-gmbh/klf"
 
 
     repositories {
@@ -34,16 +34,16 @@ allprojects {
 
 tasks.register("publishAllToMavenLocal") {
     dependsOn(
-            ":kmp-log:publishToMavenLocal",
+            ":klf:publishToMavenLocal",
 
-            ":kmp-log-graal:publishToMavenLocal"
+            ":klf-graal:publishToMavenLocal"
     )
 }
 
 tasks.register("publishAll") {
     dependsOn(
-            ":kmp-log:publish",
+            ":klf:publish",
 
-            ":kmp-log-graal:publish"
+            ":klf-graal:publish"
     )
 }

@@ -30,6 +30,7 @@ class MainActivity : ComponentActivity() {
 
         val logTest = LogTest()
         logTest.logWithLogcat()
+        logTest.logWithKlf()
     }
 }
 

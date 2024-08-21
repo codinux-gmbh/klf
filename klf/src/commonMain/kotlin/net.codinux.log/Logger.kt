@@ -27,7 +27,7 @@ interface Logger {
     fun isEnabled(level: LogLevel) = level.priority >= getEffectiveLevel().priority
 
 
-    // TODO: add overloads for programming languages that don't support default parameters - but in an extra artefact like kmp-log-java to not ruin API
+    // TODO: add overloads for programming languages that don't support default parameters - but in an extra artefact like klf-java to not ruin API
 
     fun error(message: String, exception: Throwable? = null)
 

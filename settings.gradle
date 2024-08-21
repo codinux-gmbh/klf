@@ -1,8 +1,8 @@
 
-rootProject.name = "KMP-Log-Project"
+rootProject.name = "klf-Project"
 
-include("kmp-log")
-include("kmp-log-graal")
+include("klf")
+include("klf-graal")
 
 include("sampleApps:NativeSampleApp")
 

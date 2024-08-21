@@ -5,7 +5,7 @@ import org.apache.logging.log4j.Level
 
 object Log4j2Util {
 
-    val Log4jToKmpLogLevelMapping = mapOf(
+    val Log4jToKlfLevelMapping = mapOf(
         Level.ERROR to LogLevel.Error,
         Level.INFO to LogLevel.Info,
         Level.DEBUG to LogLevel.Debug,
@@ -14,7 +14,7 @@ object Log4j2Util {
         Level.OFF to LogLevel.Off
     )
 
-    val KmpLogToLog4jLevelMapping = mapOf(
+    val KlfToLog4jLevelMapping = mapOf(
         LogLevel.Error to Level.ERROR,
         LogLevel.Info to Level.INFO,
         LogLevel.Debug to Level.DEBUG,
@@ -23,9 +23,9 @@ object Log4j2Util {
     )
 
     fun mapLevel(level: LogLevel): Level =
-        KmpLogToLog4jLevelMapping[level] ?: Level.OFF
+        KlfToLog4jLevelMapping[level] ?: Level.OFF
 
     fun mapLevel(level: Level): LogLevel =
-        Log4jToKmpLogLevelMapping[level] ?: LogLevel.Off
+        Log4jToKlfLevelMapping[level] ?: LogLevel.Off
 
 }
