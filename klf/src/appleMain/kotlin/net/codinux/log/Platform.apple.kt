@@ -1,5 +1,8 @@
+@file:OptIn(ExperimentalNativeApi::class, ExperimentalForeignApi::class)
+
 package net.codinux.log
 
+import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.UnsafeNumber
 import kotlinx.cinterop.useContents
 import net.codinux.log.appender.Appender
@@ -10,6 +13,7 @@ import platform.Foundation.NSBundle
 import platform.Foundation.NSOperationQueue
 import platform.Foundation.NSProcessInfo
 import platform.Foundation.NSThread
+import kotlin.experimental.ExperimentalNativeApi
 import kotlin.native.Platform
 import kotlin.reflect.KClass
 

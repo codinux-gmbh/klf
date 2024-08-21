@@ -1,5 +1,8 @@
+@file:OptIn(ExperimentalForeignApi::class)
+
 package net.codinux.log.appender
 
+import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.ptr
 import net.codinux.log.LogLevel
 import net.codinux.log.Cache
