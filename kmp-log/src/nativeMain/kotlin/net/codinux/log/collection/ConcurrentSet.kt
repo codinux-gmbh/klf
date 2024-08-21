@@ -4,7 +4,7 @@ import kotlin.concurrent.AtomicReference
 
 actual open class ConcurrentSet<E> : Set<E> {
 
-    protected open val atomicSet = AtomicReference(setOf<E>())
+    protected open val atomicSet = AtomicReference(mutableSetOf<E>())
 
 
     actual fun add(element: E): Boolean {
@@ -15,14 +15,14 @@ actual open class ConcurrentSet<E> : Set<E> {
         do {
             val existing = atomicSet.value
 
-            val updated = existing.toMutableSet()
+            val updated = existing
             updated.add(element)
         } while (atomicSet.compareAndSet(existing, updated) == false)
 
         return true
     }
 
-    override fun contains(element: E) =
+    actual override fun contains(element: E) =
         atomicSet.value.contains(element)
 
     actual fun remove(element: E): Boolean {
@@ -31,7 +31,7 @@ actual open class ConcurrentSet<E> : Set<E> {
         do {
             val existing = atomicSet.value
 
-            val updated = existing.toMutableSet()
+            val updated = existing
             removeResult = updated.remove(element)
         } while (atomicSet.compareAndSet(existing, updated) == false)
 
@@ -40,16 +40,16 @@ actual open class ConcurrentSet<E> : Set<E> {
 
     actual fun clear() {
         @Suppress("ControlFlowWithEmptyBody")
-        while (atomicSet.compareAndSet(atomicSet.value, setOf()) == false) { }
+        while (atomicSet.compareAndSet(atomicSet.value, mutableSetOf()) == false) { }
     }
 
-    override val size: Int
+    actual override val size: Int
         get() = atomicSet.value.size
 
-    override fun isEmpty() = atomicSet.value.isEmpty()
+    actual override fun isEmpty() = atomicSet.value.isEmpty()
 
-    override fun iterator() = atomicSet.value.iterator()
+    actual override fun iterator() = atomicSet.value.iterator()
 
-    override fun containsAll(elements: Collection<E>) = atomicSet.value.containsAll(elements)
+    actual override fun containsAll(elements: Collection<E>) = atomicSet.value.containsAll(elements)
 
 }

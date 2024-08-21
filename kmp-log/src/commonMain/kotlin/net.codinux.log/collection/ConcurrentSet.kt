@@ -2,6 +2,16 @@ package net.codinux.log.collection
 
 expect class ConcurrentSet<E>() : Set<E> {
 
+    override val size: Int
+
+    override operator fun contains(element: E): Boolean
+
+    override fun containsAll(elements: kotlin.collections.Collection<E>): kotlin.Boolean
+
+    override fun isEmpty(): kotlin.Boolean
+
+    override operator fun iterator(): MutableIterator<E>
+
     /**
      * Adds the specified element to the set.
      *
