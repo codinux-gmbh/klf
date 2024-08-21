@@ -14,7 +14,7 @@ class NativeSampleApp {
 
         log.warn { "Warn" }
 
-        log.error(Exception("Just a test, no animals have been harmed")) { "Error with Exception" }
+        log.error(Exception("Just a test, no animals were harmed")) { "Error with Exception" }
 
         logByName.info { "Info from (lazy instantiated) Logger by name" }
     }

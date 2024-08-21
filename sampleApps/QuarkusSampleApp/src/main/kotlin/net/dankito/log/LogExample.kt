@@ -27,7 +27,7 @@ class LogExample {
 
         log.warn { "Warn" }
 
-        log.error(Exception("Just a test, no animals have been harmed")) { "Error with Exception" }
+        log.error(Exception("Just a test, no animals were harmed")) { "Error with Exception" }
 
         logByName.info { "Info from (lazy instantiated) Logger by name" }
 
@@ -36,14 +36,14 @@ class LogExample {
 
         companionLog.info { "Companion Logger: Info" }
 
-        companionLog.error(Exception("Just a test, no animals have been harmed")) { "Companion Logger: Error with Exception" }
+        companionLog.error(Exception("Just a test, no animals were harmed")) { "Companion Logger: Error with Exception" }
 
 
         // static logger
 
         Log.info<LogExample> { "Static Logger: Info" }
 
-        Log.error<LogExample>(Exception("Just a test, no animals have been harmed")) { "Static Logger: Error with Exception" }
+        Log.error<LogExample>(Exception("Just a test, no animals were harmed")) { "Static Logger: Error with Exception" }
     }
 
 }
