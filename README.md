@@ -70,13 +70,13 @@ import net.codinux.log.LoggerFactory
 
 class OrderService {
     private val log = LoggerFactory.getLogger(OrderService::class)
-    // or:
+    // or by setting logger name (tag) via a string
     private val logByName = LoggerFactory.getLogger("OrderService")
   
     fun showUsage() {
         log.info("An info message: $detailedMessage") // string get directly concatenated whether INFO level is enabled or not
 
-        log.error("An error occurred", e) // e is a throwable
+        logByName.error("An error occurred", e) // e is a throwable
     }
 }
 ```
@@ -84,6 +84,28 @@ class OrderService {
 You might ask why is there no overload with format arguments like `fun info(message: String, exception: Throwable? = null, vararg arguments: Any)`.  
 This is due to the restrictions of Kotlin multiplatform as there's no `String.format()` available (also the format specifier differ, e.g. `%s` on the JVM and `%@` on iOS and macOS).  
 So if you like to format the log message, please use lambda variants.
+
+## Static Loggers
+
+Since version 1.5.0 kmp-log also supports static Loggers:
+
+```kotlin
+package com.example.service
+
+import net.codinux.log.LoggerFactory
+
+class OrderService {
+  
+    fun showUsage() {
+        Log.info<OrderService> { "Message with ${heavyCalculation()}" }
+
+        Log.errorOrderService(e) { "An error occurred" } // e is a throwable
+
+        // or set the logger tag explicitly:
+        Log.info(loggerName = "OrderService") { "Message with ${heavyCalculation()}" }
+    }
+}
+```
 
 ## Log appenders
 
