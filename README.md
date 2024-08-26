@@ -23,8 +23,8 @@ which substitutes calls to reflection. (As otherwise each class for which a Logg
 
 ### Compatibility note
 
-With version 2.0.0 the project has been renamed from `kmp-log` to `klf` and the Kotlin version changed from 1.8 to 2.0.
-For projects targeting Kotlin < 2.0 therefore use `net.codinux.log:kmp-log:1.5.1`.
+With version 1.6.0 the project has been renamed from `kmp-log` to `klf` and the Kotlin version changed from 1.8 to 1.9.
+Projects targeting Kotlin 1.8 therefore should use `net.codinux.log:kmp-log:1.5.1`.
 
 ## Usage
 
