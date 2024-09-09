@@ -8,16 +8,6 @@ abstract class LoggerBase @JvmOverloads constructor(
     override var level: LogLevel? = null
 ) : Logger {
 
-    companion object {
-        /**
-         * The default logger of all [LoggerBase] implementations.
-         *
-         * If [LoggerBase.level] is set to null than [LoggerFactory.RootLevel] will be used.
-         */
-        val RootLevel: LogLevel? = null
-    }
-
-
 
     abstract fun log(level: LogLevel, message: String, exception: Throwable?)
 
