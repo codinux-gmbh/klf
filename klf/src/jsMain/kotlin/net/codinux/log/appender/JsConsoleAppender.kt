@@ -15,10 +15,34 @@ open class JsConsoleAppender : Appender {
     val formattedMessage = formatter.formatMessage(level, message, loggerName, threadName, exception)
 
     when (level) {
-      LogLevel.Error -> console.error(formattedMessage, exception)
-      LogLevel.Warn -> console.warn(formattedMessage, exception)
-      LogLevel.Info -> console.info(formattedMessage, exception)
-      LogLevel.Debug, LogLevel.Trace -> console.log(formattedMessage, exception) // why is there no console.debug() method?
+      LogLevel.Error -> {
+        if (exception == null) {
+          console.error(formattedMessage)
+        } else {
+          console.error(formattedMessage, exception)
+        }
+      }
+      LogLevel.Warn -> {
+        if (exception == null) {
+          console.warn(formattedMessage)
+        } else {
+          console.warn(formattedMessage, exception)
+        }
+      }
+      LogLevel.Info -> {
+        if (exception == null) {
+          console.info(formattedMessage)
+        } else {
+          console.info(formattedMessage, exception)
+        }
+      }
+      LogLevel.Debug, LogLevel.Trace -> { // why is there no console.debug() method?
+        if (exception == null) {
+          console.log(formattedMessage)
+        } else {
+          console.log(formattedMessage, exception)
+        }
+      }
       LogLevel.Off -> { }
     }
   }
