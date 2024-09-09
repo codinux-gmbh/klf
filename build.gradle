@@ -18,8 +18,8 @@ plugins {
 
 
 allprojects {
-    group 'net.codinux.log'
-    version '1.6.1'
+    group "net.codinux.log"
+    version "1.6.2-SNAPSHOT"
 
     ext.projectDescription = "Kotlin (Multiplatform) logging facade for idiomatic logging in Kotlin"
     ext.sourceCodeRepositoryBaseUrl = "github.com/codinux-gmbh/klf"
