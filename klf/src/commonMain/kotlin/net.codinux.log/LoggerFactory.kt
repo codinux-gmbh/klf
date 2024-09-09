@@ -21,12 +21,15 @@ object LoggerFactory {
         }
 
     /**
-     * The default log level of the logging system that will be used if no logger specific level is set with [LoggerBase.level].
+     * Experimental: Sets the default log level for all loggers that will be used if no logger specific level is set with [LoggerBase.level].
      *
-     * If slf4j is on the classpath setting this value has no effect. Configure log level via logging backend (logback, log4j, ...) then.
+     * Be aware, this does not work reliably for all logging backends, e.g. we don't have implementations for all slf4j
+     * logging backends and the Android min log level is unchangeable.
+     *
+     * If slf4j is on the classpath, configure log level via logging backend (logback, log4j, ...).
      */
     @JvmStatic
-    internal var RootLevel: LogLevel = LogLevel.Info
+    var RootLevel: LogLevel = LogLevel.Info
 
     private var factory: ILoggerFactory = Platform.createDefaultLoggerFactory()
 
