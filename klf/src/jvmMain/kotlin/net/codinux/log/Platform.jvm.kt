@@ -25,9 +25,10 @@ actual class Platform {
         actual fun lineSeparator(): String =
             System.lineSeparator()
 
-        actual val isRunningInDebugMode: Boolean =
+        actual val isRunningInDebugMode: Boolean by lazy {
             isRunningOnAndroid == false && // due to a bug in Gradle(?) Android library doesn't get published so that Android calls this JVM code leading to crashes when running on an Android device
-                isDebuggingEnabled()
+                    isDebuggingEnabled()
+        }
 
         actual val appName: String? by lazy {
             val jarPath = Platform::class.java.protectionDomain
