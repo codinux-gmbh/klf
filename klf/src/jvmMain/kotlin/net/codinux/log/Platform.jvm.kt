@@ -47,6 +47,7 @@ actual class Platform {
                     // not 100 % reliable, but the best i could find, see e.g. https://stackoverflow.com/questions/28754627/check-whether-we-are-in-intellij-idea-debugger
                     ManagementFactory.getRuntimeMXBean().inputArguments.any { it.contains("jdwp", true) }
             } catch (e: Throwable) {
+                ConsoleAppender.Default.append(LogLevel.Error, "Could not determine if debugging is enabled", "net.codinux.log.Platform.jvm", exception = e)
                 false
             }
 
