@@ -3,7 +3,7 @@ package net.codinux.log
 import net.codinux.log.appender.Appender
 import kotlin.reflect.KClass
 
-expect object Platform {
+internal expect object Platform {
 
     fun createDefaultLoggerFactory(): ILoggerFactory
 

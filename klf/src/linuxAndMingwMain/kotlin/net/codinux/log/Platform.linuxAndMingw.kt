@@ -5,7 +5,7 @@ import net.codinux.log.appender.ConsoleAppender
 import kotlin.native.concurrent.Worker
 import kotlin.reflect.KClass
 
-actual object Platform {
+internal actual object Platform {
 
   actual fun createDefaultLoggerFactory(): ILoggerFactory = DefaultLoggerFactory()
 

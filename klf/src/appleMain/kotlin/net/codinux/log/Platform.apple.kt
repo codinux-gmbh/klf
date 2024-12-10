@@ -17,7 +17,7 @@ import kotlin.experimental.ExperimentalNativeApi
 import kotlin.native.Platform
 import kotlin.reflect.KClass
 
-actual object Platform {
+internal actual object Platform {
 
   private val supportsOsLog = isOsLogSupported()
 

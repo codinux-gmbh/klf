@@ -8,7 +8,7 @@ import kotlin.reflect.KClass
 internal fun getCurrentPathname(): String =
     js("window.location.pathname")
 
-actual object Platform {
+internal actual object Platform {
 
     actual fun createDefaultLoggerFactory(): ILoggerFactory = DefaultLoggerFactory()
 

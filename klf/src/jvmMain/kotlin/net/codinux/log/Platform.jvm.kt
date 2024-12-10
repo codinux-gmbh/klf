@@ -5,7 +5,7 @@ import net.codinux.log.appender.ConsoleAppender
 import java.lang.management.ManagementFactory
 import kotlin.reflect.KClass
 
-actual object Platform {
+internal actual object Platform {
 
     actual fun createDefaultLoggerFactory() = JvmDefaults.createDefaultLoggerFactory()
 
