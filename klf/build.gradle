@@ -198,6 +198,10 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
 
+    buildFeatures {
+        buildConfig = true // so that BuildConfig gets generated
+    }
+
     lintOptions {
         abortOnError false
     }
