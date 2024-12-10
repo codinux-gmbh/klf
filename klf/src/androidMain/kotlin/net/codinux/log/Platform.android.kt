@@ -5,9 +5,7 @@ import net.codinux.log.appender.Appender
 import net.codinux.log.appender.LogcatAppender
 import kotlin.reflect.KClass
 
-actual class Platform {
-
-  actual companion object {
+actual object Platform {
 
     const val MaxAndroidLogTagSizeBeforeApi26 = 23
 
@@ -99,5 +97,4 @@ actual class Platform {
       }
     }
 
-  }
 }

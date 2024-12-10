@@ -3,25 +3,20 @@ package net.codinux.log
 import net.codinux.log.appender.Appender
 import kotlin.reflect.KClass
 
+expect object Platform {
 
-expect class Platform {
+    fun createDefaultLoggerFactory(): ILoggerFactory
 
-    companion object {
+    val systemDefaultAppender: Appender
 
-        fun createDefaultLoggerFactory(): ILoggerFactory
+    fun <T : Any> getLoggerName(forClass: KClass<T>): String
 
-        val systemDefaultAppender: Appender
+    fun getCurrentThreadName(): String?
 
-        fun <T : Any> getLoggerName(forClass: KClass<T>): String
+    fun lineSeparator(): String
 
-        fun getCurrentThreadName(): String?
+    val isRunningInDebugMode: Boolean
 
-        fun lineSeparator(): String
-
-        val isRunningInDebugMode: Boolean
-
-        val appName: String?
-
-    }
+    val appName: String?
 
 }

@@ -5,62 +5,57 @@ import net.codinux.log.appender.ConsoleAppender
 import java.lang.management.ManagementFactory
 import kotlin.reflect.KClass
 
+actual object Platform {
 
-actual class Platform {
+    actual fun createDefaultLoggerFactory() = JvmDefaults.createDefaultLoggerFactory()
 
-    actual companion object {
+    actual val systemDefaultAppender: Appender = ConsoleAppender.Default
 
-        actual fun createDefaultLoggerFactory() = JvmDefaults.createDefaultLoggerFactory()
-
-        actual val systemDefaultAppender: Appender = ConsoleAppender.Default
-
-        private val isRunningOnAndroid by lazy { isClassAvailable("android.content.Context") }
+    private val isRunningOnAndroid by lazy { isClassAvailable("android.content.Context") }
 
 
-        actual fun <T : Any> getLoggerName(forClass: KClass<T>) = JvmDefaults.getLoggerName(forClass)
+    actual fun <T : Any> getLoggerName(forClass: KClass<T>) = JvmDefaults.getLoggerName(forClass)
 
-        actual fun getCurrentThreadName() =
-            JvmDefaults.getCurrentThreadName()
+    actual fun getCurrentThreadName() =
+        JvmDefaults.getCurrentThreadName()
 
-        actual fun lineSeparator(): String =
-            System.lineSeparator()
+    actual fun lineSeparator(): String =
+        System.lineSeparator()
 
-        actual val isRunningInDebugMode: Boolean by lazy {
-            isRunningOnAndroid == false && // due to a bug in Gradle(?) Android library doesn't get published so that Android calls this JVM code leading to crashes when running on an Android device
-                    isDebuggingEnabled()
+    actual val isRunningInDebugMode: Boolean by lazy {
+        isRunningOnAndroid == false && // due to a bug in Gradle(?) Android library doesn't get published so that Android calls this JVM code leading to crashes when running on an Android device
+                isDebuggingEnabled()
+    }
+
+    actual val appName: String? by lazy {
+        val jarPath = Platform::class.java.protectionDomain
+            .codeSource
+            .location
+            .toURI()
+            .path
+
+        jarPath.split('/').last { it.isNotBlank() }
+    }
+
+
+    private fun isDebuggingEnabled(): Boolean =
+        try {
+            isClassAvailable("java.lang.management.ManagementFactory") &&
+                // not 100 % reliable, but the best i could find, see e.g. https://stackoverflow.com/questions/28754627/check-whether-we-are-in-intellij-idea-debugger
+                ManagementFactory.getRuntimeMXBean().inputArguments.any { it.contains("jdwp", true) }
+        } catch (e: Throwable) {
+            ConsoleAppender.Default.append(LogLevel.Error, "Could not determine if debugging is enabled", "net.codinux.log.Platform.jvm", exception = e)
+            false
         }
 
-        actual val appName: String? by lazy {
-            val jarPath = Platform::class.java.protectionDomain
-                .codeSource
-                .location
-                .toURI()
-                .path
+    private fun isClassAvailable(qualifiedClassName: String): Boolean {
+        try {
+            Class.forName(qualifiedClassName)
 
-            jarPath.split('/').last { it.isNotBlank() }
-        }
+            return true
+        } catch (ignored: Exception) { }
 
-
-        private fun isDebuggingEnabled(): Boolean =
-            try {
-                isClassAvailable("java.lang.management.ManagementFactory") &&
-                    // not 100 % reliable, but the best i could find, see e.g. https://stackoverflow.com/questions/28754627/check-whether-we-are-in-intellij-idea-debugger
-                    ManagementFactory.getRuntimeMXBean().inputArguments.any { it.contains("jdwp", true) }
-            } catch (e: Throwable) {
-                ConsoleAppender.Default.append(LogLevel.Error, "Could not determine if debugging is enabled", "net.codinux.log.Platform.jvm", exception = e)
-                false
-            }
-
-        private fun isClassAvailable(qualifiedClassName: String): Boolean {
-            try {
-                Class.forName(qualifiedClassName)
-
-                return true
-            } catch (ignored: Exception) { }
-
-            return false
-        }
-
+        return false
     }
 
 }

@@ -2,7 +2,7 @@ package net.codinux.log
 
 import kotlin.reflect.KClass
 
-fun Platform.Companion.getLoggerNameForKClassesWithQualifiedName(forClass: KClass<*>): String {
+fun Platform.getLoggerNameForKClassesWithQualifiedName(forClass: KClass<*>): String {
     forClass.qualifiedName?.let { qualifiedName ->
         removeCompanionAndInnerClassSeparatorFromName(qualifiedName)
     }
@@ -19,7 +19,7 @@ fun Platform.Companion.getLoggerNameForKClassesWithQualifiedName(forClass: KClas
     }
 }
 
-fun Platform.Companion.removeCompanionAndInnerClassSeparatorFromName(loggerName: String): String {
+fun Platform.removeCompanionAndInnerClassSeparatorFromName(loggerName: String): String {
     // unwrap companion object
     return if (loggerName.endsWith(".Companion")) { // ok, someone could name a class 'Companion', but in this case i have no pity that his/her logger name is wrong then
         loggerName.substring(0, loggerName.length - ".Companion".length)
