@@ -115,6 +115,8 @@ kotlin {
         commonTest {
             dependencies {
                 implementation kotlin("test")
+
+                implementation("com.willowtreeapps.assertk:assertk:$assertKVersion")
             }
         }
 

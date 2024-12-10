@@ -112,6 +112,9 @@ class OrderService {
 }
 ```
 
+This comes in handy in Compose as in composable functions there's (usually) no class to reference with `by logger()` or `LoggerFactory.getLogger(ClassName::class)`.
+
+
 ## Log appenders
 
 klf by ships with a lot of log appenders. Depending on the platform by default these appenders are used:
@@ -139,6 +142,18 @@ Otherwise: **NSLog**
 ### Native
 
 **Console** (`println()`)
+
+### Getting notified about log events
+
+If you want to get notified about each log event, add a `NotifyAboutLogEventsAppender`:
+
+```kotlin
+LoggerFactory.addAppender(NotifyAboutLogEventsAppender(includeThreadName = true, includeException = true) { event ->
+    // handle received log event - but do not block the thread!
+})
+```
+
+For `includeException` `true` is the default value, for `includeThreadName` `false`.
 
 ### Custom
 
