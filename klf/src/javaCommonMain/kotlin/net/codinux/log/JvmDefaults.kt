@@ -57,14 +57,14 @@ object JvmDefaults {
     Thread.currentThread().name
 
 
-  fun isClassAvailable(qualifiedClassName: String): Boolean {
+  fun isClassAvailable(qualifiedClassName: String): Boolean =
+    getClassOrNull(qualifiedClassName) != null
+
+  fun getClassOrNull(qualifiedClassName: String): Class<*>? =
     try {
       Class.forName(qualifiedClassName)
-
-      return true
-    } catch (ignored: Exception) { }
-
-    return false
-  }
+    } catch (ignored: Exception) {
+      null
+    }
 
 }
