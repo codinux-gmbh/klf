@@ -1,6 +1,5 @@
 package net.codinux.log
 
-import net.codinux.log.test.TestPlatform
 import net.codinux.log.test.WatchableAppender
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -27,7 +26,7 @@ class LogTest {
 
     private val message = "Log message"
 
-    private val loggerName: String = if (TestPlatform.isRunningInJs) LogTest::class.simpleName!! else "net.codinux.log.LogTest"
+    private val loggerName: String = if (Platform.type.isJsOrWasm) LogTest::class.simpleName!! else "net.codinux.log.LogTest"
 
     private val exception = IllegalArgumentException("Just a test")
 
