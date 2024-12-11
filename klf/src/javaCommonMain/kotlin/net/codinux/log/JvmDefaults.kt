@@ -41,4 +41,15 @@ object JvmDefaults {
   fun getCurrentThreadName(): String? =
     Thread.currentThread().name
 
+
+  fun isClassAvailable(qualifiedClassName: String): Boolean {
+    try {
+      Class.forName(qualifiedClassName)
+
+      return true
+    } catch (ignored: Exception) { }
+
+    return false
+  }
+
 }

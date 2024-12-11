@@ -6,7 +6,7 @@ import org.slf4j.helpers.NOPLoggerFactory
 
 object Slf4jUtil {
 
-    val isSlf4jOnClasspath: Boolean by lazy { isClassAvailable("org.slf4j.Logger") }
+    val isSlf4jOnClasspath: Boolean by lazy { JvmDefaults.isClassAvailable("org.slf4j.Logger") }
 
     val slf4jLoggerFactory: ILoggerFactory by lazy { LoggerFactory.getILoggerFactory() }
 
@@ -55,16 +55,6 @@ object Slf4jUtil {
 
             Slf4jBinding.Unknown
         }
-    }
-
-    private fun isClassAvailable(qualifiedClassName: String): Boolean {
-        try {
-            Class.forName(qualifiedClassName)
-
-            return true
-        } catch (ignored: Exception) { }
-
-        return false
     }
 
 }
