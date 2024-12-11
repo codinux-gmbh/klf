@@ -28,13 +28,19 @@ internal actual object Platform {
     }
 
     actual val appName: String? by lazy {
-        val jarPath = Platform::class.java.protectionDomain
-            .codeSource
-            .location
-            .toURI()
-            .path
+        try {
+            val jarPath = Platform::class.java.protectionDomain
+                .codeSource
+                .location
+                .toURI()
+                .path
 
-        jarPath.split('/').last { it.isNotBlank() }
+            jarPath.split('/').last { it.isNotBlank() }
+        } catch (e: Throwable) { // TODO: log to error logger
+            Log.error<Platform>(e) { "Could not get app name from jar name (is a security manager installed?)" }
+
+            null
+        }
     }
 
 
