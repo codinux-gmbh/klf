@@ -36,7 +36,9 @@ tasks.register("publishAllToMavenLocal") {
     dependsOn(
             ":klf:publishToMavenLocal",
 
-            ":klf-graal:publishToMavenLocal"
+            ":klf-graal:publishToMavenLocal",
+
+            ":klf-loki-appender:publishToMavenLocal"
     )
 }
 
@@ -44,6 +46,8 @@ tasks.register("publishAll") {
     dependsOn(
             ":klf:publish",
 
-            ":klf-graal:publish"
+            ":klf-graal:publish",
+
+            ":klf-loki-appender:publish"
     )
 }

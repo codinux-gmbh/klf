@@ -1,8 +1,12 @@
 
 rootProject.name = "klf-Project"
 
+
 include("klf")
+
 include("klf-graal")
+
+include("klf-loki-appender")
 
 include("sampleApps:NativeSampleApp")
 

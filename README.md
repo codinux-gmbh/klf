@@ -155,6 +155,27 @@ LoggerFactory.addAppender(NotifyAboutLogEventsAppender(includeThreadName = true,
 
 For `includeException` `true` is the default value, for `includeThreadName` `false`.
 
+### Loki
+
+If you want to apply centralized logging, you can push all logs collected with klf directly to [Loki](https://github.com/grafana/loki) with `klf-loki-appender`:
+
+Add to Gradle:
+```
+implementation("net.codinux.log:klf-loki-appender:1.8.0")
+```
+
+And on app start add LokiAppender:
+
+```kotlin
+// configure Loki url and credentials:
+val config = LokiLogAppenderConfig(writer = WriterConfig("http://192.168.0.27:3100", username = null, password = null))
+
+// then add LokiAppender to klf LoggerFactory
+LoggerFactory.addAppender(LokiAppender(config))
+```
+
+If using http (e.g. for tests in local network) on Android add `android:usesCleartextTraffic="true"` to AndroidManifest.xml -> <application> tag.
+
 ### Custom
 
 You can also use add your custom log appender by implementing Appender interface:
