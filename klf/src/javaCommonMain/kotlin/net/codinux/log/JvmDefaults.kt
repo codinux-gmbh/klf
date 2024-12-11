@@ -47,7 +47,7 @@ object JvmDefaults {
     // index 2 is Platform.getLoggerNameFromCallingMethod()
     // index 3 is LoggerFactory.getLogger(String?)
     return stackTrace.drop(4).firstOrNull()?.let { stackTraceElement ->
-      stackTraceElement.className + "." + stackTraceElement.methodName
+      LoggerNameResolver.getLoggerNameFromMethod(stackTraceElement.className, stackTraceElement.methodName)
     }
   }
 
