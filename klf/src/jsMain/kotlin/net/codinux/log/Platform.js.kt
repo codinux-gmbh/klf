@@ -7,6 +7,8 @@ import kotlin.reflect.KClass
 
 internal actual object Platform {
 
+  actual val type = PlatformType.Js
+
   actual fun createDefaultLoggerFactory(): ILoggerFactory = DefaultLoggerFactory()
 
   actual val systemDefaultAppender: Appender = JsConsoleAppender()

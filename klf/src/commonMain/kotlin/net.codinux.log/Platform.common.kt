@@ -5,6 +5,8 @@ import kotlin.reflect.KClass
 
 internal expect object Platform {
 
+    val type: PlatformType
+
     fun createDefaultLoggerFactory(): ILoggerFactory
 
     val systemDefaultAppender: Appender

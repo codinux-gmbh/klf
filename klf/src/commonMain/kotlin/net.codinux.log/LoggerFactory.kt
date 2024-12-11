@@ -1,6 +1,7 @@
 package net.codinux.log
 
 import net.codinux.log.appender.Appender
+import net.codinux.log.config.LoggerConfig
 import kotlin.jvm.JvmStatic
 import kotlin.native.concurrent.ThreadLocal
 import kotlin.reflect.KClass
@@ -27,6 +28,9 @@ object LoggerFactory {
         set(value) {
             customDefaultLoggerName = value
         }
+
+    @JvmStatic
+    val config: LoggerConfig = LoggerConfig()
 
     /**
      * Experimental: Sets the default log level for all loggers that will be used if no logger specific level is set with [LoggerBase.level].
@@ -59,7 +63,7 @@ object LoggerFactory {
     @JvmStatic
     fun getLogger(name: String?): Logger {
         // name can only be null when using one of the static log methods of net.codinux.log.Log without a logger name or class
-        val actualName = name ?: Platform.getLoggerNameFromCallingMethod() ?: defaultLoggerName
+        val actualName = name ?: resolveDefaultLoggerName()
 
         return loggerCacheForName.getOrPut(actualName) {
             factory.createLogger(actualName)
@@ -71,5 +75,15 @@ object LoggerFactory {
         loggerCache.getOrPut(forClass) {
             getLogger(Platform.getLoggerName(forClass))
         }
+
+    private fun resolveDefaultLoggerName(): String {
+        if (config.useCallerMethodIfLoggerNameNotSet) {
+            Platform.getLoggerNameFromCallingMethod()?.let { fromCallingMethod ->
+                return fromCallingMethod
+            }
+        }
+
+        return defaultLoggerName
+    }
 
 }

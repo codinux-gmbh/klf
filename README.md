@@ -117,13 +117,17 @@ class OrderService {
 
 ## Logger name resolution if no logger tag is provided
 
-If no logger tag is provided, e.g. with `Log.info { "Info" }`, which comes in handy e.g. in Composables, where in most cases no class to reference is available, the following logger name resolution will be applied:
+If no logger tag is provided, e.g. with `Log.info { "Info" }`, the following logger name resolution will be applied:
 
-1. If set, the value of `LoggerFactory.defaultLoggerName` will be used.
+1. If `LoggerFactory.config.useCallerMethodIfLoggerNameNotSet` is set to true, then the method that executed the log statement will be used as logger name, in the format `<class name>.<method name>`.
+This comes in handy in Compose as in composable functions there's (usually) no class to reference with `by logger()` or `Log.info<ClassName> { }`.     
+This currently works only on `JVM` and `Android`.
 
-2. If `defaultLoggerName` is not set, we try to determine the app name (e.g. Main Bundle name on iOS, app's package name on Android, jar name on JVM and URL's last path name on JavaScript).
+2. If set, the value of `LoggerFactory.defaultLoggerName` will be used.
 
-3. If this does not work, `"net.codinux.log.klf"` will be used as logger name.
+3. If `defaultLoggerName` is not set, we try to determine the app name (e.g. Main Bundle name on iOS, app's package name on Android, jar name on JVM and URL's last path name on JavaScript).
+
+4. If this does not work, `"net.codinux.log.klf"` will be used as logger name.
 
 
 ## Log appenders
@@ -160,7 +164,7 @@ If you want to get notified about each log event, add a `NotifyAboutLogEventsApp
 
 ```kotlin
 LoggerFactory.addAppender(NotifyAboutLogEventsAppender(includeThreadName = true, includeException = true) { event ->
-    // handle received log event - but do not block the thread!
+    // handle received log event
 })
 ```
 
