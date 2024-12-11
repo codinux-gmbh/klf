@@ -2,6 +2,7 @@ package net.codinux.log
 
 import net.codinux.log.appender.Appender
 import net.codinux.log.appender.ConsoleAppender
+import net.codinux.log.util.LoggerNameResolver
 import kotlin.native.concurrent.Worker
 import kotlin.reflect.KClass
 
@@ -12,7 +13,7 @@ internal actual object Platform {
   actual val systemDefaultAppender: Appender = ConsoleAppender.Default
 
   actual fun <T : Any> getLoggerName(forClass: KClass<T>) =
-    Platform.getLoggerNameForKClassesWithQualifiedName(forClass)
+    LoggerNameResolver.getLoggerNameForKClassesWithQualifiedName(forClass)
 
   actual fun getLoggerNameFromCallingMethod(): String? = null
 

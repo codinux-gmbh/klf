@@ -8,6 +8,7 @@ import kotlinx.cinterop.useContents
 import net.codinux.log.appender.Appender
 import net.codinux.log.appender.NSLogAppender
 import net.codinux.log.appender.OSLogAppender
+import net.codinux.log.util.LoggerNameResolver
 import platform.CoreFoundation.kCFBundleNameKey
 import platform.Foundation.NSBundle
 import platform.Foundation.NSOperationQueue
@@ -26,7 +27,7 @@ internal actual object Platform {
   actual val systemDefaultAppender: Appender = if (supportsOsLog) OSLogAppender() else NSLogAppender()
 
   actual fun <T : Any> getLoggerName(forClass: KClass<T>) =
-    net.codinux.log.Platform.getLoggerNameForKClassesWithQualifiedName(forClass)
+    LoggerNameResolver.getLoggerNameForKClassesWithQualifiedName(forClass)
 
   // TODO: may use Thread.callStackSymbols
   actual fun getLoggerNameFromCallingMethod(): String? = null

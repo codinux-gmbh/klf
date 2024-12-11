@@ -2,6 +2,7 @@ package net.codinux.log
 
 import net.codinux.log.slf4j.Slf4jLoggerFactory
 import net.codinux.log.slf4j.Slf4jUtil
+import net.codinux.log.util.LoggerNameResolver
 import kotlin.reflect.KClass
 import kotlin.reflect.jvm.jvmName
 
@@ -35,7 +36,7 @@ object JvmDefaults {
       ?: forClass.jvmName.replace('$', '.')
 
   fun <T : Any> getClassNameWithUnwrappingCompanion(forClass: KClass<T>): String =
-    Platform.removeCompanionAndInnerClassSeparatorFromName(forClass.qualifiedName ?: forClass.jvmName)
+    LoggerNameResolver.removeCompanionAndInnerClassSeparatorFromName(forClass.qualifiedName ?: forClass.jvmName)
 
 
   fun getLoggerNameFromCallingMethod(): String? {
