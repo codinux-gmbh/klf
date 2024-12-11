@@ -108,13 +108,12 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation kotlin('stdlib-common')
-                implementation kotlin("reflect")
+                implementation(kotlin("reflect"))
             }
         }
         commonTest {
             dependencies {
-                implementation kotlin("test")
+                implementation(kotlin("test"))
 
                 implementation("com.willowtreeapps.assertk:assertk:$assertKVersion")
             }
