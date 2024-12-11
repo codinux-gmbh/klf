@@ -72,8 +72,8 @@ internal actual object Platform {
         val packageName = loggerClass.java.packageName
 
         getClassNameWithShortenedPackageNameOfLogTagMaxLength(packageName, className)
-      } catch (e: Throwable) {
-        // TODO: log to error logger
+      } catch (e: Throwable) { // TODO: log to error logger
+        Log.error<Platform>(e) { "Could not shorten class name to meet Android's max log tag length of $MaxAndroidLogTagSizeBeforeApi26 on older Androids before API 26" }
         null
       }
     }
