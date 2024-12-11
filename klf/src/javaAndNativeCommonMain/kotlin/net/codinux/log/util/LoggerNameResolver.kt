@@ -6,7 +6,7 @@ internal object LoggerNameResolver {
 
     fun getLoggerNameForKClassesWithQualifiedName(forClass: KClass<*>): String {
         forClass.qualifiedName?.let { qualifiedName ->
-            removeCompanionAndInnerClassSeparatorFromName(qualifiedName)
+            return removeCompanionAndInnerClassSeparatorFromName(qualifiedName)
         }
 
         forClass.simpleName?.let {
