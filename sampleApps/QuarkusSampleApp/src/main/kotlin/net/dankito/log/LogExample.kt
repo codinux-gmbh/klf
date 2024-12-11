@@ -44,6 +44,15 @@ class LogExample {
         Log.info<LogExample> { "Static Logger: Info" }
 
         Log.error<LogExample>(Exception("Just a test, no animals were harmed")) { "Static Logger: Error with Exception" }
+
+        // The logger tag can also be omitted; in this case, the default logger name resolution will apply
+        Log.info { "Message with ${heavyCalculation()}" }
+    }
+
+    private fun heavyCalculation(): String {
+        java.lang.Thread.sleep(500)
+
+        return "heavy calculation"
     }
 
 }

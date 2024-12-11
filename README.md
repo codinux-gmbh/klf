@@ -104,15 +104,26 @@ class OrderService {
     fun showUsage() {
         Log.info<OrderService> { "Message with ${heavyCalculation()}" }
 
-        Log.errorOrderService(e) { "An error occurred" } // e is a throwable
+        Log.error<OrderService>(e) { "An error occurred" } // e is a throwable
 
-        // or set the logger tag explicitly:
+        // or set the logger tag via String:
         Log.info(loggerName = "OrderService") { "Message with ${heavyCalculation()}" }
+        
+        // The logger tag can also be omitted; in this case, the default logger name resolution will apply, as described below.
+        Log.info { "Message with ${heavyCalculation()}" }
     }
 }
 ```
 
-This comes in handy in Compose as in composable functions there's (usually) no class to reference with `by logger()` or `LoggerFactory.getLogger(ClassName::class)`.
+## Logger name resolution if no logger tag is provided
+
+If no logger tag is provided, e.g. with `Log.info { "Info" }`, which comes in handy e.g. in Composables, where in most cases no class to reference is available, the following logger name resolution will be applied:
+
+1. If set, the value of `LoggerFactory.defaultLoggerName` will be used.
+
+2. If `defaultLoggerName` is not set, we try to determine the app name (e.g. Main Bundle name on iOS, app's package name on Android, jar name on JVM and URL's last path name on JavaScript).
+
+3. If this does not work, `"net.codinux.log.klf"` will be used as logger name.
 
 
 ## Log appenders
