@@ -14,6 +14,14 @@ object LoggerFactory {
 
     private var customDefaultLoggerName: String? = null
 
+    /**
+     * The logger name that will be applied if no logger tag has been provided, e.g. with
+     * `Log.info { "Info without provided logger tag" }`.
+     *
+     * If [defaultLoggerName] has not been set, we try to find the app name.
+     *
+     * If this does not work, then `"net.codinux.log.klf"` will be used as logger name.
+     */
     var defaultLoggerName: String
         get() = customDefaultLoggerName ?: Platform.appName ?: "net.codinux.log.klf"
         set(value) {
@@ -50,7 +58,8 @@ object LoggerFactory {
 
     @JvmStatic
     fun getLogger(name: String?): Logger {
-        val actualName = name ?: defaultLoggerName
+        // name can only be null when using one of the static log methods of net.codinux.log.Log without a logger name or class
+        val actualName = name ?: Platform.getLoggerNameFromCallingMethod() ?: defaultLoggerName
 
         return loggerCacheForName.getOrPut(actualName) {
             factory.createLogger(actualName)

@@ -28,6 +28,9 @@ internal actual object Platform {
   actual fun <T : Any> getLoggerName(forClass: KClass<T>) =
     net.codinux.log.Platform.getLoggerNameForKClassesWithQualifiedName(forClass)
 
+  // TODO: may use Thread.callStackSymbols
+  actual fun getLoggerNameFromCallingMethod(): String? = null
+
   actual fun getCurrentThreadName(): String? {
     val currentThread = NSThread.currentThread
 
@@ -37,9 +40,11 @@ internal actual object Platform {
   }
 
   fun printStackTrace() {
-    NSThread.callStackSymbols.forEach { callStackSymbol ->
-      println(callStackSymbol)
-    }
+    NSThread.callStackSymbols
+      .drop(1) // skip invocation of Exception constructor and this method
+      .forEach { callStackSymbol ->
+        println(callStackSymbol)
+      }
   }
 
   actual fun lineSeparator(): String =

@@ -20,6 +20,8 @@ internal actual object Platform {
         return forClass.simpleName ?: forClass.toString()
     }
 
+    actual fun getLoggerNameFromCallingMethod(): String? = null
+
     actual fun getCurrentThreadName(): String? = "main" // TODO: how to get current thread in WebAssembly?
 
     actual fun lineSeparator(): String = "\n"

@@ -15,6 +15,9 @@ internal actual object Platform {
 
     actual fun <T : Any> getLoggerName(forClass: KClass<T>): String = getAndroidLogTag(forClass)
 
+    actual fun getLoggerNameFromCallingMethod(): String? =
+        JvmDefaults.getLoggerNameFromCallingMethod()
+
     actual fun getCurrentThreadName() =
       JvmDefaults.getCurrentThreadName()
 

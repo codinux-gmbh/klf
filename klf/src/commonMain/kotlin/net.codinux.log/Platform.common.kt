@@ -11,6 +11,8 @@ internal expect object Platform {
 
     fun <T : Any> getLoggerName(forClass: KClass<T>): String
 
+    fun getLoggerNameFromCallingMethod(): String?
+
     fun getCurrentThreadName(): String?
 
     fun lineSeparator(): String

@@ -17,6 +17,8 @@ internal actual object Platform {
     return forClass.simpleName ?: forClass.js.name
   }
 
+  actual fun getLoggerNameFromCallingMethod(): String? = null
+
   actual fun getCurrentThreadName(): String? = "main"
 
   actual fun lineSeparator(): String = "\n"

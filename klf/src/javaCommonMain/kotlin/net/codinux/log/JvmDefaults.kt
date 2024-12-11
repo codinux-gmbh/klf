@@ -38,6 +38,19 @@ object JvmDefaults {
     Platform.removeCompanionAndInnerClassSeparatorFromName(forClass.qualifiedName ?: forClass.jvmName)
 
 
+  fun getLoggerNameFromCallingMethod(): String? {
+    val stackTrace = Thread.currentThread().stackTrace
+
+    // index 0 is getStackTrace()
+    // index 1 is this method
+    // index 2 is Platform.getLoggerNameFromCallingMethod()
+    // index 3 is LoggerFactory.getLogger(String?)
+    return stackTrace.drop(4).firstOrNull()?.let { stackTraceElement ->
+      stackTraceElement.className + "." + stackTraceElement.methodName
+    }
+  }
+
+
   fun getCurrentThreadName(): String? =
     Thread.currentThread().name
 
