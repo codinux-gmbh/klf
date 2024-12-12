@@ -13,4 +13,6 @@ enum class PlatformType {
 
     val isJsOrWasm: Boolean by lazy { this == Js || this == Wasm }
 
+    val isNative: Boolean by lazy { this == Apple || this == LinuxOrMingw }
+
 }

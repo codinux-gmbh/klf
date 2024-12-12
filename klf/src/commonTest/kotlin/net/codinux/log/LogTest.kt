@@ -123,13 +123,13 @@ class LogTest {
 
     @Test
     fun traceWithGenericTypAndException_LevelTraceEnabled() {
-        if (Platform.type == PlatformType.LinuxOrMingw) { // on native we also have to set debugConfig as there Platform.isRunningInDebug mode is true as long as no release build is built
+        if (Platform.type.isNative) { // on native we also have to set debugConfig as there Platform.isRunningInDebug mode is true as long as no release build is built
             LoggerFactory.debugConfig.rootLevel = LogLevel.Trace
         }
 
         Log.trace<LogTest>(exception) { message }
 
-        if (Platform.type == PlatformType.LinuxOrMingw) {
+        if (Platform.type.isNative) {
             LoggerFactory.debugConfig.rootLevel = LogLevel.Debug // reset for other tests
         }
 
