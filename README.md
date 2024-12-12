@@ -130,6 +130,26 @@ This currently works only on `JVM` and `Android`.
 4. If this does not work, `"net.codinux.log.klf"` will be used as logger name.
 
 
+## Configuration
+
+### Android
+
+For some features to work on Android, like logging the app name or determining if running in debug mode, Android 
+Context is required. Set it at app start, e.g. in MainActivity:
+
+```kotlin
+class MainActivity : ComponentActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        net.codinux.log.android.AndroidContext.applicationContext = this.applicationContext
+
+        // ...
+    }
+}
+```
+
 ## Log appenders
 
 klf by ships with a lot of log appenders. Depending on the platform by default these appenders are used:

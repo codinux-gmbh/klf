@@ -1,6 +1,8 @@
 package net.codinux.log
 
+import android.content.pm.ApplicationInfo
 import android.os.Build
+import net.codinux.log.android.AndroidContext
 import net.codinux.log.appender.Appender
 import net.codinux.log.appender.LogcatAppender
 import kotlin.reflect.KClass
@@ -28,17 +30,25 @@ internal actual object Platform {
       System.lineSeparator()
 
     actual val isRunningInDebugMode =
-      BuildConfig.DEBUG
+        // BuildConfig.DEBUG will always be false as for a compiled library its set to false at compile time
+        AndroidContext.applicationContext?.applicationContext?.let {
+            it.applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE != 0
+        } ?: false
 
     actual val appName: String? by lazy {
-//      try {
-//        context.packageManager.getApplicationInfo(context.applicationInfo.packageName, 0)?.let {
-//          packageManager.getApplicationLabel(applicationInfo)
-//        }
-//      } catch (e: Throwable) {
-//
-//      }
-      BuildConfig.LIBRARY_PACKAGE_NAME // it's not the app name, for this we need the applicationContext, but at least the package name
+      try {
+          AndroidContext.applicationContext?.applicationContext?.let { context ->
+              context.applicationInfo?.let { applicationInfo ->
+                  applicationInfo.loadLabel(context.packageManager)?.let { label ->
+                      "${applicationInfo.packageName ?: applicationInfo.processName}.$label"
+                  }
+              }
+          }
+      } catch (e: Throwable) {
+          Log.error<Platform>(e) { "Could not get app name" }
+
+          null
+      }
     }
 
 
