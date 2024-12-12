@@ -7,9 +7,10 @@ import kotlin.reflect.KClass
 
 internal actual object Platform {
 
-    actual val type = PlatformType.Android
-
     const val MaxAndroidLogTagSizeBeforeApi26 = 23
+
+
+    actual val type = PlatformType.Android
 
     actual fun createDefaultLoggerFactory() = JvmDefaults.createDefaultLoggerFactory()
 
