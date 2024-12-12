@@ -119,13 +119,13 @@ class OrderService {
 
 If no logger tag is provided, e.g. with `Log.info { "Info" }`, the following logger name resolution will be applied:
 
-1. If `LoggerFactory.config.useCallerMethodIfLoggerNameNotSet` is set to true, then the method that executed the log statement will be used as logger name, in the format `<class name>.<method name>`.
-This comes in handy in Compose as in composable functions there's (usually) no class to reference with `by logger()` or `Log.info<ClassName> { }`.     
-This currently works only on `JVM` and `Android`.
+1. If `LoggerFactory.config.useCallerMethodIfLoggerNameNotSet` or in debug mode  `LoggerFactory.debugConfig.useMethodNameIfLogTagIsNotSet` is set to true, then the method that executed the log statement will be used as logger name (which is quite handy e.g. for @Composable functions).       
+It's a bit resource intensive, see below.   
+Currently only works on `JVM` and `Android`.
 
-2. If set, the value of `LoggerFactory.defaultLoggerName` will be used.
+2. Otherwise if set, the value of `LoggerFactory.defaultLoggerName` will be used.
 
-3. If `defaultLoggerName` is not set, we try to determine the app name (e.g. Main Bundle name on iOS, app's package name on Android, jar name on JVM and URL's last path name on JavaScript).
+3. If `defaultLoggerName` is not set, we try to determine the app name (e.g. Main Bundle name on iOS, app's package name and name on Android (but see Configuration -> [Android](#android)), jar name on JVM and URL's last path name on JavaScript).
 
 4. If this does not work, `"net.codinux.log.klf"` will be used as logger name.
 
@@ -149,6 +149,44 @@ class MainActivity : ComponentActivity() {
     }
 }
 ```
+
+### Options
+
+#### useCallerMethodIfLoggerNameNotSet
+
+If no logger tag is passed to log statement, e.g. with `Log.info { ".." }`, 
+and `LoggerFactory.config.useCallerMethodIfLoggerNameNotSet` or in debug mode 
+`LoggerFactory.debugConfig.useMethodNameIfLogTagIsNotSet` is set to true, 
+then the method that executed the log statement will be used as logger name, 
+in the format `<class name>.<method name>`.
+
+This comes in handy in Compose as in composable functions there's (usually) no class to reference with `by logger()` or `Log.info<ClassName> { }`. 
+
+It's also trying to remove auto generated class name parts like they are applied to Coroutine functions
+(like "org.example.AppKt$App$2$1$2.invokeSuspend" -> "org.example.App").
+This may not work reliably under all circumstances as we have to extract the class name and method name from strings and we may are not aware of all possible formats yet.
+
+But be aware that this is a bit resource intensive as it walks up the call 
+stack for each log call to find the calling method, so preferably only enable it in debug mode.     
+For UI applications this should be fine anyway, just don't enable it on high load servers.
+
+This currently works only on `JVM` and `Android`.
+
+### Debug mode vs. normal / release mode
+
+For all options in `LoggerFactory.config` there's a same named option in `LoggerFactory.debugConfig`.
+
+Values from `debugConfig` will only be applied when running in debug mode / a debugger is attached.     
+So you can set values that only get applied during development / when running in debug mode
+and don't touch your normal user's configuration like:
+
+```kotlin
+LoggerFactory.debugConfig.useCallerMethodIfLoggerNameNotSet = true
+```
+
+This does currently not work on `JS` and `WASM` (hints how to detect attached debugger in JS are welcome).        
+For `Android` it means that the app is compiled in `debug build variant`.
+
 
 ## Log appenders
 

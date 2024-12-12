@@ -1,6 +1,7 @@
 package net.codinux.log
 
 import net.codinux.log.appender.Appender
+import net.codinux.log.config.EffectiveLoggerConfig
 import net.codinux.log.config.LoggerConfig
 import kotlin.jvm.JvmStatic
 import kotlin.native.concurrent.ThreadLocal
@@ -32,6 +33,11 @@ object LoggerFactory {
 
     @JvmStatic
     val config: LoggerConfig = LoggerConfig()
+
+    @JvmStatic
+    val debugConfig: LoggerConfig = LoggerConfig()
+
+    internal val effectiveConfig: EffectiveLoggerConfig = EffectiveLoggerConfig(config, debugConfig, Platform.isRunningInDebugMode)
 
     /**
      * Experimental: Sets the default log level for all loggers that will be used if no logger specific level is set with [LoggerBase.level].
@@ -78,7 +84,7 @@ object LoggerFactory {
         }
 
     private fun resolveDefaultLoggerName(): String {
-        if (config.useCallerMethodIfLoggerNameNotSet) {
+        if (effectiveConfig.useCallerMethodIfLoggerNameNotSet) {
             Platform.getLoggerNameFromCallingMethod()?.let { fromCallingMethod ->
                 return fromCallingMethod
             }
