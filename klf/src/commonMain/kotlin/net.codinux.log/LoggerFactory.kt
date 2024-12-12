@@ -34,16 +34,8 @@ object LoggerFactory {
             config.defaultLoggerName = value
         }
 
-    @JvmStatic
-    val config: LoggerConfig = LoggerConfig()
-
-    @JvmStatic
-    val debugConfig: LoggerConfig = LoggerConfig()
-
-    internal val effectiveConfig: EffectiveLoggerConfig = EffectiveLoggerConfig(config, debugConfig, Platform.isRunningInDebugMode)
-
     /**
-     * Experimental: Sets the default log level for all loggers that will be used if no logger specific level is set with [LoggerBase.level].
+     * Experimental: Sets the default log level for all loggers that will be used if no logger specific level is set with [Logger.level].
      *
      * Be aware, this does not work reliably for all logging backends, e.g. we don't have implementations for all slf4j
      * logging backends and the Android min log level is unchangeable.
@@ -51,7 +43,26 @@ object LoggerFactory {
      * If slf4j is on the classpath, configure log level via logging backend (logback, log4j, ...).
      */
     @JvmStatic
-    var RootLevel: LogLevel = LogLevel.Info
+    @Deprecated(
+        level = DeprecationLevel.WARNING,
+        replaceWith = ReplaceWith("LoggerFactory.config.rootLevel or LoggerFactory.debugConfig.rootLevel"),
+        message = "Simply passes call on to `LoggerFactory.config.rootLevel`.\nUse `LoggerFactory.config.rootLevel` or `LoggerFactory.debugConfig.rootLevel` instead.\nThis will be removed in klf 2.0.\n"
+    )
+    var RootLevel: LogLevel
+        get() = config.rootLevel
+        set(value) {
+            config.rootLevel = value
+        }
+
+
+    @JvmStatic
+    val config: LoggerConfig = LoggerConfig()
+
+    @JvmStatic
+    val debugConfig: LoggerConfig = LoggerConfig(defaultRootLevel = LogLevel.Debug)
+
+    internal val effectiveConfig: EffectiveLoggerConfig = EffectiveLoggerConfig(config, debugConfig, Platform.isRunningInDebugMode)
+
 
     private var factory: ILoggerFactory = Platform.createDefaultLoggerFactory()
 

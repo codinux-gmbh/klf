@@ -17,7 +17,7 @@ class AppenderTest {
             // otherwise on JVM slf4j's org.slf4j.helpers.NOPLoggerFactory is used. Loggers then have the name "NOP"
             LoggerFactory.setLoggerFactory(DefaultLoggerFactory())
 
-            LoggerFactory.RootLevel = LogLevel.Trace // so that by default all logs get written
+            LoggerFactory.config.rootLevel = LogLevel.Trace // so that by default all logs get written
 
             appender = WatchableAppender().apply {
                 LoggerFactory.addAppender(this)

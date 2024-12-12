@@ -6,7 +6,7 @@ interface Logger {
     val name: String
 
     /**
-     * The logger specific log level. If not set / set to null then default log level set in [LoggerFactory.RootLevel] will be used.
+     * The logger specific log level. If not set / set to null then default log level set in [LoggerFactory.effectiveConfig.rootLevel] will be used.
      */
     var level: LogLevel?
 
@@ -22,7 +22,7 @@ interface Logger {
     val isTraceEnabled: Boolean
 
     fun getEffectiveLevel(): LogLevel =
-        level ?: LoggerFactory.RootLevel
+        level ?: LoggerFactory.effectiveConfig.rootLevel
 
     fun isEnabled(level: LogLevel) = level.priority >= getEffectiveLevel().priority
 

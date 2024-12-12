@@ -62,7 +62,7 @@ class ConsoleAppenderTest {
   @Test
   fun debugDisabled() {
     val message = "Debug Message"
-    LoggerFactory.RootLevel = LogLevel.Info
+    LoggerFactory.config.rootLevel = LogLevel.Info
 
     underTest.debug { message }
 

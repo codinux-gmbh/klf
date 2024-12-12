@@ -15,7 +15,7 @@ class LogTest {
             // otherwise on JVM slf4j's org.slf4j.helpers.NOPLoggerFactory is used. Loggers then have the name "NOP"
             LoggerFactory.setLoggerFactory(DefaultLoggerFactory())
 
-            LoggerFactory.RootLevel = LogLevel.Trace // so that by default all logs get written
+            LoggerFactory.config.rootLevel = LogLevel.Trace // so that by default all logs get written
 
             appender = WatchableAppender().apply {
                 LoggerFactory.addAppender(this)
@@ -122,16 +122,26 @@ class LogTest {
 
     @Test
     fun traceWithGenericTypAndException_LevelTraceEnabled() {
+        if (Platform.type == PlatformType.LinuxOrMingw) { // on native we also have to set debugConfig as there Platform.isRunningInDebug mode is true as long as no release build is built
+            LoggerFactory.debugConfig.rootLevel = LogLevel.Trace
+        }
+
         Log.trace<LogTest>(exception) { message }
+
+        if (Platform.type == PlatformType.LinuxOrMingw) {
+            LoggerFactory.debugConfig.rootLevel = LogLevel.Debug // reset for other tests
+        }
 
         assertTrue(appender.hasExactlyOneLogEventWith(LogLevel.Trace, message, loggerName, exception = exception))
     }
 
     @Test
     fun traceWithGenericTypAndException_LevelTraceDisabled() {
-        LoggerFactory.RootLevel = LogLevel.Debug
+        LoggerFactory.config.rootLevel = LogLevel.Debug
 
         Log.trace<LogTest>(exception) { message }
+
+        LoggerFactory.config.rootLevel = LogLevel.Trace // reset it for other tests
 
         assertTrue(appender.hasNoLogEvents)
     }

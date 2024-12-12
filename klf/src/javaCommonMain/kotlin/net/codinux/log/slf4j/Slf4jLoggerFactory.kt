@@ -11,12 +11,12 @@ open class Slf4jLoggerFactory : LoggerFactoryBase() {
 
     init {
         if (Slf4jUtil.boundLoggingFramework == Slf4jBinding.Log4j2) {
-            log4j2Configurator.setRootLevel(LoggerFactory.RootLevel)
+            log4j2Configurator.setRootLevel(LoggerFactory.effectiveConfig.rootLevel)
         }
     }
 
 
-    override val rootLogger = Slf4jLogger(org.slf4j.Logger.ROOT_LOGGER_NAME, this, LoggerFactory.RootLevel)
+    override val rootLogger = Slf4jLogger(org.slf4j.Logger.ROOT_LOGGER_NAME, this, LoggerFactory.effectiveConfig.rootLevel)
 
     override fun createLogger(name: String) =
         Slf4jLogger(name, this)

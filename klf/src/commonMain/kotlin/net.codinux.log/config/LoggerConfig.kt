@@ -1,13 +1,31 @@
 package net.codinux.log.config
 
-class LoggerConfig{
+import net.codinux.log.LogLevel
+
+class LoggerConfig(
+    defaultRootLevel: LogLevel = rootLevelDefault
+) {
 
     companion object {
+        val rootLevelDefault = LogLevel.Info
+
         val defaultLoggerNameDefault: String? = null
 
         const val useCallerMethodIfLoggerNameNotSetDefault = false
     }
 
+
+    /**
+     * Experimental: Sets the default log level for all loggers that will be used
+     * if no logger specific level is set with [net.codinux.log.Logger.level].
+     *
+     * Be aware, this does not work reliably for all logging backends, e.g. we don't
+     * have implementations for all slf4j logging backends and the Android min log
+     * level is unchangeable.
+     *
+     * If slf4j is on the classpath, configure log level via logging backend (logback, log4j, ...).
+     */
+    var rootLevel: LogLevel = defaultRootLevel
 
     /**
      * The logger name that will be applied if no logger tag has been provided, e.g. with
@@ -45,5 +63,5 @@ class LoggerConfig{
     var useCallerMethodIfLoggerNameNotSet: Boolean = useCallerMethodIfLoggerNameNotSetDefault
 
 
-    override fun toString() = "useCallerMethodIfLoggerNameNotSet = $useCallerMethodIfLoggerNameNotSet"
+    override fun toString() = "rootLevel = $, defaultLoggerName = $defaultLoggerName, useCallerMethodIfLoggerNameNotSet = $useCallerMethodIfLoggerNameNotSet"
 }

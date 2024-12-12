@@ -152,6 +152,19 @@ class MainActivity : ComponentActivity() {
 
 ### Options
 
+### rootLevel
+
+Experimental: Sets the default log level for all loggers that will be used
+if no logger specific level is set with [Logger.level].
+
+Be aware, this does not work reliably for all logging backends, e.g. we don't
+have implementations for all slf4j logging backends and the Android min log
+level is unchangeable.
+
+If slf4j is on the classpath, configure log level via logging backend (logback, log4j, ...).
+
+Defaults to `LogLevel.Info` and in debug mode to `LogLevel.Debug`.
+
 #### useCallerMethodIfLoggerNameNotSet
 
 If no logger tag is passed to log statement, e.g. with `Log.info { ".." }`, 
