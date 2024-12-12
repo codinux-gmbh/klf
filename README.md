@@ -8,7 +8,7 @@ Kotlin (Multiplatform) logging facade for idiomatic logging in Kotlin with appen
 ### Gradle
 
 ```
-implementation("net.codinux.log:klf:1.6.2")
+implementation("net.codinux.log:klf:1.8.0")
 ```
 
 ### Native Images (e.g. Quarkus native)
@@ -16,7 +16,7 @@ implementation("net.codinux.log:klf:1.6.2")
 For native images use
 
 ```
-implementation("net.codinux.log:klf-graal:1.6.2")
+implementation("net.codinux.log:klf-graal:1.8.0")
 ```
 
 which substitutes calls to reflection. (As otherwise each class for which a Logger gets created would need to be annotated with `@RegisterForReflection`.)
