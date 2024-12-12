@@ -172,6 +172,16 @@ For UI applications this should be fine anyway, just don't enable it on high loa
 
 This currently works only on `JVM` and `Android`.
 
+#### defaultLoggerName
+
+If no logger tag is passed to log statement, e.g. with `Log.info { ".." }`,
+and [useCallerMethodIfLoggerNameNotSet](useCallerMethodIfLoggerNameNotSet)
+is set to false, then the value configured with `defaultLoggerName` will be used.
+
+If also `defaultLoggerName` is not set, we are trying to determine the app name
+and use that as logger name.        
+If this does not work, `"net.codinux.log.klf"` will be used as logger name.
+
 ### Debug mode vs. normal / release mode
 
 For all options in `LoggerFactory.config` there's a same named option in `LoggerFactory.debugConfig`.

@@ -3,8 +3,22 @@ package net.codinux.log.config
 class LoggerConfig{
 
     companion object {
+        val defaultLoggerNameDefault: String? = null
+
         const val useCallerMethodIfLoggerNameNotSetDefault = false
     }
+
+
+    /**
+     * The logger name that will be applied if no logger tag has been provided, e.g. with
+     * `Log.info { "Info without provided logger tag" }` and [useCallerMethodIfLoggerNameNotSet]
+     * is set to `false`.
+     *
+     * If [defaultLoggerName] has not been set, we try to find the app name.
+     *
+     * If this does not work, then `"net.codinux.log.klf"` will be used as logger name.
+     */
+    var defaultLoggerName: String? = defaultLoggerNameDefault
 
 
     /**

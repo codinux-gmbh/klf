@@ -74,9 +74,11 @@ class LogTest {
 
     @Test
     fun infoWithoutLoggerName() {
-        LoggerFactory.defaultLoggerName = "app"
+        LoggerFactory.config.defaultLoggerName = "app"
 
         Log.info { message }
+
+        LoggerFactory.config.defaultLoggerName = null // reset for other tests
 
         assertTrue(appender.hasExactlyOneLogEventWith(LogLevel.Info, message, "app"))
     }
@@ -84,11 +86,12 @@ class LogTest {
     @Test
     fun infoWithoutLoggerName_useCallerMethodIfLoggerNameNotSetIsTrue() {
         LoggerFactory.config.useCallerMethodIfLoggerNameNotSet = true
-        LoggerFactory.defaultLoggerName = "app" // should be ignored on Android and JVM
+        LoggerFactory.config.defaultLoggerName = "app" // should be ignored on Android and JVM
 
         Log.info { message }
 
         LoggerFactory.config.useCallerMethodIfLoggerNameNotSet = false // reset for other test methods
+        LoggerFactory.config.defaultLoggerName = null // reset for other tests
 
         val expectedLoggerName = if (Platform.type.isJvmOrAndroid) "net.codinux.log.LogTest.infoWithoutLoggerName_useCallerMethodIfLoggerNameNotSetIsTrue"
                                 else "app"

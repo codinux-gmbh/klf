@@ -14,8 +14,6 @@ object LoggerFactory {
 
     private val loggerCacheForName = Cache<String, Logger>()
 
-    private var customDefaultLoggerName: String? = null
-
     /**
      * The logger name that will be applied if no logger tag has been provided, e.g. with
      * `Log.info { "Info without provided logger tag" }`.
@@ -25,10 +23,15 @@ object LoggerFactory {
      * If this does not work, then `"net.codinux.log.klf"` will be used as logger name.
      */
     @JvmStatic
-    var defaultLoggerName: String
-        get() = customDefaultLoggerName ?: Platform.appName ?: "net.codinux.log.klf"
+    @Deprecated(
+        level = DeprecationLevel.WARNING,
+        replaceWith = ReplaceWith("LoggerFactory.config.defaultLoggerName or LoggerFactory.debugConfig.defaultLoggerName"),
+        message = "Simply passes call on to `LoggerFactory.config.defaultLoggerName`.\nUse `LoggerFactory.config.defaultLoggerName` or `LoggerFactory.debugConfig.defaultLoggerName` instead.\nThis will be removed in klf 2.0.\n"
+    )
+    var defaultLoggerName: String?
+        get() = config.defaultLoggerName
         set(value) {
-            customDefaultLoggerName = value
+            config.defaultLoggerName = value
         }
 
     @JvmStatic
@@ -90,7 +93,7 @@ object LoggerFactory {
             }
         }
 
-        return defaultLoggerName
+        return effectiveConfig.defaultLoggerName ?: Platform.appName ?: "net.codinux.log.klf"
     }
 
 }
