@@ -188,7 +188,7 @@ This currently works only on `JVM` and `Android`.
 #### defaultLoggerName
 
 If no logger tag is passed to log statement, e.g. with `Log.info { ".." }`,
-and [useCallerMethodIfLoggerNameNotSet](useCallerMethodIfLoggerNameNotSet)
+and [useCallerMethodIfLoggerNameNotSet](#useCallerMethodIfLoggerNameNotSet)
 is set to false, then the value configured with `defaultLoggerName` will be used.
 
 If also `defaultLoggerName` is not set, we are trying to determine the app name
