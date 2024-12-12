@@ -25,7 +25,6 @@ internal actual object Platform {
   actual fun lineSeparator(): String =
     LinuxAndMingwPlatform.lineSeparator()
 
-  @kotlin.experimental.ExperimentalNativeApi
   actual val isRunningInDebugMode: Boolean =
     NativeDefaults.isRunningInDebugMode
 
