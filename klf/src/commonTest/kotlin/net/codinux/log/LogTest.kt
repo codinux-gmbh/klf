@@ -1,9 +1,10 @@
 package net.codinux.log
 
+import assertk.assertThat
+import assertk.assertions.isTrue
 import net.codinux.log.test.WatchableAppender
 import kotlin.test.BeforeTest
 import kotlin.test.Test
-import kotlin.test.assertTrue
 
 class LogTest {
 
@@ -41,35 +42,35 @@ class LogTest {
     fun infoWithGenericTyp() {
         Log.info<LogTest> { message }
 
-        assertTrue(appender.hasExactlyOneLogEventWith(LogLevel.Info, message, loggerName))
+        appender.assertHasExactlyOneLogEventWith(LogLevel.Info, message, loggerName)
     }
 
     @Test
     fun infoWithGenericTypAndException() {
         Log.info<LogTest>(exception) { message }
 
-        assertTrue(appender.hasExactlyOneLogEventWith(LogLevel.Info, message, loggerName, exception = exception))
+        appender.assertHasExactlyOneLogEventWith(LogLevel.Info, message, loggerName, exception = exception)
     }
 
     @Test
     fun infoWithLoggerClass() {
         Log.info(loggerClass = LogTest::class) { message }
 
-        assertTrue(appender.hasExactlyOneLogEventWith(LogLevel.Info, message, loggerName))
+        appender.assertHasExactlyOneLogEventWith(LogLevel.Info, message, loggerName)
     }
 
     @Test
     fun infoWithLoggerClassAndException() {
         Log.info(exception, LogTest::class) { message }
 
-        assertTrue(appender.hasExactlyOneLogEventWith(LogLevel.Info, message, loggerName, exception = exception))
+        appender.assertHasExactlyOneLogEventWith(LogLevel.Info, message, loggerName, exception = exception)
     }
 
     @Test
     fun infoWithLoggerName() {
         Log.info(loggerName = loggerName) { message }
 
-        assertTrue(appender.hasExactlyOneLogEventWith(LogLevel.Info, message, loggerName))
+        appender.assertHasExactlyOneLogEventWith(LogLevel.Info, message, loggerName)
     }
 
     @Test
@@ -80,7 +81,7 @@ class LogTest {
 
         LoggerFactory.config.defaultLoggerName = null // reset for other tests
 
-        assertTrue(appender.hasExactlyOneLogEventWith(LogLevel.Info, message, "app"))
+        appender.assertHasExactlyOneLogEventWith(LogLevel.Info, message, "app")
     }
 
     @Test
@@ -95,7 +96,7 @@ class LogTest {
 
         val expectedLoggerName = if (Platform.type.isJvmOrAndroid) "net.codinux.log.LogTest.infoWithoutLoggerName_useCallerMethodIfLoggerNameNotSetIsTrue"
                                 else "app"
-        assertTrue(appender.hasExactlyOneLogEventWith(LogLevel.Info, message, expectedLoggerName))
+        appender.assertHasExactlyOneLogEventWith(LogLevel.Info, message, expectedLoggerName)
     }
 
 
@@ -103,21 +104,21 @@ class LogTest {
     fun errorWithGenericTypAndException() {
         Log.error<LogTest>(exception) { message }
 
-        assertTrue(appender.hasExactlyOneLogEventWith(LogLevel.Error, message, loggerName, exception = exception))
+        appender.assertHasExactlyOneLogEventWith(LogLevel.Error, message, loggerName, exception = exception)
     }
 
     @Test
     fun warnWithGenericTypAndException() {
         Log.warn<LogTest>(exception) { message }
 
-        assertTrue(appender.hasExactlyOneLogEventWith(LogLevel.Warn, message, loggerName, exception = exception))
+        appender.assertHasExactlyOneLogEventWith(LogLevel.Warn, message, loggerName, exception = exception)
     }
 
     @Test
     fun debugWithGenericTypAndException() {
         Log.debug<LogTest>(exception) { message }
 
-        assertTrue(appender.hasExactlyOneLogEventWith(LogLevel.Debug, message, loggerName, exception = exception))
+        appender.assertHasExactlyOneLogEventWith(LogLevel.Debug, message, loggerName, exception = exception)
     }
 
     @Test
@@ -132,7 +133,7 @@ class LogTest {
             LoggerFactory.debugConfig.rootLevel = LogLevel.Debug // reset for other tests
         }
 
-        assertTrue(appender.hasExactlyOneLogEventWith(LogLevel.Trace, message, loggerName, exception = exception))
+        appender.assertHasExactlyOneLogEventWith(LogLevel.Trace, message, loggerName, exception = exception)
     }
 
     @Test
@@ -143,7 +144,7 @@ class LogTest {
 
         LoggerFactory.config.rootLevel = LogLevel.Trace // reset it for other tests
 
-        assertTrue(appender.hasNoLogEvents)
+        assertThat(appender.hasNoLogEvents).isTrue()
     }
 
 }
