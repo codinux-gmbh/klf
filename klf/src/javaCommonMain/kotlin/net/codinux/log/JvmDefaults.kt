@@ -42,7 +42,10 @@ object JvmDefaults {
   fun getLoggerNameFromCallingMethod(): String? {
     val stackTrace = Thread.currentThread().stackTrace
 
-    // index 0 is getStackTrace()
+    // on JVM the first element is "java.lang.Thread.getStackTrace", on Android "dalvik.system.VMStack.getThreadStackTrace" and then "java.lang.Thread.getStackTrace"
+    val getStackTraceElement = stackTrace.indexOfFirst { it.className == "java.lang.Thread" && it.methodName == "getStackTrace" }
+
+    // index 0 is Thread.getStackTrace() (or on Android dalvik.system.VMStack.getThreadStackTrace, which moves all indices at by one)
     // index 1 is this method
     // index 2 is Platform.getLoggerNameFromCallingMethod()
     // index 3 is LoggerFactory.resolveDefaultLoggerName()
