@@ -6,11 +6,11 @@ enum class PlatformType {
     Apple,
     LinuxOrMingw,
     Js,
-    Wasm
+    Wasm;
+
+
+    val isJvmOrAndroid: Boolean by lazy { this == Jvm || this == Android }
+
+    val isJsOrWasm: Boolean by lazy { this == Js || this == Wasm }
+
 }
-
-val PlatformType.isJvmOrAndroid: Boolean
-    get() = this == PlatformType.Jvm || this == PlatformType.Android
-
-val PlatformType.isJsOrWasm: Boolean
-    get() = this == PlatformType.Js || this == PlatformType.Wasm
