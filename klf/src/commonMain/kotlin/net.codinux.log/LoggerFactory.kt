@@ -23,6 +23,7 @@ object LoggerFactory {
      *
      * If this does not work, then `"net.codinux.log.klf"` will be used as logger name.
      */
+    @JvmStatic
     var defaultLoggerName: String
         get() = customDefaultLoggerName ?: Platform.appName ?: "net.codinux.log.klf"
         set(value) {
