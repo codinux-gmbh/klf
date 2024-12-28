@@ -2,6 +2,7 @@ package net.codinux.log
 
 import net.codinux.log.appender.Appender
 import net.codinux.log.appender.ConsoleAppender
+import net.codinux.log.appender.JsConsoleAppender
 import kotlin.reflect.KClass
 
 // calls to js() have to be declared on package level (https://kotlinlang.org/docs/wasm-js-interop.html#kotlin-functions-with-javascript-code)
@@ -14,7 +15,7 @@ internal actual object Platform {
 
     actual fun createDefaultLoggerFactory(): ILoggerFactory = DefaultLoggerFactory()
 
-    actual val systemDefaultAppender: Appender = ConsoleAppender.Default
+    actual val systemDefaultAppender: Appender = JsConsoleAppender()
 
     actual fun <T : Any> getLoggerName(forClass: KClass<T>): String {
         // unwrapping companion objects is not possible on JS. There as class / logger name "Companion" will be used
