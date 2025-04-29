@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.multiplatform")
@@ -9,12 +11,13 @@ ext.artifactName = "klf"
 
 //@OptIn(ExperimentalKotlinGradlePluginApi::class)
 kotlin {
-    jvmToolchain(11)
-
     compilerOptions {
         // suppresses compiler warning: [EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING] 'expect'/'actual' classes (including interfaces, objects, annotations, enums, and 'actual' typealiases) are in Beta.
         freeCompilerArgs.add("-Xexpect-actual-classes")
     }
+
+
+    jvmToolchain(11)
 
 
     jvm {
@@ -213,6 +216,17 @@ android {
         }
         unitTests.all {
             useJUnitPlatform()
+        }
+    }
+}
+
+
+tasks.withType(KotlinCompile).configureEach {
+    // Android needs JVM 11, but for all others we can set it to 8. Is also
+    // good for some libraries that use klf and still use JVM 8.
+    if (name.toLowerCase().contains("android") == false) {
+        kotlinOptions {
+            jvmTarget = "1.8"
         }
     }
 }
