@@ -1,5 +1,6 @@
 # Kotlin Logging Facade (klf)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/net.codinux.log/klf/badge.svg)](https://maven-badges.herokuapp.com/maven-central/net.codinux.log/klf)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 Kotlin (Multiplatform) logging facade for idiomatic logging in Kotlin with appenders for all supported KMP platforms.
 
