@@ -20,4 +20,6 @@ dependencies {
 ext["customArtifactId"] = "klf-graal"
 ext["projectDescription"] = "Substitutions to make klf work in native images generated with GraalVM (e.g. in Quarkus)"
 
-apply(from = "../gradle/scripts/publish-codinux.gradle.kts")
+if (File(projectDir, "../gradle/scripts/publish-codinux.gradle.kts").exists()) {
+    apply(from = "../gradle/scripts/publish-codinux.gradle.kts")
+}

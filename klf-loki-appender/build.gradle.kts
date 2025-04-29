@@ -75,4 +75,6 @@ ext["artifactName"] = "klf-loki-appender"
 
 ext["projectDescription"] = "Enables pushing logs collected with klf directly to Loki"
 
-apply(from = "../gradle/scripts/publish-codinux.gradle.kts")
+if (File(projectDir, "../gradle/scripts/publish-codinux.gradle.kts").exists()) {
+    apply(from = "../gradle/scripts/publish-codinux.gradle.kts")
+}
