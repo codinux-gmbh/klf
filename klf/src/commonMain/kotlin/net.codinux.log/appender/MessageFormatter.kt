@@ -31,7 +31,7 @@ open class MessageFormatter {
         //   at net.codinux.log.slf4j.LogbackBindingTest.simpleLoggerOutput(LogbackBindingTest.kt:11)
         //   at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ...
         // be aware that we should localize time!
-        return "${threadName?.let { "[$it] " } ?: ""}$level $loggerName - ${formatMessage(message, exception)}"
+        return "$level $loggerName ${threadName?.let { "[$it] " } ?: ""}- ${formatMessage(message, exception)}"
     }
 
 }
