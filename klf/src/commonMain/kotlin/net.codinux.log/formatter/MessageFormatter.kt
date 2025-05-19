@@ -1,4 +1,4 @@
-package net.codinux.log.appender
+package net.codinux.log.formatter
 
 import net.codinux.log.LogLevel
 import net.codinux.log.Platform

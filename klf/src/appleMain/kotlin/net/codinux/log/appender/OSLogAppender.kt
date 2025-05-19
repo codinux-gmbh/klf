@@ -6,6 +6,7 @@ import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.ptr
 import net.codinux.log.LogLevel
 import net.codinux.log.Cache
+import net.codinux.log.formatter.MessageFormatter
 import platform.Foundation.NSBundle
 import platform.darwin.*
 

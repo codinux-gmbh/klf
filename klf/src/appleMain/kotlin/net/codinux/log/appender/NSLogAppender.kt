@@ -1,6 +1,7 @@
 package net.codinux.log.appender
 
 import net.codinux.log.LogLevel
+import net.codinux.log.formatter.MessageFormatter
 import platform.Foundation.NSLog
 
 
