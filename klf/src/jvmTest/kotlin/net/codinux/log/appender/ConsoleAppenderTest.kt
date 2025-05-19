@@ -36,7 +36,7 @@ class ConsoleAppenderTest {
     underTest.error { message }
 
     val logOutput = getWrittenLogOutput()
-    assertThat(logOutput).isEqualTo("[Test worker] Error net.codinux.log.appender.ConsoleAppenderTest - " + message + System.lineSeparator())
+    assertThat(logOutput).isEqualTo("Error net.codinux.log.appender.ConsoleAppenderTest [Test worker] - " + message + System.lineSeparator())
   }
 
   @Test
@@ -46,7 +46,7 @@ class ConsoleAppenderTest {
     underTest.warn { message }
 
     val logOutput = getWrittenLogOutput()
-    assertThat(logOutput).isEqualTo("[Test worker] Warn net.codinux.log.appender.ConsoleAppenderTest - " + message + System.lineSeparator())
+    assertThat(logOutput).isEqualTo("Warn  net.codinux.log.appender.ConsoleAppenderTest [Test worker] - " + message + System.lineSeparator())
   }
 
   @Test
@@ -56,7 +56,7 @@ class ConsoleAppenderTest {
     underTest.info { message }
 
     val logOutput = getWrittenLogOutput()
-    assertThat(logOutput).isEqualTo("[Test worker] Info net.codinux.log.appender.ConsoleAppenderTest - " + message + System.lineSeparator())
+    assertThat(logOutput).isEqualTo("Info  net.codinux.log.appender.ConsoleAppenderTest [Test worker] - " + message + System.lineSeparator())
   }
 
   @Test
