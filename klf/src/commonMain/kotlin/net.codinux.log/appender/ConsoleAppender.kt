@@ -1,7 +1,7 @@
 package net.codinux.log.appender
 
 import net.codinux.log.LogLevel
-import net.codinux.log.formatter.MessageFormatter
+import net.codinux.log.formatter.LogEventFormatter
 
 
 open class ConsoleAppender : Appender {
@@ -13,7 +13,7 @@ open class ConsoleAppender : Appender {
   }
 
 
-  protected open val formatter = MessageFormatter()
+  protected open val formatter = LogEventFormatter()
 
 
   override val logsThreadName = true

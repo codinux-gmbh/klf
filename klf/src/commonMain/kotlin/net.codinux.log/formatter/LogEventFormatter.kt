@@ -3,7 +3,7 @@ package net.codinux.log.formatter
 import net.codinux.log.LogLevel
 import net.codinux.log.Platform
 
-open class MessageFormatter {
+open class LogEventFormatter {
 
     private val lineSeparator = Platform.lineSeparator()
 
