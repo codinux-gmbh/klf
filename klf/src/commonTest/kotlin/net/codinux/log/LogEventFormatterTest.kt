@@ -5,7 +5,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
-class MessageFormatterTest {
+class LogEventFormatterTest {
 
     companion object {
         private const val Message = "Test Message"
