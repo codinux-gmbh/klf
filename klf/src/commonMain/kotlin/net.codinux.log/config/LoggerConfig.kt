@@ -1,6 +1,7 @@
 package net.codinux.log.config
 
 import net.codinux.log.LogLevel
+import net.codinux.log.formatter.LogEventFormatter
 
 class LoggerConfig(
     defaultRootLevel: LogLevel = rootLevelDefault
@@ -8,6 +9,8 @@ class LoggerConfig(
 
     companion object {
         val rootLevelDefault = LogLevel.Info
+
+        val defaultLogEventFormatter: LogEventFormatter = LogEventFormatter.Default
 
         val defaultLoggerNameDefault: String? = null
 
@@ -26,6 +29,15 @@ class LoggerConfig(
      * If slf4j is on the classpath, configure log level via logging backend (logback, log4j, ...).
      */
     var rootLevel: LogLevel = defaultRootLevel
+
+    /**
+     * The formatter to use for converting log events to the string output mostly on console
+     * (like in [net.codinux.log.appender.ConsoleAppender], `JsConsoleAppender`, `OSLogAppender`
+     * and `NSLogAppender`).
+     *
+     * Not used when logging over `slf4j` or using custom appenders.
+     */
+    var logEventFormatter: LogEventFormatter = defaultLogEventFormatter
 
     /**
      * The logger name that will be applied if no logger tag has been provided, e.g. with

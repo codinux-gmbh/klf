@@ -6,7 +6,7 @@ import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.ptr
 import net.codinux.log.LogLevel
 import net.codinux.log.Cache
-import net.codinux.log.formatter.LogEventFormatter
+import net.codinux.log.LoggerFactory
 import platform.Foundation.NSBundle
 import platform.darwin.*
 
@@ -14,7 +14,7 @@ open class OSLogAppender : Appender {
 
     protected open val loggerCache = Cache<String, os_log_t>()
 
-    protected open val formatter = LogEventFormatter.Default
+    protected open val formatter = LoggerFactory.effectiveConfig.logEventFormatter
 
 
     override val logsThreadName = false

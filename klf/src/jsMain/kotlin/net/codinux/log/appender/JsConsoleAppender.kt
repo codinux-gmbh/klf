@@ -1,11 +1,11 @@
 package net.codinux.log.appender
 
 import net.codinux.log.LogLevel
-import net.codinux.log.formatter.LogEventFormatter
+import net.codinux.log.LoggerFactory
 
 open class JsConsoleAppender : Appender {
 
-  protected open val formatter = LogEventFormatter.Default
+  protected open val formatter = LoggerFactory.effectiveConfig.logEventFormatter
 
 
   override val logsThreadName = true

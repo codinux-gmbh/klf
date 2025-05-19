@@ -1,7 +1,7 @@
 package net.codinux.log.appender
 
 import net.codinux.log.LogLevel
-import net.codinux.log.formatter.LogEventFormatter
+import net.codinux.log.LoggerFactory
 
 
 fun consoleError(message: String): Unit =
@@ -31,7 +31,7 @@ fun consoleLog(message: String, exception: String): Unit =
 
 open class JsConsoleAppender : Appender {
 
-  protected open val formatter = LogEventFormatter.Default
+  protected open val formatter = LoggerFactory.effectiveConfig.logEventFormatter
 
 
   override val logsThreadName = true

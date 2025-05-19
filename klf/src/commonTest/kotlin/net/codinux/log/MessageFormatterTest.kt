@@ -1,6 +1,5 @@
 package net.codinux.log
 
-import net.codinux.log.formatter.LogEventFormatter
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -21,7 +20,7 @@ class MessageFormatterTest {
     }
 
 
-    private val underTest = LogEventFormatter.Default
+    private val underTest = LoggerFactory.effectiveConfig.logEventFormatter
 
 
     @Test

@@ -1,6 +1,7 @@
 package net.codinux.log.config
 
 import net.codinux.log.LogLevel
+import net.codinux.log.formatter.LogEventFormatter
 
 class EffectiveLoggerConfig(
     private val config: LoggerConfig,
@@ -13,6 +14,13 @@ class EffectiveLoggerConfig(
             debugConfig.rootLevel
         } else {
             config.rootLevel
+        }
+
+    val logEventFormatter: LogEventFormatter
+        get() = if (isRunningInDebugMode && debugConfig.logEventFormatter != LoggerConfig.defaultLogEventFormatter) {
+            debugConfig.logEventFormatter
+        } else {
+            config.logEventFormatter
         }
 
     val defaultLoggerName: String?
