@@ -21,7 +21,7 @@ open class ConsoleAppender : Appender {
   override val logsException = true
 
   override fun append(level: LogLevel, message: String, loggerName: String, threadName: String?, exception: Throwable?) {
-    println(formatter.formatMessage(level, message, loggerName, threadName, exception))
+    println(formatter.formatEvent(level, message, loggerName, threadName, exception))
   }
 
 }

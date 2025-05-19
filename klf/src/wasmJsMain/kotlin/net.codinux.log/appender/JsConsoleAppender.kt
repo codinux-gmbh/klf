@@ -39,7 +39,7 @@ open class JsConsoleAppender : Appender {
   override val logsException = true
 
   override fun append(level: LogLevel, message: String, loggerName: String, threadName: String?, exception: Throwable?) {
-    val formattedMessage = formatter.formatMessage(level, message, loggerName, threadName, exception)
+    val formattedMessage = formatter.formatEvent(level, message, loggerName, threadName, exception)
 
     when (level) {
       LogLevel.Error -> {

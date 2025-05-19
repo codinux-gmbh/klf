@@ -15,7 +15,7 @@ open class NSLogAppender : Appender {
     override val logsException = true
 
     override fun append(level: LogLevel, message: String, loggerName: String, threadName: String?, exception: Throwable?) {
-        NSLog(formatter.formatMessage(level, message, loggerName, threadName, exception))
+        NSLog(formatter.formatEvent(level, message, loggerName, threadName, exception))
     }
 
 }

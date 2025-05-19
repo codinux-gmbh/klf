@@ -15,7 +15,7 @@ open class LogEventFormatter {
         }
     }
 
-    open fun formatMessage(level: LogLevel, message: String, loggerName: String, threadName: String? = null, exception: Throwable? = null): String {
+    open fun formatEvent(level: LogLevel, message: String, loggerName: String, threadName: String? = null, exception: Throwable? = null): String {
         // may add format specifiers as logback has:
         // %d{yyyy-MM-dd HH:mm:ss,SSS} %-5p [%c{3.}] (%t) %s%e%n
         // p = level

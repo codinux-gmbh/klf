@@ -54,7 +54,7 @@ class MessageFormatterTest {
 
     @Test
     fun loggerName() {
-        val result = underTest.formatMessage(RootLevel, Message, LoggerName)
+        val result = underTest.formatEvent(RootLevel, Message, LoggerName)
 
         assertTrue(result.contains(LoggerName))
         assertFalse(result.contains(Platform.lineSeparator()))
@@ -63,7 +63,7 @@ class MessageFormatterTest {
 
     @Test
     fun withoutThreadName() {
-        val result = underTest.formatMessage(RootLevel, Message, LoggerName, null)
+        val result = underTest.formatEvent(RootLevel, Message, LoggerName, null)
 
         assertFalse(result.contains(ThreadName))
         assertFalse(result.contains(Platform.lineSeparator()))
@@ -71,7 +71,7 @@ class MessageFormatterTest {
 
     @Test
     fun withThreadName() {
-        val result = underTest.formatMessage(RootLevel, Message, LoggerName, ThreadName)
+        val result = underTest.formatEvent(RootLevel, Message, LoggerName, ThreadName)
 
         assertTrue(result.contains(ThreadName))
         assertFalse(result.contains(Platform.lineSeparator()))
@@ -79,7 +79,7 @@ class MessageFormatterTest {
 
     @Test
     fun withAllData() {
-        val result = underTest.formatMessage(RootLevel, Message, LoggerName, ThreadName, IllegalArgumentException(ExceptionMessage))
+        val result = underTest.formatEvent(RootLevel, Message, LoggerName, ThreadName, IllegalArgumentException(ExceptionMessage))
 
         assertTrue(result.contains(RootLevel.name))
         assertTrue(result.contains(ThreadName))
@@ -93,7 +93,7 @@ class MessageFormatterTest {
 
     @Test
     fun levelTrace() {
-        val result = underTest.formatMessage(LogLevel.Trace, Message, LoggerName)
+        val result = underTest.formatEvent(LogLevel.Trace, Message, LoggerName)
 
         assertTrue(result.contains(LogLevel.Trace.name))
         assertFalse(result.contains(LogLevel.Debug.name))
@@ -104,7 +104,7 @@ class MessageFormatterTest {
 
     @Test
     fun levelDebug() {
-        val result = underTest.formatMessage(LogLevel.Debug, Message, LoggerName)
+        val result = underTest.formatEvent(LogLevel.Debug, Message, LoggerName)
 
         assertFalse(result.contains(LogLevel.Trace.name))
         assertTrue(result.contains(LogLevel.Debug.name))
@@ -115,7 +115,7 @@ class MessageFormatterTest {
 
     @Test
     fun levelInfo() {
-        val result = underTest.formatMessage(LogLevel.Info, Message, LoggerName)
+        val result = underTest.formatEvent(LogLevel.Info, Message, LoggerName)
 
         assertFalse(result.contains(LogLevel.Trace.name))
         assertFalse(result.contains(LogLevel.Debug.name))
@@ -126,7 +126,7 @@ class MessageFormatterTest {
 
     @Test
     fun levelWarn() {
-        val result = underTest.formatMessage(LogLevel.Warn, Message, LoggerName)
+        val result = underTest.formatEvent(LogLevel.Warn, Message, LoggerName)
 
         assertFalse(result.contains(LogLevel.Trace.name))
         assertFalse(result.contains(LogLevel.Debug.name))
@@ -137,7 +137,7 @@ class MessageFormatterTest {
 
     @Test
     fun levelError() {
-        val result = underTest.formatMessage(LogLevel.Error, Message, LoggerName)
+        val result = underTest.formatEvent(LogLevel.Error, Message, LoggerName)
 
         assertFalse(result.contains(LogLevel.Trace.name))
         assertFalse(result.contains(LogLevel.Debug.name))
