@@ -16,7 +16,7 @@ internal actual object Platform {
 
     actual fun createDefaultLoggerFactory() = JvmDefaults.createDefaultLoggerFactory()
 
-    actual val systemDefaultAppender: Appender = LogcatAppender.Default
+    actual val systemDefaultAppender: Appender by lazy { LogcatAppender.Default }
 
     actual fun <T : Any> getLoggerName(forClass: KClass<T>): String = getAndroidLogTag(forClass)
 

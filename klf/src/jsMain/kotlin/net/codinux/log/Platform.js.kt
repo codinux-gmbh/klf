@@ -11,7 +11,7 @@ internal actual object Platform {
 
   actual fun createDefaultLoggerFactory(): ILoggerFactory = DefaultLoggerFactory()
 
-  actual val systemDefaultAppender: Appender = JsConsoleAppender()
+  actual val systemDefaultAppender: Appender by lazy { JsConsoleAppender() }
 
   actual fun <T : Any> getLoggerName(forClass: KClass<T>): String {
     // unwrapping companion objects is not possible on JS. There as class / logger name "Companion" will be used

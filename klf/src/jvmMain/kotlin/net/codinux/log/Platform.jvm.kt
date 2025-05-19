@@ -11,7 +11,7 @@ internal actual object Platform {
 
     actual fun createDefaultLoggerFactory() = JvmDefaults.createDefaultLoggerFactory()
 
-    actual val systemDefaultAppender: Appender = ConsoleAppender.Default
+    actual val systemDefaultAppender: Appender by lazy { ConsoleAppender.Default }
 
     private val isRunningOnAndroid by lazy { JvmDefaults.isClassAvailable("android.content.Context") }
 

@@ -12,7 +12,7 @@ internal actual object Platform {
 
   actual fun createDefaultLoggerFactory(): ILoggerFactory = DefaultLoggerFactory()
 
-  actual val systemDefaultAppender: Appender = ConsoleAppender.Default
+  actual val systemDefaultAppender: Appender by lazy { ConsoleAppender.Default }
 
   actual fun <T : Any> getLoggerName(forClass: KClass<T>) =
     LoggerNameResolver.getLoggerNameForKClassesWithQualifiedName(forClass)
