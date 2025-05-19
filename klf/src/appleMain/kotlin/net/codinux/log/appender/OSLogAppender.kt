@@ -14,7 +14,7 @@ open class OSLogAppender : Appender {
 
     protected open val loggerCache = Cache<String, os_log_t>()
 
-    protected open val formatter = LogEventFormatter()
+    protected open val formatter = LogEventFormatter.Default
 
 
     override val logsThreadName = false

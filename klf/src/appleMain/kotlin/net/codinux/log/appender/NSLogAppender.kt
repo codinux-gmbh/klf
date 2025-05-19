@@ -7,7 +7,7 @@ import platform.Foundation.NSLog
 
 open class NSLogAppender : Appender {
 
-    protected open val formatter = LogEventFormatter()
+    protected open val formatter = LogEventFormatter.Default
 
 
     override val logsThreadName = true

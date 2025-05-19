@@ -21,7 +21,7 @@ class MessageFormatterTest {
     }
 
 
-    private val underTest = LogEventFormatter()
+    private val underTest = LogEventFormatter.Default
 
 
     @Test

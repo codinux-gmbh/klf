@@ -13,7 +13,7 @@ open class ConsoleAppender : Appender {
   }
 
 
-  protected open val formatter = LogEventFormatter()
+  protected open val formatter = LogEventFormatter.Default
 
 
   override val logsThreadName = true

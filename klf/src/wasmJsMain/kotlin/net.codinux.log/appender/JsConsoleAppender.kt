@@ -31,7 +31,7 @@ fun consoleLog(message: String, exception: String): Unit =
 
 open class JsConsoleAppender : Appender {
 
-  protected open val formatter = LogEventFormatter()
+  protected open val formatter = LogEventFormatter.Default
 
 
   override val logsThreadName = true
