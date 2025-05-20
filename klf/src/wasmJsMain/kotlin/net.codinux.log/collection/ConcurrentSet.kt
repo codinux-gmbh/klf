@@ -17,7 +17,8 @@ actual open class ConcurrentSet<E> : Set<E> {
 
     actual fun clear() = impl.clear()
 
-    actual override val size = impl.size
+    actual override val size
+        get() = impl.size
 
     actual override fun isEmpty() = impl.isEmpty()
 
