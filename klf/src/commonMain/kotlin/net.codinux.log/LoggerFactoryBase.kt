@@ -1,5 +1,6 @@
 package net.codinux.log
 
+import net.codinux.kotlin.collections.fastForEach
 import net.codinux.log.appender.Appender
 import net.codinux.log.collection.*
 
