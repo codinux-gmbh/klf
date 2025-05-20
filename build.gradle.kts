@@ -16,7 +16,7 @@ buildscript {
 
 allprojects {
     group = "net.codinux.log"
-    version = "1.8.2-SNAPSHOT"
+    version = "1.8.2"
 
     ext["projectDescription"] = "Kotlin (Multiplatform) logging facade for idiomatic logging in Kotlin"
     ext["sourceCodeRepositoryBaseUrl"] = "github.com/codinux-gmbh/klf"
