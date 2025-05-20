@@ -17,8 +17,6 @@ internal expect object Platform {
 
     fun getCurrentThreadName(): String?
 
-    fun lineSeparator(): String
-
     val isRunningInDebugMode: Boolean
 
     val appName: String?

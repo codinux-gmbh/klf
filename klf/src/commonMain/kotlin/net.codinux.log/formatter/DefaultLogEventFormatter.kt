@@ -1,11 +1,11 @@
 package net.codinux.log.formatter
 
+import net.codinux.log.Defaults
 import net.codinux.log.LogLevel
-import net.codinux.log.Platform
 
 open class DefaultLogEventFormatter : LogEventFormatter {
 
-    private val lineSeparator = Platform.lineSeparator()
+    private val lineSeparator = Defaults.lineSeparator
 
     override fun formatMessage(message: String, exception: Throwable?): String {
         return if (exception != null) {

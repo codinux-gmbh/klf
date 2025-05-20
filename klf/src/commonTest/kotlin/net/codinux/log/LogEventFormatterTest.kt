@@ -37,7 +37,7 @@ class LogEventFormatterTest {
         assertTrue(result.contains(Message))
         assertTrue(result.contains("IllegalArgumentException"))
         assertTrue(result.contains(ExceptionMessage))
-        assertTrue(result.contains(Platform.lineSeparator()))
+        assertTrue(result.contains(Defaults.lineSeparator))
     }
 
     @Test
@@ -47,7 +47,7 @@ class LogEventFormatterTest {
         assertTrue(result.contains(Message))
         assertTrue(result.contains("Error"))
         assertTrue(result.contains(ExceptionMessage))
-        assertTrue(result.contains(Platform.lineSeparator()))
+        assertTrue(result.contains(Defaults.lineSeparator))
     }
 
 
@@ -56,7 +56,7 @@ class LogEventFormatterTest {
         val result = underTest.formatEvent(RootLevel, Message, LoggerName)
 
         assertTrue(result.contains(LoggerName))
-        assertFalse(result.contains(Platform.lineSeparator()))
+        assertFalse(result.contains(Defaults.lineSeparator))
     }
 
 
@@ -65,7 +65,7 @@ class LogEventFormatterTest {
         val result = underTest.formatEvent(RootLevel, Message, LoggerName, null)
 
         assertFalse(result.contains(ThreadName))
-        assertFalse(result.contains(Platform.lineSeparator()))
+        assertFalse(result.contains(Defaults.lineSeparator))
     }
 
     @Test
@@ -73,7 +73,7 @@ class LogEventFormatterTest {
         val result = underTest.formatEvent(RootLevel, Message, LoggerName, ThreadName)
 
         assertTrue(result.contains(ThreadName))
-        assertFalse(result.contains(Platform.lineSeparator()))
+        assertFalse(result.contains(Defaults.lineSeparator))
     }
 
     @Test
@@ -86,7 +86,7 @@ class LogEventFormatterTest {
         assertTrue(result.contains(Message))
         assertTrue(result.contains("IllegalArgumentException"))
         assertTrue(result.contains(ExceptionMessage))
-        assertTrue(result.contains(Platform.lineSeparator()))
+        assertTrue(result.contains(Defaults.lineSeparator))
     }
 
 

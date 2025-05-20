@@ -109,6 +109,8 @@ kotlin {
     applyDefaultHierarchyTemplate()
 
 
+    val kmpBaseVersion: String by project
+
     val assertKVersion: String by project
     val assertJVersion: String by project
 
@@ -116,6 +118,8 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(kotlin("reflect"))
+
+                implementation("net.codinux.kotlin:kmp-base:$kmpBaseVersion")
             }
         }
         commonTest {

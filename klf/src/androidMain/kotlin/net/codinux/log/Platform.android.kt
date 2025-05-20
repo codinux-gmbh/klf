@@ -26,9 +26,6 @@ internal actual object Platform {
     actual fun getCurrentThreadName() =
       JvmDefaults.getCurrentThreadName()
 
-    actual fun lineSeparator(): String =
-      System.lineSeparator()
-
     actual val isRunningInDebugMode =
         // BuildConfig.DEBUG will always be false as for a compiled library its set to false at compile time
         AndroidContext.applicationContext?.applicationContext?.let {

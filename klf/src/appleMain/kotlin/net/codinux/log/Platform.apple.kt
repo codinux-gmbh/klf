@@ -50,9 +50,6 @@ internal actual object Platform {
       }
   }
 
-  actual fun lineSeparator(): String =
-    "\n" // TODO: check if this works reliably; may use NSParagraphSeparatorCharacter or NSLineSeparatorCharacter
-
   actual val isRunningInDebugMode: Boolean =
     NativeDefaults.isRunningInDebugMode
 

@@ -27,8 +27,6 @@ internal actual object Platform {
 
     actual fun getCurrentThreadName(): String? = "main" // TODO: how to get current thread in WebAssembly?
 
-    actual fun lineSeparator(): String = "\n"
-
     actual val isRunningInDebugMode: Boolean = false // TODO: don't know how to do this in JS
 
     actual val appName: String?  = null
