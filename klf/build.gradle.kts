@@ -1,16 +1,22 @@
+@file:Suppress("UnstableApiUsage")
+
+import groovy.lang.Closure
+import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.jetbrains.kotlin.multiplatform")
+    kotlin("multiplatform")
     id("com.android.library")
 }
 
 
-apply(from: "./createCompilations.gradle")
+apply(from = "./createCompilations.gradle")
+val createCompilation = project.extra["createCompilation"] as Closure<*>
 
 
-//@OptIn(ExperimentalKotlinGradlePluginApi::class)
 kotlin {
+    @OptIn(ExperimentalKotlinGradlePluginApi::class)
     compilerOptions {
         // suppresses compiler warning: [EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING] 'expect'/'actual' classes (including interfaces, objects, annotations, enums, and 'actual' typealiases) are in Beta.
         freeCompilerArgs.add("-Xexpect-actual-classes")
@@ -25,6 +31,10 @@ kotlin {
     jvmToolchain(11)
 
 
+    val logbackVersion: String by project
+    val slf4jVersion: String by project
+    val log4j2Version: String by project
+
     jvm {
         testRuns["test"].executionTask.configure {
             useJUnitPlatform()
@@ -35,21 +45,15 @@ kotlin {
         }
 
         // register additional compilations and test tasks for slf4j bindings tests
-        compilations { compilations ->
-            createCompilation("logbackTest", compilations, "ch.qos.logback:logback-classic:$logbackVersion")
-            createCompilation("log4j2Test", compilations, "org.apache.logging.log4j:log4j-slf4j-impl:$log4j2Version")
-            createCompilation("log4j1Test", compilations, "org.slf4j:slf4j-log4j12:$slf4jVersion")
-            createCompilation("julTest", compilations, "org.slf4j:slf4j-jdk14:$slf4jVersion")
-            createCompilation("slf4jSimpleTest", compilations, "org.slf4j:slf4j-simple:$slf4jVersion")
-        }
+        createCompilation.call("logbackTest", compilations, "ch.qos.logback:logback-classic:$logbackVersion")
+        createCompilation.call("log4j2Test", compilations, "org.apache.logging.log4j:log4j-slf4j-impl:$log4j2Version")
+        createCompilation.call("log4j1Test", compilations, "org.slf4j:slf4j-log4j12:$slf4jVersion")
+        createCompilation.call("julTest", compilations, "org.slf4j:slf4j-jdk14:$slf4jVersion")
+        createCompilation.call("slf4jSimpleTest", compilations, "org.slf4j:slf4j-simple:$slf4jVersion")
     }
 
     androidTarget { // name in Kotlin 1.9
         publishLibraryVariants("release")
-
-        compilations.all {
-            kotlinOptions.jvmTarget = JavaVersion.VERSION_11
-        }
     }
 
     js {
@@ -74,6 +78,7 @@ kotlin {
         }
     }
 
+    @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
         browser {
             testTask {
@@ -108,6 +113,9 @@ kotlin {
     applyDefaultHierarchyTemplate()
 
 
+    val assertKVersion: String by project
+    val assertJVersion: String by project
+
     sourceSets {
         commonMain {
             dependencies {
@@ -123,15 +131,15 @@ kotlin {
         }
 
 
-        javaAndNativeCommonMain {
-            dependsOn(commonMain)
+        val javaAndNativeCommonMain by creating {
+            dependsOn(commonMain.get())
         }
-        javaAndNativeCommonTest {
-            dependsOn(commonTest)
+        val javaAndNativeCommonTest by creating {
+            dependsOn(commonTest.get())
         }
 
 
-        javaCommonMain {
+        val javaCommonMain by creating {
             dependsOn(javaAndNativeCommonMain)
 
             dependencies {
@@ -139,13 +147,13 @@ kotlin {
                 compileOnly("org.apache.logging.log4j:log4j-core:$log4j2Version")
             }
         }
-        javaCommonTest {
+        val javaCommonTest by creating {
             dependsOn(javaAndNativeCommonTest)
 
             dependencies {
                 implementation("org.assertj:assertj-core:$assertJVersion")
                 implementation("io.mockk:mockk:1.13.5") {
-                    exclude(group: "org.slf4j")
+                    exclude(group = "org.slf4j")
                 }
 
                 implementation("ch.qos.logback:logback-classic:$logbackVersion")
@@ -159,10 +167,10 @@ kotlin {
             dependsOn(javaCommonTest)
         }
 
-        androidMain {
+        val androidMain by getting {
             dependsOn(javaCommonMain)
         }
-        androidUnitTest {
+        val androidUnitTest by getting {
             dependsOn(javaCommonTest)
         }
 
@@ -173,13 +181,13 @@ kotlin {
         nativeMain {
             dependsOn(javaAndNativeCommonMain)
         }
-        linuxAndMingwMain {
-            dependsOn(nativeMain)
+        val linuxAndMingwMain by creating {
+            dependsOn(nativeMain.get())
         }
-        linuxX64Main {
+        linuxMain {
             dependsOn(linuxAndMingwMain)
         }
-        mingwX64Main {
+        mingwMain {
             dependsOn(linuxAndMingwMain)
         }
     }
@@ -189,10 +197,9 @@ android {
     namespace = "net.codinux.log"
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
 
-    compileSdk(33)
+    compileSdk = 33
     defaultConfig {
-        minSdkVersion(21)
-        targetSdkVersion(33)
+        minSdk = 21
     }
 
     compileOptions {
@@ -204,7 +211,7 @@ android {
         buildConfig = true // so that BuildConfig gets generated
     }
 
-    lintOptions {
+    lint {
         abortOnError = false
     }
 
@@ -212,19 +219,20 @@ android {
         unitTests {
             // Otherwise we get this exception in tests:
             // Method e in android.util.Log not mocked. See https://developer.android.com/r/studio-ui/build/not-mocked for details.
-            setReturnDefaultValues(true)
+            isReturnDefaultValues = true
         }
+
         unitTests.all {
-            useJUnitPlatform()
+            it.useJUnitPlatform()
         }
     }
 }
 
 
-tasks.withType(KotlinCompile).configureEach {
+tasks.withType<KotlinCompile>().configureEach {
     // Android needs JVM 11, but for all others we can set it to 8. Is also
     // good for some libraries that use klf and still use JVM 8.
-    if (name.toLowerCase().contains("android") == false) {
+    if (name.lowercase().contains("android") == false) {
         kotlinOptions {
             jvmTarget = "1.8"
         }
@@ -232,4 +240,4 @@ tasks.withType(KotlinCompile).configureEach {
 }
 
 
-apply(from: "../gradle/scripts/publish-codinux.gradle.kts")
+apply(from = "../gradle/scripts/publish-codinux.gradle.kts")

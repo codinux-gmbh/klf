@@ -1,5 +1,5 @@
 
-ext.createCompilation = { String name, NamedDomainObjectContainer compilations, String... mavenDependencies ->
+ext.createCompilation = { String name, NamedDomainObjectContainer compilations, String mavenDependency ->
     def main = compilations.main
     def test = compilations.test
 
@@ -13,9 +13,8 @@ ext.createCompilation = { String name, NamedDomainObjectContainer compilations, 
                 implementation(kotlin("test-junit"))
                 implementation("org.junit.jupiter:junit-jupiter-api:5.6.0")
                 runtimeOnly("org.junit.jupiter:junit-jupiter-engine")
-                for (String dependency : mavenDependencies) {
-                    implementation dependency
-                }
+
+                implementation mavenDependency
             }
         }
 
