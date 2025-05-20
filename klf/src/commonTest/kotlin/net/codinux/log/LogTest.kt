@@ -2,6 +2,10 @@ package net.codinux.log
 
 import assertk.assertThat
 import assertk.assertions.isTrue
+import net.codinux.kotlin.platform.Platform
+import net.codinux.kotlin.platform.isJavaScript
+import net.codinux.kotlin.platform.isJvmOrAndroid
+import net.codinux.kotlin.platform.isNative
 import net.codinux.log.test.WatchableAppender
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -27,7 +31,7 @@ class LogTest {
 
     private val message = "Log message"
 
-    private val loggerName: String = if (Platform.type.isJsOrWasm) LogTest::class.simpleName!! else "net.codinux.log.LogTest"
+    private val loggerName: String = if (Platform.isJavaScript) LogTest::class.simpleName!! else "net.codinux.log.LogTest"
 
     private val exception = IllegalArgumentException("Just a test")
 
@@ -94,7 +98,7 @@ class LogTest {
         LoggerFactory.config.useCallerMethodIfLoggerNameNotSet = false // reset for other test methods
         LoggerFactory.config.defaultLoggerName = null // reset for other tests
 
-        val expectedLoggerName = if (Platform.type.isJvmOrAndroid) "net.codinux.log.LogTest.infoWithoutLoggerName_useCallerMethodIfLoggerNameNotSetIsTrue"
+        val expectedLoggerName = if (Platform.isJvmOrAndroid) "net.codinux.log.LogTest.infoWithoutLoggerName_useCallerMethodIfLoggerNameNotSetIsTrue"
                                 else "app"
         appender.assertHasExactlyOneLogEventWith(LogLevel.Info, message, expectedLoggerName)
     }
@@ -123,13 +127,13 @@ class LogTest {
 
     @Test
     fun traceWithGenericTypAndException_LevelTraceEnabled() {
-        if (Platform.type.isNative) { // on native we also have to set debugConfig as there Platform.isRunningInDebug mode is true as long as no release build is built
+        if (Platform.isNative) { // on native we also have to set debugConfig as there Platform.isRunningInDebug mode is true as long as no release build is built
             LoggerFactory.debugConfig.rootLevel = LogLevel.Trace
         }
 
         Log.trace<LogTest>(exception) { message }
 
-        if (Platform.type.isNative) {
+        if (Platform.isNative) {
             LoggerFactory.debugConfig.rootLevel = LogLevel.Debug // reset for other tests
         }
 

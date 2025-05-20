@@ -7,8 +7,6 @@ import kotlin.reflect.KClass
 
 internal actual object Platform {
 
-    actual val type = PlatformType.Jvm
-
     actual fun createDefaultLoggerFactory() = JvmDefaults.createDefaultLoggerFactory()
 
     actual val systemDefaultAppender: Appender by lazy { ConsoleAppender.Default }

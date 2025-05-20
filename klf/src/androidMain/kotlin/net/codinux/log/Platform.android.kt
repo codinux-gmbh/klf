@@ -12,8 +12,6 @@ internal actual object Platform {
     const val MaxAndroidLogTagSizeBeforeApi26 = 23
 
 
-    actual val type = PlatformType.Android
-
     actual fun createDefaultLoggerFactory() = JvmDefaults.createDefaultLoggerFactory()
 
     actual val systemDefaultAppender: Appender by lazy { LogcatAppender.Default }

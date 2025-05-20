@@ -22,8 +22,6 @@ internal actual object Platform {
 
   private val supportsOsLog = isOsLogSupported()
 
-  actual val type = PlatformType.Apple
-
   actual fun createDefaultLoggerFactory(): ILoggerFactory = DefaultLoggerFactory()
 
   actual val systemDefaultAppender: Appender by lazy { if (supportsOsLog) OSLogAppender() else NSLogAppender() }

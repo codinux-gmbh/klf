@@ -10,8 +10,6 @@ internal fun getCurrentPathname(): String =
 
 internal actual object Platform {
 
-    actual val type = PlatformType.Wasm
-
     actual fun createDefaultLoggerFactory(): ILoggerFactory = DefaultLoggerFactory()
 
     actual val systemDefaultAppender: Appender by lazy { JsConsoleAppender() }

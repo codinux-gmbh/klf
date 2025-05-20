@@ -2,6 +2,8 @@ package net.codinux.log
 
 import assertk.assertThat
 import assertk.assertions.isEqualTo
+import net.codinux.kotlin.platform.Platform
+import net.codinux.kotlin.platform.isJavaScript
 import kotlin.js.JsName
 import kotlin.test.Test
 
@@ -17,7 +19,7 @@ class LoggerFactoryTest {
   fun `Logger declaration in instance property - logger name is of class`() {
     val actualName = ClassDeclaringLoggerAsInstanceProperty().log.name
 
-    if (Platform.type.isJsOrWasm) {
+    if (Platform.isJavaScript) {
       assertThat(actualName).isEqualTo("ClassDeclaringLoggerAsInstanceProperty")
     } else {
       assertThat(actualName).isEqualTo("net.codinux.log.ClassDeclaringLoggerAsInstanceProperty")
@@ -29,7 +31,7 @@ class LoggerFactoryTest {
   fun `Logger declaration in companion object - logger name is of enclosing class`() {
     val actualName = ClassDeclaringLoggerInCompanionObject.log.name
 
-    if (Platform.type.isJsOrWasm) {
+    if (Platform.isJavaScript) {
       assertThat(actualName).isEqualTo("Companion")
     } else {
       assertThat(actualName).isEqualTo("net.codinux.log.ClassDeclaringLoggerInCompanionObject")
@@ -41,7 +43,7 @@ class LoggerFactoryTest {
   fun `Logger declaration in object - logger name is of object`() {
     val actualName = ObjectDeclaringLoggerAsInstanceProperty.log.name
 
-    if (Platform.type.isJsOrWasm) {
+    if (Platform.isJavaScript) {
       assertThat(actualName).isEqualTo("ObjectDeclaringLoggerAsInstanceProperty")
     } else {
       assertThat(actualName).isEqualTo("net.codinux.log.ObjectDeclaringLoggerAsInstanceProperty")
@@ -53,7 +55,7 @@ class LoggerFactoryTest {
   fun `Logger declaration in inner class - logger name is of inner class`() {
     val actualName = OuterClass.InnerClass().log.name
 
-    if (Platform.type.isJsOrWasm) {
+    if (Platform.isJavaScript) {
       assertThat(actualName).isEqualTo("InnerClass")
     } else {
       assertThat(actualName).isEqualTo("net.codinux.log.OuterClass.InnerClass")
