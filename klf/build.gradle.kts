@@ -115,32 +115,31 @@ kotlin {
     val assertJVersion: String by project
 
     sourceSets {
-        commonMain {
-            dependencies {
-                implementation(kotlin("reflect"))
+        commonMain.dependencies {
+            implementation(kotlin("reflect"))
 
-                implementation("net.codinux.kotlin:kmp-base:$kmpBaseVersion")
-            }
+            implementation("net.codinux.kotlin:kmp-base:$kmpBaseVersion")
         }
-        commonTest {
-            dependencies {
-                implementation(kotlin("test"))
+        commonTest.dependencies {
+            implementation(kotlin("test"))
 
-                implementation("com.willowtreeapps.assertk:assertk:$assertKVersion")
-            }
+            implementation("com.willowtreeapps.assertk:assertk:$assertKVersion")
         }
 
 
         val javaAndNativeCommonMain by creating {
             dependsOn(commonMain.get())
+            nativeMain.get().dependsOn(this)
         }
         val javaAndNativeCommonTest by creating {
             dependsOn(commonTest.get())
+            nativeTest.get().dependsOn(this)
         }
 
 
         val javaCommonMain by creating {
             dependsOn(javaAndNativeCommonMain)
+            jvmMain.get().dependsOn(this)
 
             dependencies {
                 compileOnly("org.slf4j:slf4j-api:$slf4jVersion")
@@ -149,6 +148,7 @@ kotlin {
         }
         val javaCommonTest by creating {
             dependsOn(javaAndNativeCommonTest)
+            jvmTest.get().dependsOn(this)
 
             dependencies {
                 implementation("org.assertj:assertj-core:$assertJVersion")
@@ -160,13 +160,6 @@ kotlin {
             }
         }
 
-        jvmMain {
-            dependsOn(javaCommonMain)
-        }
-        jvmTest {
-            dependsOn(javaCommonTest)
-        }
-
         val androidMain by getting {
             dependsOn(javaCommonMain)
         }
@@ -174,24 +167,14 @@ kotlin {
             dependsOn(javaCommonTest)
         }
 
-        jsMain.dependencies {
-
-        }
-
-        nativeMain {
-            dependsOn(javaAndNativeCommonMain)
-        }
         val linuxAndMingwMain by creating {
             dependsOn(nativeMain.get())
-        }
-        linuxMain {
-            dependsOn(linuxAndMingwMain)
-        }
-        mingwMain {
-            dependsOn(linuxAndMingwMain)
+            linuxMain.get().dependsOn(this)
+            mingwMain.get().dependsOn(this)
         }
     }
 }
+
 
 android {
     namespace = "net.codinux.log"
