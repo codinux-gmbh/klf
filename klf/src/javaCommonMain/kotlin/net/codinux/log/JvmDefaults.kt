@@ -56,10 +56,6 @@ object JvmDefaults {
   }
 
 
-  fun getCurrentThreadName(): String? =
-    Thread.currentThread().name
-
-
   fun isClassAvailable(qualifiedClassName: String): Boolean =
     getClassOrNull(qualifiedClassName) != null
 

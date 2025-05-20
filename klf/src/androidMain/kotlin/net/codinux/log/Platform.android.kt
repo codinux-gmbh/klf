@@ -23,9 +23,6 @@ internal actual object Platform {
     actual fun getLoggerNameFromCallingMethod(): String? =
         JvmDefaults.getLoggerNameFromCallingMethod()
 
-    actual fun getCurrentThreadName() =
-      JvmDefaults.getCurrentThreadName()
-
     actual val isRunningInDebugMode =
         // BuildConfig.DEBUG will always be false as for a compiled library its set to false at compile time
         AndroidContext.applicationContext?.applicationContext?.let {

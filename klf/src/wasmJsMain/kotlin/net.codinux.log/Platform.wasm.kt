@@ -1,7 +1,6 @@
 package net.codinux.log
 
 import net.codinux.log.appender.Appender
-import net.codinux.log.appender.ConsoleAppender
 import net.codinux.log.appender.JsConsoleAppender
 import kotlin.reflect.KClass
 
@@ -24,8 +23,6 @@ internal actual object Platform {
     }
 
     actual fun getLoggerNameFromCallingMethod(): String? = null
-
-    actual fun getCurrentThreadName(): String? = "main" // TODO: how to get current thread in WebAssembly?
 
     actual val isRunningInDebugMode: Boolean = false // TODO: don't know how to do this in JS
 

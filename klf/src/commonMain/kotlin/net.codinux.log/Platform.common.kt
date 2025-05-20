@@ -15,8 +15,6 @@ internal expect object Platform {
 
     fun getLoggerNameFromCallingMethod(): String?
 
-    fun getCurrentThreadName(): String?
-
     val isRunningInDebugMode: Boolean
 
     val appName: String?

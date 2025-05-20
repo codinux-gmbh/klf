@@ -34,14 +34,6 @@ internal actual object Platform {
   // TODO: may use Thread.callStackSymbols
   actual fun getLoggerNameFromCallingMethod(): String? = null
 
-  actual fun getCurrentThreadName(): String? {
-    val currentThread = NSThread.currentThread
-
-    return currentThread.name?.takeIf { it.isNotBlank() }
-      ?: currentThread.description
-      ?: NSOperationQueue.currentQueue?.underlyingQueue?.description
-  }
-
   fun printStackTrace() {
     NSThread.callStackSymbols
       .drop(1) // skip invocation of Exception constructor and this method

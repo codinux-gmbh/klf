@@ -19,9 +19,6 @@ internal actual object Platform {
 
   actual fun getLoggerNameFromCallingMethod(): String? = null
 
-  actual fun getCurrentThreadName(): String? =
-    Worker.current.name // TODO: use native C implementation
-
   actual val isRunningInDebugMode: Boolean =
     NativeDefaults.isRunningInDebugMode
 
