@@ -2,8 +2,6 @@ package net.codinux.log
 
 import net.codinux.log.appender.Appender
 import net.codinux.log.appender.ConsoleAppender
-import java.lang.management.ManagementFactory
-import kotlin.reflect.KClass
 
 internal actual object Platform {
 
@@ -11,8 +9,6 @@ internal actual object Platform {
 
     actual val systemDefaultAppender: Appender by lazy { ConsoleAppender.Default }
 
-
-    actual fun <T : Any> getLoggerName(forClass: KClass<T>) = JvmDefaults.getLoggerName(forClass)
 
     actual fun getLoggerNameFromCallingMethod(): String? =
         JvmDefaults.getLoggerNameFromCallingMethod()

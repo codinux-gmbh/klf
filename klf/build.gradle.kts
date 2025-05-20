@@ -110,18 +110,19 @@ kotlin {
 
 
     val kmpBaseVersion: String by project
+    val logFormatterVersion: String by project
 
     val assertKVersion: String by project
     val assertJVersion: String by project
 
     sourceSets {
         commonMain.dependencies {
-            implementation(kotlin("reflect"))
-
             implementation("net.codinux.kotlin:kmp-base:$kmpBaseVersion")
+            implementation("net.codinux.log:log-formatter:$logFormatterVersion")
         }
         commonTest.dependencies {
             implementation(kotlin("test"))
+            implementation(kotlin("reflect"))
 
             implementation("com.willowtreeapps.assertk:assertk:$assertKVersion")
         }

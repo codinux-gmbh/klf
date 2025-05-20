@@ -3,8 +3,6 @@ package net.codinux.log
 import net.codinux.log.slf4j.Slf4jLoggerFactory
 import net.codinux.log.slf4j.Slf4jUtil
 import net.codinux.log.util.LoggerNameResolver
-import kotlin.reflect.KClass
-import kotlin.reflect.jvm.jvmName
 
 object JvmDefaults {
 
@@ -15,26 +13,6 @@ object JvmDefaults {
 
     return DefaultLoggerFactory()
   }
-
-
-  fun <T : Any> getLoggerName(forClass: KClass<T>): String = getClassName(unwrapCompanionClass(forClass))
-
-  // unwrap companion class to enclosing class given a Java Class
-  internal fun <T : Any> unwrapCompanionClass(ofClass: KClass<T>): KClass<*> {
-    return if (ofClass.isCompanion) {
-      ofClass.java.enclosingClass?.kotlin // enclosingClass should never be null, just in case
-        ?: ofClass
-    } else {
-      ofClass
-    }
-  }
-
-  private fun <T : Any> getClassName(forClass: KClass<T>): String =
-    forClass.qualifiedName // os opposed to jvmName qualifiedName for inner classes already replaces '$' with '.'
-      ?: forClass.jvmName.replace('$', '.')
-
-  fun <T : Any> getClassNameWithUnwrappingCompanion(forClass: KClass<T>): String =
-    LoggerNameResolver.removeCompanionAndInnerClassSeparatorFromName(forClass.qualifiedName ?: forClass.jvmName)
 
 
   fun getLoggerNameFromCallingMethod(): String? {

@@ -1,6 +1,8 @@
 package net.codinux.log
 
 import net.codinux.log.appender.Appender
+import net.codinux.log.classname.ClassNameResolver
+import net.codinux.log.classname.ClassType
 import net.codinux.log.config.EffectiveLoggerConfig
 import net.codinux.log.config.LoggerConfig
 import kotlin.jvm.JvmStatic
@@ -13,6 +15,9 @@ object LoggerFactory {
     private val loggerCache = Cache<KClass<*>, Logger>()
 
     private val loggerCacheForName = Cache<String, Logger>()
+
+    private val classNameResolver = ClassNameResolver()
+
 
     /**
      * The logger name that will be applied if no logger tag has been provided, e.g. with
@@ -94,8 +99,18 @@ object LoggerFactory {
     @JvmStatic
     fun getLogger(forClass: KClass<*>): Logger =
         loggerCache.getOrPut(forClass) {
-            getLogger(Platform.getLoggerName(forClass))
+            getLogger(getLoggerName(forClass))
         }
+
+    private fun getLoggerName(forClass: KClass<*>): String {
+        val components = classNameResolver.getClassNameComponents(forClass)
+
+        return if (components.enclosingClassName != null && components.type != ClassType.InnerClass && components.type != ClassType.LocalClass) {
+            components.packageNamePrefix + components.enclosingClassName
+        } else {
+            components.packageNamePrefix + components.className
+        }
+    }
 
     private fun resolveDefaultLoggerName(): String {
         if (effectiveConfig.useCallerMethodIfLoggerNameNotSet) {

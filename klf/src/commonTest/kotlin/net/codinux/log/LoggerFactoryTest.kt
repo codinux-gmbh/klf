@@ -32,7 +32,7 @@ class LoggerFactoryTest {
     val actualName = ClassDeclaringLoggerInCompanionObject.log.name
 
     if (Platform.isJavaScript) {
-      assertThat(actualName).isEqualTo("Companion")
+      assertThat(actualName).isEqualTo("Companion_1")
     } else {
       assertThat(actualName).isEqualTo("net.codinux.log.ClassDeclaringLoggerInCompanionObject")
     }

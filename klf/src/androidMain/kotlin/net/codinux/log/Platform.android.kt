@@ -16,8 +16,6 @@ internal actual object Platform {
 
     actual val systemDefaultAppender: Appender by lazy { LogcatAppender.Default }
 
-    actual fun <T : Any> getLoggerName(forClass: KClass<T>): String = getAndroidLogTag(forClass)
-
     actual fun getLoggerNameFromCallingMethod(): String? =
         JvmDefaults.getLoggerNameFromCallingMethod()
 
@@ -38,6 +36,7 @@ internal actual object Platform {
     }
 
 
+    // TODO: migrate max loggerName length to LoggerFactory
     /**
      * Before API 26 there was a max log tag length of 23:
      * "An IllegalArgumentException is thrown if the tag.length() > 23 for Nougat (7.0) and prior releases (API <= 25),

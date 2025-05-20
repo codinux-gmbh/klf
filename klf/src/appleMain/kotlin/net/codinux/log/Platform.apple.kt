@@ -26,9 +26,6 @@ internal actual object Platform {
 
   actual val systemDefaultAppender: Appender by lazy { if (supportsOsLog) OSLogAppender() else NSLogAppender() }
 
-  actual fun <T : Any> getLoggerName(forClass: KClass<T>) =
-    LoggerNameResolver.getLoggerNameForKClassesWithQualifiedName(forClass)
-
   // TODO: may use Thread.callStackSymbols
   actual fun getLoggerNameFromCallingMethod(): String? = null
 

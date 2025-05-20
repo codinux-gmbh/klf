@@ -9,8 +9,6 @@ internal expect object Platform {
 
     val systemDefaultAppender: Appender
 
-    fun <T : Any> getLoggerName(forClass: KClass<T>): String
-
     fun getLoggerNameFromCallingMethod(): String?
 
     val appName: String?
