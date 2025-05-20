@@ -5,11 +5,9 @@ import net.codinux.log.LogLevel
 
 open class DefaultLogEventFormatter : LogEventFormatter {
 
-    private val lineSeparator = Defaults.lineSeparator
-
     override fun formatMessage(message: String, exception: Throwable?): String {
         return if (exception != null) {
-            "$message:$lineSeparator${exception.stackTraceToString()}"
+            "$message:${Defaults.lineSeparator}${exception.stackTraceToString()}"
         } else {
             message
         }
