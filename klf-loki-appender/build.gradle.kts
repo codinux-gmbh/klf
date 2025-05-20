@@ -61,6 +61,7 @@ kotlin {
             api(project(":klf"))
 
             api("net.codinux.log:loki-log-appender-base:$lokiAppenderVersion")
+            implementation("net.codinux.log.web:loki-ktor-web-client:$lokiAppenderVersion")
         }
 
         commonTest.dependencies {
