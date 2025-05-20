@@ -21,8 +21,6 @@ internal actual object Platform {
 
   actual fun getLoggerNameFromCallingMethod(): String? = null
 
-  actual val isRunningInDebugMode: Boolean = false // TODO: don't know how to do this in JS
-
   actual val appName: String? by lazy {
     try {
       window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/'))

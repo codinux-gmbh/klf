@@ -61,7 +61,7 @@ object LoggerFactory {
     @JvmStatic
     val debugConfig: LoggerConfig = LoggerConfig(defaultRootLevel = LogLevel.Debug)
 
-    internal val effectiveConfig: EffectiveLoggerConfig = EffectiveLoggerConfig(config, debugConfig, Platform.isRunningInDebugMode)
+    internal val effectiveConfig: EffectiveLoggerConfig = EffectiveLoggerConfig(config, debugConfig, Defaults.isRunningInDebugMode)
 
 
     private var factory: ILoggerFactory = Platform.createDefaultLoggerFactory()

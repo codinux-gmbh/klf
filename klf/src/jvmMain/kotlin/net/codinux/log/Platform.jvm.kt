@@ -21,11 +21,6 @@ internal actual object Platform {
     actual fun getLoggerNameFromCallingMethod(): String? =
         JvmDefaults.getLoggerNameFromCallingMethod()
 
-    actual val isRunningInDebugMode: Boolean by lazy {
-        isRunningOnAndroid == false && // due to a bug in Gradle(?) Android library doesn't get published so that Android calls this JVM code leading to crashes when running on an Android device
-                isDebuggingEnabled()
-    }
-
     actual val appName: String? by lazy {
         try {
             val jarPath = Platform::class.java.protectionDomain

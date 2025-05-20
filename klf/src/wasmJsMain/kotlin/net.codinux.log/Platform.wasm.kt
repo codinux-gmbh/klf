@@ -24,8 +24,6 @@ internal actual object Platform {
 
     actual fun getLoggerNameFromCallingMethod(): String? = null
 
-    actual val isRunningInDebugMode: Boolean = false // TODO: don't know how to do this in JS
-
     actual val appName: String?  = null
 
 }

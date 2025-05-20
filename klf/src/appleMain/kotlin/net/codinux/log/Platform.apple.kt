@@ -42,9 +42,6 @@ internal actual object Platform {
       }
   }
 
-  actual val isRunningInDebugMode: Boolean =
-    NativeDefaults.isRunningInDebugMode
-
   actual val appName: String? by lazy {
 //      val info = NSBundle.mainBundle.infoDictionary!!
 //      println("appName: ${info["CFBundleName"]}, displayName: ${info["CFBundleDisplayName"]}, identifier: ${info["CFBundleIdentifier"]}, appBuild: ${info["CFBundleVersion"]}, appVersion: ${info["CFBundleShortVersionString"]}")
