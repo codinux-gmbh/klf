@@ -52,13 +52,15 @@ kotlin {
 
 
     sourceSets {
+        val lokiAppenderVersion: String by project
+
         val assertKVersion: String by project
 
 
         commonMain.dependencies {
             api(project(":klf"))
 
-            api("net.codinux.log:loki-log-appender-base:0.6.1")
+            api("net.codinux.log:loki-log-appender-base:$lokiAppenderVersion")
         }
 
         commonTest.dependencies {
