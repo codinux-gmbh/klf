@@ -1,0 +1,38 @@
+
+ext.createCompilation = { String name, NamedDomainObjectContainer compilations, String... mavenDependencies ->
+    def main = compilations.main
+    def test = compilations.test
+
+    // see https://kotlinlang.org/docs/multiplatform-configure-compilations.html#create-a-custom-compilation
+    compilations.create(name) {
+        defaultSourceSet {
+            dependencies {
+                // Compile against the main compilation's compile classpath and outputs:
+                implementation(main.compileDependencyFiles + main.output.classesDirs + test.output.classesDirs)
+                implementation(project(":klf"))
+                implementation(kotlin("test-junit"))
+                implementation("org.junit.jupiter:junit-jupiter-api:5.6.0")
+                runtimeOnly("org.junit.jupiter:junit-jupiter-engine")
+                for (String dependency : mavenDependencies) {
+                    implementation dependency
+                }
+            }
+        }
+
+        tasks.register("jvm${name[0].toUpperCase()}${name.substring(1)}", Test) {
+            group = "verification"
+
+            useJUnitPlatform()
+
+            // Run the tests with the classpath containing the compile dependencies (including 'main'),
+            // runtime dependencies, and the outputs of this compilation:
+            classpath = compileDependencyFiles + runtimeDependencyFiles + output.allOutputs
+
+            // Run only the tests from this compilation's outputs:
+            testClassesDirs = output.classesDirs
+
+            // configure that this tasks runs with 'jvmTest' task
+            tasks.named("jvmTest").get().dependsOn(it)
+        }
+    }
+}
