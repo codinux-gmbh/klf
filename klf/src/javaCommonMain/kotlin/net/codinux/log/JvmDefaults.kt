@@ -19,8 +19,6 @@ object JvmDefaults {
 
   fun <T : Any> getLoggerName(forClass: KClass<T>): String = getClassName(unwrapCompanionClass(forClass))
 
-  fun <T : Any> getLoggerName(forClass: Class<T>): String = getLoggerName(forClass.kotlin)
-
   // unwrap companion class to enclosing class given a Java Class
   internal fun <T : Any> unwrapCompanionClass(ofClass: KClass<T>): KClass<*> {
     return if (ofClass.isCompanion) {
