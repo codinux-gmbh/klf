@@ -1,4 +1,6 @@
 buildscript {
+    val kotlinVersion: String by extra
+
     repositories {
         mavenCentral()
         google()
