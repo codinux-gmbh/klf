@@ -58,7 +58,7 @@ kotlin {
         commonMain.dependencies {
             api(project(":klf"))
 
-            api("net.codinux.log:loki-log-appender-base:0.5.5")
+            api("net.codinux.log:loki-log-appender-base:0.6.1")
         }
 
         commonTest.dependencies {
