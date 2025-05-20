@@ -1,15 +1,13 @@
 package net.codinux.log
 
 import net.codinux.log.appender.Appender
-import net.codinux.log.collection.ConcurrentSet
-import net.codinux.log.collection.ImmutableCollection
-import net.codinux.log.collection.toImmutableCollection
+import net.codinux.log.collection.*
 
 abstract class LoggerFactoryBase : ILoggerFactory {
 
     protected open val appenders = ConcurrentSet<Appender>()
 
-    protected open var immutableAppenders = ImmutableCollection<Appender>()
+    protected open var immutableAppenders = ImmutableList<Appender>()
 
     override var doesAnyAppenderLogThreadName: Boolean = false
         protected set
@@ -17,7 +15,7 @@ abstract class LoggerFactoryBase : ILoggerFactory {
 
     override fun addAppender(appender: Appender) {
         appenders.add(appender)
-        immutableAppenders = appenders.toImmutableCollection() // make a copy, don't pass mutable state to the outside
+        immutableAppenders = appenders.toList().toImmutableList() // make a copy, don't pass mutable state to the outside
 
         this.doesAnyAppenderLogThreadName = appenders.any { it.logsThreadName }
     }
@@ -28,7 +26,7 @@ abstract class LoggerFactoryBase : ILoggerFactory {
     override fun appendToAppenders(level: LogLevel, loggerName: String, message: String, exception: Throwable?) {
         val threadName = if (doesAnyAppenderLogThreadName) Platform.getCurrentThreadName() else null
 
-        appenders.forEach { appender ->
+        immutableAppenders.fastForEach { appender ->
             appender.append(
                 level,
                 message,
