@@ -1,12 +1,9 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("com.android.library")
     id("org.jetbrains.kotlin.multiplatform")
+    id("com.android.library")
 }
-
-
-ext.artifactName = "klf"
 
 
 //@OptIn(ExperimentalKotlinGradlePluginApi::class)
@@ -14,6 +11,11 @@ kotlin {
     compilerOptions {
         // suppresses compiler warning: [EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING] 'expect'/'actual' classes (including interfaces, objects, annotations, enums, and 'actual' typealiases) are in Beta.
         freeCompilerArgs.add("-Xexpect-actual-classes")
+
+        // avoid "variable has been optimized out" in debugging mode
+        if (System.getProperty("idea.debugger.dispatch.addr") != null) {
+            freeCompilerArgs.add("-Xdebug")
+        }
     }
 
 
@@ -48,7 +50,6 @@ kotlin {
     }
 
     js {
-        moduleName = "klf"
         binaries.library()
 
         browser {
@@ -72,10 +73,6 @@ kotlin {
 
     wasmJs {
         browser {
-            commonWebpackConfig {
-                experiments.add("topLevelAwait")
-            }
-
             testTask {
                 useKarma {
                     useChromeHeadless()
