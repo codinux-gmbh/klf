@@ -6,6 +6,11 @@ import kotlin.reflect.KClass
 
 open class LoggerNameService {
 
+    companion object {
+        val Default = LoggerNameService()
+    }
+
+
     protected val loggerCache = Cache<KClass<*>, Logger>()
 
     protected val loggerCacheForName = Cache<String, Logger>()

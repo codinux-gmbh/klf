@@ -12,7 +12,7 @@ import kotlin.reflect.KClass
 @ThreadLocal // actually not needed anymore on Kotlin 1.7 and above but to make compiler happy
 object LoggerFactory {
 
-    private val loggerNameService = LoggerNameService()
+    private val loggerNameService = LoggerNameService.Default
 
 
     /**
