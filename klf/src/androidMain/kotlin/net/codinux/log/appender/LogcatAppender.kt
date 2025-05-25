@@ -1,11 +1,21 @@
 package net.codinux.log.appender
 
+import android.os.Build
 import android.util.Log
 import net.codinux.log.LogLevel
 
-class LogcatAppender : Appender {
+open class LogcatAppender : Appender {
 
   companion object {
+
+    /**
+     * Before API 26 there was a max log tag length of 23:
+     * "An IllegalArgumentException is thrown if the tag.length() > 23 for Nougat (7.0) and prior releases (API <= 25),
+     * there is no tag limit of concern after this API level."
+     * [https://developer.android.com/reference/android/util/Log#isLoggable(java.lang.String,%20int)](https://developer.android.com/reference/android/util/Log#isLoggable(java.lang.String,%20int))
+     */
+    const val MaxAndroidLogTagSizeBeforeApi26 = 23
+
 
     val Default = LogcatAppender()
 
@@ -16,15 +26,27 @@ class LogcatAppender : Appender {
 
   override val logsException = true
 
+  protected open val loggerNameAbbreviator = LoggerNameAbbreviator()
+
+
   override fun append(level: LogLevel, message: String, loggerName: String, threadName: String?, exception: Throwable?) {
+    val tag = getLoggerTag(loggerName)
+
     when (level) {
-      LogLevel.Error -> Log.e(loggerName, message, exception)
-      LogLevel.Warn -> Log.w(loggerName, message, exception)
-      LogLevel.Info -> Log.i(loggerName, message, exception)
-      LogLevel.Debug -> Log.d(loggerName, message, exception)
-      LogLevel.Trace -> Log.v(loggerName, message, exception)
+      LogLevel.Error -> Log.e(tag, message, exception)
+      LogLevel.Warn -> Log.w(tag, message, exception)
+      LogLevel.Info -> Log.i(tag, message, exception)
+      LogLevel.Debug -> Log.d(tag, message, exception)
+      LogLevel.Trace -> Log.v(tag, message, exception)
       LogLevel.Off -> { }
     }
   }
+
+  protected open fun getLoggerTag(loggerName: String): String =
+    if (Build.VERSION.SDK_INT in 1 .. 25) {
+      loggerNameAbbreviator.getLoggerTagOfMaxLength(loggerName, MaxAndroidLogTagSizeBeforeApi26)
+    } else {
+      loggerName
+    }
 
 }
