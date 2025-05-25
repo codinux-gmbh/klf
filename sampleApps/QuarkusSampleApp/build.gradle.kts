@@ -30,7 +30,7 @@ dependencies {
 
     implementation("io.quarkus:quarkus-smallrye-openapi")
 
-    implementation("net.codinux.log:klf-graal:1.8.0")
+    implementation("net.codinux.log:klf-graal:1.8.3")
 
 
     testImplementation("io.quarkus:quarkus-junit5")

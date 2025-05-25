@@ -9,7 +9,7 @@ Kotlin (Multiplatform) logging facade for idiomatic logging in Kotlin with appen
 ### Gradle
 
 ```
-implementation("net.codinux.log:klf:1.8.0")
+implementation("net.codinux.log:klf:1.8.3")
 ```
 
 ### Native Images (e.g. Quarkus native)
@@ -17,7 +17,7 @@ implementation("net.codinux.log:klf:1.8.0")
 For native images use
 
 ```
-implementation("net.codinux.log:klf-graal:1.8.0")
+implementation("net.codinux.log:klf-graal:1.8.3")
 ```
 
 which substitutes calls to reflection. (As otherwise each class for which a Logger gets created would need to be annotated with `@RegisterForReflection`.)
@@ -258,7 +258,7 @@ If you want to apply centralized logging, you can push all logs collected with k
 
 Add to Gradle:
 ```
-implementation("net.codinux.log:klf-loki-appender:1.8.0")
+implementation("net.codinux.log:klf-loki-appender:1.8.3")
 ```
 
 And on app start add LokiAppender:
