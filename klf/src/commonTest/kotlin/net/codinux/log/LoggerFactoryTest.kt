@@ -3,7 +3,9 @@ package net.codinux.log
 import assertk.assertThat
 import assertk.assertions.isEqualTo
 import net.codinux.kotlin.platform.Platform
+import net.codinux.kotlin.platform.PlatformType
 import net.codinux.kotlin.platform.isJavaScript
+import net.codinux.kotlin.platform.isJsBrowserOrNodeJs
 import kotlin.js.JsName
 import kotlin.test.Test
 
@@ -31,8 +33,10 @@ class LoggerFactoryTest {
   fun `Logger declaration in companion object - logger name is of enclosing class`() {
     val actualName = ClassDeclaringLoggerInCompanionObject.log.name
 
-    if (Platform.isJavaScript) {
+    if (Platform.isJsBrowserOrNodeJs) {
       assertThat(actualName).isEqualTo("Companion_1")
+    } else if (Platform.type == PlatformType.WasmJs) {
+      assertThat(actualName).isEqualTo("Companion")
     } else {
       assertThat(actualName).isEqualTo("net.codinux.log.ClassDeclaringLoggerInCompanionObject")
     }
