@@ -4,7 +4,7 @@ import assertk.assertThat
 import assertk.assertions.isEqualTo
 import kotlin.test.Test
 
-class JvmDefaultsTest {
+class LoggerFactoryJavaAndNativeTest {
 
     companion object
 
@@ -21,23 +21,23 @@ class JvmDefaultsTest {
 
     @Test
     fun getLogger_Class() {
-        val result = LoggerFactory.getLogger(JvmDefaultsTest::class).name
+        val result = LoggerFactory.getLogger(LoggerFactoryJavaAndNativeTest::class).name
 
-        assertThat(result).isEqualTo("net.codinux.log.JvmDefaultsTest")
+        assertThat(result).isEqualTo("net.codinux.log.LoggerFactoryJavaAndNativeTest")
     }
 
     @Test
     fun getLogger_CompanionObject() {
-        val result = LoggerFactory.getLogger(JvmDefaultsTest.Companion::class).name
+        val result = LoggerFactory.getLogger(Companion::class).name
 
-        assertThat(result).isEqualTo("net.codinux.log.JvmDefaultsTest")
+        assertThat(result).isEqualTo("net.codinux.log.LoggerFactoryJavaAndNativeTest")
     }
 
     @Test
     fun getLogger_InnerClass() {
-        val result = LoggerFactory.getLogger(JvmDefaultsTest.InnerClass::class).name
+        val result = LoggerFactory.getLogger(InnerClass::class).name
 
-        assertThat(result).isEqualTo("net.codinux.log.JvmDefaultsTest.InnerClass")
+        assertThat(result).isEqualTo("net.codinux.log.LoggerFactoryJavaAndNativeTest.InnerClass")
     }
 
     @Test
@@ -49,16 +49,16 @@ class JvmDefaultsTest {
 
     @Test
     fun getLogger_InnerObject() {
-        val result = LoggerFactory.getLogger(JvmDefaultsTest.InnerObject::class).name
+        val result = LoggerFactory.getLogger(InnerObject::class).name
 
-        assertThat(result).isEqualTo("net.codinux.log.JvmDefaultsTest.InnerObject")
+        assertThat(result).isEqualTo("net.codinux.log.LoggerFactoryJavaAndNativeTest.InnerObject")
     }
 
     @Test
     fun getLogger_DataClass() {
         val result = LoggerFactory.getLogger(InnerDataClass::class).name
 
-        assertThat(result).isEqualTo("net.codinux.log.JvmDefaultsTest.InnerDataClass")
+        assertThat(result).isEqualTo("net.codinux.log.LoggerFactoryJavaAndNativeTest.InnerDataClass")
     }
 
 }
