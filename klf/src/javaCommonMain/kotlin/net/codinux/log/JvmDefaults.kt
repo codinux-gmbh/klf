@@ -24,9 +24,10 @@ object JvmDefaults {
     // index 0 is Thread.getStackTrace() (or on Android dalvik.system.VMStack.getThreadStackTrace, which moves all indices at by one)
     // index 1 is this method
     // index 2 is Platform.getLoggerNameFromCallingMethod()
-    // index 3 is LoggerFactory.resolveDefaultLoggerName()
-    // index 4 is LoggerFactory.getLogger(String?)
-    return stackTrace.drop(getStackTraceElement + 5).firstOrNull()?.let { stackTraceElement ->
+    // index 3 is LoggerNameService.resolveDefaultLoggerName()
+    // index 4 is LoggerNameService.getLogger(String?)
+    // index 5 is LoggerFactory.getLogger(String?)
+    return stackTrace.drop(getStackTraceElement + 6).firstOrNull()?.let { stackTraceElement ->
       LoggerNameResolver.getLoggerNameFromMethod(stackTraceElement.className, stackTraceElement.methodName)
     }
   }

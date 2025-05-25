@@ -12,11 +12,7 @@ import kotlin.reflect.KClass
 @ThreadLocal // actually not needed anymore on Kotlin 1.7 and above but to make compiler happy
 object LoggerFactory {
 
-    private val loggerCache = Cache<KClass<*>, Logger>()
-
-    private val loggerCacheForName = Cache<String, Logger>()
-
-    private val classNameResolver = ClassNameResolver()
+    private val loggerNameService = LoggerNameService()
 
 
     /**
@@ -69,7 +65,7 @@ object LoggerFactory {
     internal val effectiveConfig: EffectiveLoggerConfig = EffectiveLoggerConfig(config, debugConfig, Defaults.isRunningInDebugMode)
 
 
-    private var factory: ILoggerFactory = Platform.createDefaultLoggerFactory()
+    internal var factory: ILoggerFactory = Platform.createDefaultLoggerFactory()
 
     @JvmStatic
     fun setLoggerFactory(factory: ILoggerFactory) {
@@ -87,41 +83,9 @@ object LoggerFactory {
 
 
     @JvmStatic
-    fun getLogger(name: String?): Logger {
-        // name can only be null when using one of the static log methods of net.codinux.log.Log without a logger name or class
-        val actualName = name ?: resolveDefaultLoggerName()
-
-        return loggerCacheForName.getOrPut(actualName) {
-            factory.createLogger(actualName)
-        }
-    }
+    fun getLogger(name: String?): Logger = loggerNameService.getLogger(name)
 
     @JvmStatic
-    fun getLogger(forClass: KClass<*>): Logger =
-        loggerCache.getOrPut(forClass) {
-            getLogger(getLoggerName(forClass))
-        }
-
-    private fun getLoggerName(forClass: KClass<*>): String {
-        val components = classNameResolver.getClassNameComponents(forClass)
-
-        val className = if (components.enclosingClassName != null && components.type != ClassType.InnerClass && components.type != ClassType.LocalClass) {
-            components.enclosingClassName!!
-        } else {
-            components.className
-        }
-
-        return components.packageNamePrefix + className
-    }
-
-    private fun resolveDefaultLoggerName(): String {
-        if (effectiveConfig.useCallerMethodIfLoggerNameNotSet) {
-            Platform.getLoggerNameFromCallingMethod()?.let { fromCallingMethod ->
-                return fromCallingMethod
-            }
-        }
-
-        return effectiveConfig.defaultLoggerName ?: Platform.appName ?: "net.codinux.log.klf"
-    }
+    fun getLogger(forClass: KClass<*>): Logger = loggerNameService.getLogger(forClass)
 
 }
