@@ -9,8 +9,6 @@ interface LogEventFormatter {
     }
 
 
-    fun formatMessage(message: String) = formatMessage(message, null)
-
     fun formatMessage(message: String, exception: Throwable? = null): String
 
 
