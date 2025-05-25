@@ -31,11 +31,13 @@ class LoggerConfig(
     var rootLevel: LogLevel = defaultRootLevel
 
     /**
-     * The formatter to use for converting log events to the string output mostly on console
-     * (like in [net.codinux.log.appender.ConsoleAppender], `JsConsoleAppender`, `OSLogAppender`
-     * and `NSLogAppender`).
+     * The formatter most of our platform-dependent default appenders use to render log events
+     * before printing them to the console
+     * (like [net.codinux.log.appender.ConsoleAppender], `JsConsoleAppender` and `OSLogAppender`).
      *
      * Not used when logging over `slf4j` or using custom appenders.
+     *
+     * For customizing log event formatting, set your own [LogEventFormatter] implementation here.
      */
     var logEventFormatter: LogEventFormatter = defaultLogEventFormatter
 
