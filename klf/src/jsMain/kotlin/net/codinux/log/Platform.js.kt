@@ -3,7 +3,6 @@ package net.codinux.log
 import kotlinx.browser.window
 import net.codinux.log.appender.Appender
 import net.codinux.log.appender.JsConsoleAppender
-import kotlin.reflect.KClass
 
 internal actual object Platform {
 

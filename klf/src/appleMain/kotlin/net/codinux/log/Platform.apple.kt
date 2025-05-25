@@ -8,15 +8,12 @@ import kotlinx.cinterop.useContents
 import net.codinux.log.appender.Appender
 import net.codinux.log.appender.NSLogAppender
 import net.codinux.log.appender.OSLogAppender
-import net.codinux.log.util.LoggerNameResolver
 import platform.CoreFoundation.kCFBundleNameKey
 import platform.Foundation.NSBundle
-import platform.Foundation.NSOperationQueue
 import platform.Foundation.NSProcessInfo
 import platform.Foundation.NSThread
 import kotlin.experimental.ExperimentalNativeApi
 import kotlin.native.Platform
-import kotlin.reflect.KClass
 
 internal actual object Platform {
 

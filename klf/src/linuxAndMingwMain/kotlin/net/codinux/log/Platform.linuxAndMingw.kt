@@ -2,8 +2,6 @@ package net.codinux.log
 
 import net.codinux.log.appender.Appender
 import net.codinux.log.appender.ConsoleAppender
-import net.codinux.log.util.LoggerNameResolver
-import kotlin.reflect.KClass
 
 internal actual object Platform {
 
