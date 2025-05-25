@@ -2,6 +2,7 @@ package net.codinux.log.appender
 
 import android.os.Build
 import android.util.Log
+import net.codinux.log.Cache
 import net.codinux.log.LogLevel
 
 open class LogcatAppender : Appender {
@@ -26,7 +27,10 @@ open class LogcatAppender : Appender {
 
   override val logsException = true
 
+
   protected open val loggerNameAbbreviator = LoggerNameAbbreviator()
+
+  protected open val abbreviatedLoggerTagCache = Cache<String, String>()
 
 
   override fun append(level: LogLevel, message: String, loggerName: String, threadName: String?, exception: Throwable?) {
@@ -44,7 +48,9 @@ open class LogcatAppender : Appender {
 
   protected open fun getLoggerTag(loggerName: String): String =
     if (Build.VERSION.SDK_INT in 1 .. 25) {
-      loggerNameAbbreviator.getLoggerTagOfMaxLength(loggerName, MaxAndroidLogTagSizeBeforeApi26)
+      abbreviatedLoggerTagCache.getOrPut(loggerName) {
+        loggerNameAbbreviator.getLoggerTagOfMaxLength(loggerName, MaxAndroidLogTagSizeBeforeApi26)
+      }
     } else {
       loggerName
     }
