@@ -105,11 +105,13 @@ object LoggerFactory {
     private fun getLoggerName(forClass: KClass<*>): String {
         val components = classNameResolver.getClassNameComponents(forClass)
 
-        return if (components.enclosingClassName != null && components.type != ClassType.InnerClass && components.type != ClassType.LocalClass) {
-            components.packageNamePrefix + components.enclosingClassName
+        val className = if (components.enclosingClassName != null && components.type != ClassType.InnerClass && components.type != ClassType.LocalClass) {
+            components.enclosingClassName!!
         } else {
-            components.packageNamePrefix + components.className
+            components.className
         }
+
+        return components.packageNamePrefix + className
     }
 
     private fun resolveDefaultLoggerName(): String {
