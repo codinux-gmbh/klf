@@ -19,43 +19,43 @@ class JvmDefaultsTest {
 
 
     @Test
-    fun getLoggerName_Class() {
-        val result = JvmDefaults.getLoggerName(JvmDefaultsTest::class)
+    fun getLogger_Class() {
+        val result = LoggerFactory.getLogger(JvmDefaultsTest::class).name
 
         assertThat(result).isEqualTo("net.codinux.log.JvmDefaultsTest")
     }
 
     @Test
-    fun getLoggerName_CompanionObject() {
-        val result = JvmDefaults.getLoggerName(JvmDefaultsTest.Companion::class)
+    fun getLogger_CompanionObject() {
+        val result = LoggerFactory.getLogger(JvmDefaultsTest.Companion::class).name
 
         assertThat(result).isEqualTo("net.codinux.log.JvmDefaultsTest")
     }
 
     @Test
-    fun getLoggerName_InnerClass() {
-        val result = JvmDefaults.getLoggerName(JvmDefaultsTest.InnerClass::class)
+    fun getLogger_InnerClass() {
+        val result = LoggerFactory.getLogger(JvmDefaultsTest.InnerClass::class).name
 
         assertThat(result).isEqualTo("net.codinux.log.JvmDefaultsTest.InnerClass")
     }
 
     @Test
-    fun getLoggerName_TopLevelObject() {
-        val result = JvmDefaults.getLoggerName(TopLevelObject::class)
+    fun getLogger_TopLevelObject() {
+        val result = LoggerFactory.getLogger(TopLevelObject::class).name
 
         assertThat(result).isEqualTo("net.codinux.log.TopLevelObject")
     }
 
     @Test
-    fun getLoggerName_InnerObject() {
-        val result = JvmDefaults.getLoggerName(JvmDefaultsTest.InnerObject::class)
+    fun getLogger_InnerObject() {
+        val result = LoggerFactory.getLogger(JvmDefaultsTest.InnerObject::class).name
 
         assertThat(result).isEqualTo("net.codinux.log.JvmDefaultsTest.InnerObject")
     }
 
     @Test
-    fun getLoggerName_DataClass() {
-        val result = JvmDefaults.getLoggerName(InnerDataClass::class)
+    fun getLogger_DataClass() {
+        val result = LoggerFactory.getLogger(InnerDataClass::class).name
 
         assertThat(result).isEqualTo("net.codinux.log.JvmDefaultsTest.InnerDataClass")
     }
