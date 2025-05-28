@@ -4,7 +4,7 @@ import net.codinux.log.appender.AppenderContainer
 import kotlin.jvm.JvmOverloads
 
 
-open class DelegateToAppenderLogger @JvmOverloads constructor(
+open class DelegateToAppendersLogger @JvmOverloads constructor(
   name: String,
   protected open val container: AppenderContainer, // or use ILoggerFactory implementation directly?
   level: LogLevel? = null // do not set to RootLevel to enable late log level determination e.g. due to a changed RootLevel
