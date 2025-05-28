@@ -1,6 +1,8 @@
 package net.codinux.log.slf4j
 
-import org.assertj.core.api.Assertions.assertThat
+import assertk.assertThat
+import assertk.assertions.isEqualByComparingTo
+import assertk.assertions.isTrue
 import org.junit.jupiter.api.Test
 
 class Slf4jUtilTest {

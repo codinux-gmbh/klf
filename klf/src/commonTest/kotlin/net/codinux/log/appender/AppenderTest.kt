@@ -1,12 +1,17 @@
 package net.codinux.log.appender
 
+import assertk.assertThat
+import assertk.assertions.hasSize
+import assertk.assertions.isNotNull
+import assertk.assertions.isNull
 import net.codinux.log.DefaultLoggerFactory
 import net.codinux.log.LogField
 import net.codinux.log.LogLevel
 import net.codinux.log.LoggerFactory
 import net.codinux.log.test.WatchableAppender
 import kotlin.js.JsName
-import kotlin.test.*
+import kotlin.test.BeforeTest
+import kotlin.test.Test
 
 class AppenderTest {
 
@@ -40,10 +45,10 @@ class AppenderTest {
 
         LoggerFactory.getLogger("test").info { "Info" }
 
-        assertEquals(1, appender.appendedLogEvents.size)
+        assertThat(appender.appendedLogEvents).hasSize(1)
 
         val appendedLog = appender.appendedLogEvents.first()
-        assertNull(appendedLog.threadName)
+        assertThat(appendedLog::threadName).isNull()
     }
 
     @Test
@@ -53,10 +58,10 @@ class AppenderTest {
 
         LoggerFactory.getLogger("test").info { "Info" }
 
-        assertEquals(1, appender.appendedLogEvents.size)
+        assertThat(appender.appendedLogEvents).hasSize(1)
 
         val appendedLog = appender.appendedLogEvents.first()
-        assertNotNull(appendedLog.threadName)
+        assertThat(appendedLog::threadName).isNotNull()
     }
 
 
@@ -67,10 +72,10 @@ class AppenderTest {
 
         LoggerFactory.getLogger("test").error(Exception()) { "Error" }
 
-        assertEquals(1, appender.appendedLogEvents.size)
+        assertThat(appender.appendedLogEvents).hasSize(1)
 
         val appendedLog = appender.appendedLogEvents.first()
-        assertNull(appendedLog.exception)
+        assertThat(appendedLog::exception).isNull()
     }
 
     @Test
@@ -80,10 +85,10 @@ class AppenderTest {
 
         LoggerFactory.getLogger("test").error(Exception()) { "Error" }
 
-        assertEquals(1, appender.appendedLogEvents.size)
+        assertThat(appender.appendedLogEvents).hasSize(1)
 
         val appendedLog = appender.appendedLogEvents.first()
-        assertNotNull(appendedLog.exception)
+        assertThat(appendedLog::exception).isNotNull()
     }
 
 

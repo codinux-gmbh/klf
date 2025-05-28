@@ -31,10 +31,10 @@ class WatchableAppender : Appender {
         assertThat(_appendedLogEvents).hasSize(1)
 
         val event = _appendedLogEvents.first()
-        assertThat(event.level).isEqualTo(level)
-        assertThat(event.message).isEqualTo(message)
-        assertThat(event.loggerName).isEqualTo(loggerName)
-        assertThat(event.exception).isEqualTo(exception)
+        assertThat(event::level).isEqualTo(level)
+        assertThat(event::message).isEqualTo(message)
+        assertThat(event::loggerName).isEqualTo(loggerName)
+        assertThat(event::exception).isEqualTo(exception)
     }
 
     fun reset() {

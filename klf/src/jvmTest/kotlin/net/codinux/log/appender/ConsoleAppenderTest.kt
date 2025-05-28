@@ -1,14 +1,16 @@
 package net.codinux.log.appender
 
+import assertk.assertThat
+import assertk.assertions.isEmpty
+import assertk.assertions.isEqualTo
 import net.codinux.log.DefaultLoggerFactory
 import net.codinux.log.LogLevel
 import net.codinux.log.LoggerFactory
 import net.codinux.log.logger
-import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
 import java.io.ByteArrayOutputStream
 import java.io.PrintStream
+import kotlin.test.BeforeTest
+import kotlin.test.Test
 
 
 class ConsoleAppenderTest {
@@ -23,7 +25,7 @@ class ConsoleAppenderTest {
   }
 
 
-  @BeforeEach
+  @BeforeTest
   fun setUp() {
     System.setOut(PrintStream(consoleOutputStream.buffered(), true, Charsets.UTF_8.name()))
   }

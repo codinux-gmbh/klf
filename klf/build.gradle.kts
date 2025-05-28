@@ -11,6 +11,8 @@ plugins {
 }
 
 
+val assertKVersion: String by project
+
 kotlin {
     @OptIn(ExperimentalKotlinGradlePluginApi::class)
     compilerOptions {
@@ -112,9 +114,6 @@ kotlin {
     val kmpBaseVersion: String by project
     val logFormatterVersion: String by project
 
-    val assertKVersion: String by project
-    val assertJVersion: String by project
-
     sourceSets {
         commonMain.dependencies {
             implementation("net.codinux.kotlin:kmp-base:$kmpBaseVersion")
@@ -154,7 +153,6 @@ kotlin {
             jvmTest.get().dependsOn(this)
 
             dependencies {
-                implementation("org.assertj:assertj-core:$assertJVersion")
                 implementation("io.mockk:mockk:1.13.5") {
                     exclude(group = "org.slf4j")
                 }
@@ -239,6 +237,7 @@ fun createCompilation(name: String, compilations: NamedDomainObjectContainer<Kot
             implementation(kotlin("test-junit"))
             implementation("org.junit.jupiter:junit-jupiter-api:5.6.0")
             runtimeOnly("org.junit.jupiter:junit-jupiter-engine")
+            implementation("com.willowtreeapps.assertk:assertk:$assertKVersion")
             implementation(mavenDependency)
         }
     }

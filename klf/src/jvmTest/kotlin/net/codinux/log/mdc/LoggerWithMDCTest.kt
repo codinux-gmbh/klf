@@ -1,5 +1,10 @@
 package net.codinux.log.mdc
 
+import assertk.assertThat
+import assertk.assertions.containsOnly
+import assertk.assertions.hasSize
+import assertk.assertions.isEmpty
+import assertk.assertions.isEqualTo
 import ch.qos.logback.classic.Logger
 import ch.qos.logback.classic.LoggerContext
 import ch.qos.logback.classic.spi.ILoggingEvent
@@ -8,7 +13,6 @@ import net.codinux.log.LoggerFactory
 import net.codinux.log.logger
 import net.codinux.log.slf4j.Slf4jLoggerFactory
 import net.codinux.log.withMdc
-import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.slf4j.MDC
 
@@ -41,7 +45,7 @@ class LoggerWithMDCTest {
         assertThat(infoEvents).hasSize(1)
 
         val event = infoEvents.first()
-        assertThat(event.mdcPropertyMap).containsExactlyEntriesOf(mdc)
+        assertThat(event.mdcPropertyMap).containsOnly(*mdc.map { it.key to it.value }.toTypedArray())
         assertThat(event.message).isEqualTo(message)
         assertThat(event.loggerName).isEqualTo(LoggerWithMDCTest::class.qualifiedName)
 
@@ -65,7 +69,7 @@ class LoggerWithMDCTest {
         assertThat(infoEvents).hasSize(1)
 
         val event = infoEvents.first()
-        assertThat(event.mdcPropertyMap).containsExactlyEntriesOf(mapOf(mdcKey to mdcValue))
+        assertThat(event.mdcPropertyMap).containsOnly(mdcKey to mdcValue)
         assertThat(event.message).isEqualTo(message)
         assertThat(event.loggerName).isEqualTo(LoggerWithMDCTest::class.qualifiedName)
 

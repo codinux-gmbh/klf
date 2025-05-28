@@ -1,10 +1,11 @@
 package net.codinux.log.slf4j
 
+import assertk.assertThat
+import assertk.assertions.isEqualTo
 import net.codinux.log.Logger
 import net.codinux.log.LoggerFactory
 import org.junit.jupiter.api.Test
 import kotlin.reflect.KClass
-import kotlin.test.assertEquals
 
 abstract class Slf4jBindingTestBase {
 
@@ -15,7 +16,7 @@ abstract class Slf4jBindingTestBase {
     fun assertRootLoggerName() {
         val log = LoggerFactory.rootLogger
 
-        assertEquals(rootLoggerName, log.name)
+        assertThat(log.name).isEqualTo(rootLoggerName)
     }
 
 
@@ -24,7 +25,7 @@ abstract class Slf4jBindingTestBase {
 
         val slf4jLogger = getSlf4jLogger(log)
 
-        assertEquals(expectedBoundLoggerClass, slf4jLogger::class)
+        assertThat(slf4jLogger::class).isEqualTo(expectedBoundLoggerClass)
     }
 
     protected open fun getRootLoggersSlf4jLogger() =

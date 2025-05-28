@@ -1,9 +1,10 @@
 package net.codinux.log.slf4j
 
+import assertk.assertThat
+import assertk.assertions.isEqualTo
 import org.junit.jupiter.api.Test
 import org.slf4j.impl.JDK14LoggerAdapter
 import java.util.logging.Logger
-import kotlin.test.assertEquals
 
 class JulBindingTest : Slf4jBindingTestBase() {
 
@@ -21,7 +22,7 @@ class JulBindingTest : Slf4jBindingTestBase() {
 
         val logger: Logger = getFieldValue(slf4jLogger, "logger")
 
-        assertEquals(logger.name, Slf4jUtil.getLoggingFrameworkRootLoggerName(Slf4jBinding.JUL)) // logger name has to be ""
+        assertThat(logger.name).isEqualTo(Slf4jUtil.getLoggingFrameworkRootLoggerName(Slf4jBinding.JUL)) // logger name has to be ""
     }
 
 }
