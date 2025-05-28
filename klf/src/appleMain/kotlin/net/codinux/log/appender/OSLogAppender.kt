@@ -18,9 +18,7 @@ open class OSLogAppender : Appender {
     protected open val formatter = LoggerFactory.effectiveConfig.logEventFormatter
 
 
-    override val logsThreadName = false
-
-    override val logsException = true
+    override val loggedFields = Appender.MinLoggedFieldsAndException
 
     override fun append(event: LogEvent) {
         val type = getType(event.level)

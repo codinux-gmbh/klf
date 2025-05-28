@@ -25,8 +25,7 @@ class Slf4jAppenderTest {
     @Test
     fun append() {
         val mockAppender = mockk<Appender>()
-        every { mockAppender.logsThreadName } returns false
-        every { mockAppender.logsException } returns false
+        every { mockAppender.loggedFields } returns Appender.MinLoggedFields
         every { mockAppender.append(any()) } returns Unit
 
         LoggerFactory.addAppender(mockAppender)

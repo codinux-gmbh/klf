@@ -4,6 +4,7 @@ import assertk.assertThat
 import assertk.assertions.hasSize
 import assertk.assertions.isEqualTo
 import net.codinux.log.LogEvent
+import net.codinux.log.LogField
 import net.codinux.log.LogLevel
 import net.codinux.log.appender.Appender
 import net.codinux.log.collection.toImmutableList
@@ -15,9 +16,7 @@ class WatchableAppender : Appender {
     val appendedLogEvents: List<LogEvent>
         get() = _appendedLogEvents.toImmutableList()
 
-    override var logsThreadName = false
-
-    override var logsException = true
+    override var loggedFields: MutableSet<LogField> = mutableSetOf(LogField.Message, LogField.Level, LogField.LoggerName, LogField.Exception)
 
 
     override fun append(event: LogEvent) {

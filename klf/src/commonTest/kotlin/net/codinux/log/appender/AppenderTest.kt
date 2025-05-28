@@ -1,6 +1,7 @@
 package net.codinux.log.appender
 
 import net.codinux.log.DefaultLoggerFactory
+import net.codinux.log.LogField
 import net.codinux.log.LogLevel
 import net.codinux.log.LoggerFactory
 import net.codinux.log.test.WatchableAppender
@@ -87,8 +88,8 @@ class AppenderTest {
 
 
     private fun configureAppender(logsThreadName: Boolean = false, logsException: Boolean = false) = appender.apply {
-        this.logsThreadName = logsThreadName
-        this.logsException = logsException
+        if (logsThreadName) this.loggedFields.add(LogField.ThreadName) else this.loggedFields.remove(LogField.ThreadName)
+        if (logsException) this.loggedFields.add(LogField.Exception) else this.loggedFields.remove(LogField.Exception)
 
         // add it so that LoggerFactoryBase.doesAnyAppenderLogThreadName gets set
         LoggerFactory.addAppender(appender)

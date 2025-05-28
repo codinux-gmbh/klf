@@ -1,6 +1,7 @@
 package net.codinux.log.appender
 
 import net.codinux.log.LogEvent
+import net.codinux.log.LogField
 
 open class NotifyAboutLogEventsAppender(
     includeThreadName: Boolean = false,
@@ -8,9 +9,17 @@ open class NotifyAboutLogEventsAppender(
     protected open val logEvent: (LogEvent) -> Unit
 ) : Appender {
 
-    override val logsThreadName = includeThreadName
+    override val loggedFields = buildSet {
+        addAll(Appender.MinLoggedFields)
 
-    override val logsException = includeException
+        if (includeThreadName) {
+            add(LogField.ThreadName)
+        }
+        if (includeException) {
+            add(LogField.Exception)
+        }
+    }
+
 
     override fun append(event: LogEvent) {
         logEvent(event)

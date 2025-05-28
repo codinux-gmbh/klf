@@ -15,9 +15,7 @@ open class ConsoleAppender : Appender {
   protected open val formatter = LoggerFactory.effectiveConfig.logEventFormatter
 
 
-  override val logsThreadName = true
-
-  override val logsException = true
+  override val loggedFields = Appender.MinLoggedFieldsAndExceptionAndThreadName
 
   override fun append(event: LogEvent) {
     println(formatter.formatEvent(event))

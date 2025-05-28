@@ -1,6 +1,7 @@
 package net.codinux.log.loki
 
 import net.codinux.log.LogEvent
+import net.codinux.log.LogField
 import net.codinux.log.appender.Appender
 import net.codinux.log.loki.config.LokiLogAppenderConfig
 import net.codinux.log.loki.web.KtorWebClient
@@ -13,9 +14,16 @@ open class LokiAppender(
     stateLogger: AppenderStateLogger = StdOutStateLogger()
 ) : Appender {
 
-    override val logsThreadName = config.enabled && config.fields.logsThreadName
+    override val loggedFields = buildSet {
+        addAll(Appender.MinLoggedFields)
 
-    override val logsException = config.enabled && config.fields.logsException
+        if (config.enabled && config.fields.logsThreadName) {
+            add(LogField.ThreadName)
+        }
+        if (config.enabled && config.fields.logsException) {
+            add(LogField.Exception)
+        }
+    }
 
 
     protected open val isEnabled: Boolean = config.enabled

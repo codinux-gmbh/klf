@@ -18,7 +18,7 @@ abstract class LoggerFactoryBase : ILoggerFactory {
         appenders.add(appender)
         immutableAppenders = appenders.toList().toImmutableList() // make a copy, don't pass mutable state to the outside
 
-        this.doesAnyAppenderLogThreadName = appenders.any { it.logsThreadName }
+        this.doesAnyAppenderLogThreadName = appenders.any { it.loggedFields.contains(LogField.ThreadName) }
     }
 
     override fun getAppenders(): Collection<Appender> =
@@ -32,8 +32,8 @@ abstract class LoggerFactoryBase : ILoggerFactory {
                 level,
                 message,
                 loggerName,
-                if (appender.logsThreadName) threadName else null,
-                if (appender.logsException) exception else null
+                if (appender.loggedFields.contains(LogField.ThreadName)) threadName else null,
+                if (appender.loggedFields.contains(LogField.Exception)) exception else null
             ))
         }
     }

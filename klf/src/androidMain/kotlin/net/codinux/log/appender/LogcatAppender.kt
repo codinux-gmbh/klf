@@ -24,9 +24,7 @@ open class LogcatAppender : Appender {
   }
 
 
-  override val logsThreadName = false
-
-  override val logsException = true
+  override val loggedFields = Appender.MinLoggedFieldsAndException
 
 
   protected open val loggerNameAbbreviator = LoggerNameAbbreviator()
