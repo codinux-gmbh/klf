@@ -41,11 +41,11 @@ kotlin {
         }
 
         // register additional compilations and test tasks for slf4j bindings tests
-        createCompilation("logbackTest", compilations, "ch.qos.logback:logback-classic:$logbackVersion")
-        createCompilation("log4j2Test", compilations, "org.apache.logging.log4j:log4j-slf4j-impl:$log4j2Version")
-        createCompilation("log4j1Test", compilations, "org.slf4j:slf4j-log4j12:$slf4jVersion")
-        createCompilation("julTest", compilations, "org.slf4j:slf4j-jdk14:$slf4jVersion")
-        createCompilation("slf4jSimpleTest", compilations, "org.slf4j:slf4j-simple:$slf4jVersion")
+        createCompilation("logback", compilations, testRuns, "ch.qos.logback:logback-classic:$logbackVersion")
+        createCompilation("log4j2", compilations, testRuns, "org.apache.logging.log4j:log4j-slf4j-impl:$log4j2Version")
+        createCompilation("log4j1", compilations, testRuns, "org.slf4j:slf4j-log4j12:$slf4jVersion")
+        createCompilation("jul", compilations, testRuns, "org.slf4j:slf4j-jdk14:$slf4jVersion")
+        createCompilation("slf4jSimple", compilations, testRuns, "org.slf4j:slf4j-simple:$slf4jVersion")
     }
 
     androidTarget { // name in Kotlin 1.9
@@ -222,16 +222,18 @@ tasks.withType<KotlinCompile>().configureEach {
 }
 
 
-fun createCompilation(name: String, compilations: NamedDomainObjectContainer<KotlinJvmCompilation>, mavenDependency: String) {
-    val main = compilations.getByName("main")
+fun createCompilation(name: String, compilations: NamedDomainObjectContainer<KotlinJvmCompilation>,
+                      testRuns: NamedDomainObjectContainer<org.jetbrains.kotlin.gradle.targets.jvm.KotlinJvmTestRun>, mavenDependency: String) {
     val test = compilations.getByName("test")
 
+    val compilationName = name + "Test"
+
     // see https://kotlinlang.org/docs/multiplatform-configure-compilations.html#create-a-custom-compilation
-    val compilation = compilations.create(name).apply {
+    val compilation = compilations.create(compilationName).apply {
+        // Import test and its classpath as dependencies and establish internal visibility
+        associateWith(test)
+
         defaultSourceSet.dependencies {
-            // Compile against the main compilation's compile classpath and outputs:
-            implementation(main.compileDependencyFiles + main.output.classesDirs + test.output.classesDirs)
-            implementation(project.project(":klf"))
             implementation(mavenDependency)
 
             implementation(kotlin("test"))
@@ -239,21 +241,10 @@ fun createCompilation(name: String, compilations: NamedDomainObjectContainer<Kot
         }
     }
 
-    val taskName = "jvm${name.replaceFirstChar { it.uppercase() }}"
-    val testTask = project.tasks.register(taskName, Test::class.java) {
-        group = "verification"
-        useJUnitPlatform()
-
-        // Run the tests with the classpath containing the compile dependencies (including 'main'),
-        // runtime dependencies, and the outputs of this compilation:
-        classpath = compilation.compileDependencyFiles + compilation.runtimeDependencyFiles + compilation.output.allOutputs
-
-        // Run only the tests from this compilation's outputs:
-        testClassesDirs = compilation.output.classesDirs
-    }
-
-    tasks.named("jvmTest").configure {
-        dependsOn(testTask)
+    // Create a test task to run the tests produced by this compilation:
+    testRuns.create(compilationName) {
+        // Configure the test task
+        setExecutionSourceFrom(compilation)
     }
 }
 
