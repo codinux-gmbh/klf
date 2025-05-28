@@ -6,6 +6,7 @@ import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.ptr
 import net.codinux.log.LogLevel
 import net.codinux.log.Cache
+import net.codinux.log.LogEvent
 import net.codinux.log.LoggerFactory
 import platform.Foundation.NSBundle
 import platform.darwin.*
@@ -21,15 +22,15 @@ open class OSLogAppender : Appender {
 
     override val logsException = true
 
-    override fun append(level: LogLevel, message: String, loggerName: String, threadName: String?, exception: Throwable?) {
-        val type = getType(level)
+    override fun append(event: LogEvent) {
+        val type = getType(event.level)
         if (type == null) {
             return
         }
 
-        val logger = loggerCache.getOrPut(loggerName) { createLogger(loggerName) }
+        val logger = loggerCache.getOrPut(event.loggerName) { createLogger(event.loggerName) }
 
-        _os_log_internal(__dso_handle.ptr, logger, type, formatter.formatMessage(message, exception))
+        _os_log_internal(__dso_handle.ptr, logger, type, formatter.formatMessage(event.message, event.exception))
     }
 
     private fun createLogger(loggerName: String): os_log_t {

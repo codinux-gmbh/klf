@@ -1,6 +1,6 @@
 package net.codinux.log.formatter
 
-import net.codinux.log.LogLevel
+import net.codinux.log.LogEvent
 
 interface LogEventFormatter {
 
@@ -11,11 +11,6 @@ interface LogEventFormatter {
 
     fun formatMessage(message: String, exception: Throwable? = null): String
 
-
-    fun formatEvent(level: LogLevel, message: String, loggerName: String) = formatEvent(level, message, loggerName, null)
-
-    fun formatEvent(level: LogLevel, message: String, loggerName: String, threadName: String?) = formatEvent(level, message, loggerName, threadName, null)
-
-    fun formatEvent(level: LogLevel, message: String, loggerName: String, threadName: String? = null, exception: Throwable? = null): String
+    fun formatEvent(event: LogEvent): String
 
 }

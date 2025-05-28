@@ -28,13 +28,13 @@ abstract class LoggerFactoryBase : ILoggerFactory {
         val threadName = if (doesAnyAppenderLogThreadName) Defaults.getCurrentThreadName() else null
 
         immutableAppenders.fastForEach { appender ->
-            appender.append(
+            appender.append(LogEvent( // TODO: create LogEvent only once, but adjust tests for this
                 level,
                 message,
                 loggerName,
                 if (appender.logsThreadName) threadName else null,
                 if (appender.logsException) exception else null
-            )
+            ))
         }
     }
 

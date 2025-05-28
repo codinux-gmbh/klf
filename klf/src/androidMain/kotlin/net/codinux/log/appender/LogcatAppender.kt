@@ -3,6 +3,7 @@ package net.codinux.log.appender
 import android.os.Build
 import android.util.Log
 import net.codinux.log.Cache
+import net.codinux.log.LogEvent
 import net.codinux.log.LogLevel
 
 open class LogcatAppender : Appender {
@@ -33,10 +34,12 @@ open class LogcatAppender : Appender {
   protected open val abbreviatedLoggerTagCache = Cache<String, String>()
 
 
-  override fun append(level: LogLevel, message: String, loggerName: String, threadName: String?, exception: Throwable?) {
-    val tag = getLoggerTag(loggerName)
+  override fun append(event: LogEvent) {
+    val tag = getLoggerTag(event.loggerName)
+    val message = event.message
+    val exception = event.exception
 
-    when (level) {
+    when (event.level) {
       LogLevel.Error -> Log.e(tag, message, exception)
       LogLevel.Warn -> Log.w(tag, message, exception)
       LogLevel.Info -> Log.i(tag, message, exception)

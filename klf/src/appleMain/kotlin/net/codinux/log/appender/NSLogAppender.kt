@@ -1,6 +1,6 @@
 package net.codinux.log.appender
 
-import net.codinux.log.LogLevel
+import net.codinux.log.LogEvent
 import net.codinux.log.LoggerFactory
 import platform.Foundation.NSLog
 
@@ -14,8 +14,8 @@ open class NSLogAppender : Appender {
 
     override val logsException = true
 
-    override fun append(level: LogLevel, message: String, loggerName: String, threadName: String?, exception: Throwable?) {
-        NSLog(formatter.formatEvent(level, message, loggerName, threadName, exception))
+    override fun append(event: LogEvent) {
+        NSLog(formatter.formatEvent(event))
     }
 
 }

@@ -1,7 +1,7 @@
 package net.codinux.log.formatter
 
 import net.codinux.log.Defaults
-import net.codinux.log.LogLevel
+import net.codinux.log.LogEvent
 
 open class DefaultLogEventFormatter : LogEventFormatter {
 
@@ -13,7 +13,7 @@ open class DefaultLogEventFormatter : LogEventFormatter {
         }
     }
 
-    override fun formatEvent(level: LogLevel, message: String, loggerName: String, threadName: String?, exception: Throwable?): String {
+    override fun formatEvent(event: LogEvent): String {
         // may add format specifiers as logback has:
         // %d{yyyy-MM-dd HH:mm:ss,SSS} %-5p [%c{3.}] (%t) %s%e%n
         // p = level
@@ -29,7 +29,9 @@ open class DefaultLogEventFormatter : LogEventFormatter {
         //   at net.codinux.log.slf4j.LogbackBindingTest.simpleLoggerOutput(LogbackBindingTest.kt:11)
         //   at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ...
         // be aware that we should localize time!
-        return "${level.toString().padEnd(5, ' ')} $loggerName ${threadName?.let { "[$it] " } ?: ""}- ${formatMessage(message, exception)}"
+        return with(event) {
+            "${level.toString().padEnd(5, ' ')} $loggerName ${threadName?.let { "[$it] " } ?: ""}- ${formatMessage(message, exception)}"
+        }
     }
 
 }

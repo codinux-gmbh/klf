@@ -6,6 +6,7 @@ import assertk.assertions.isEqualTo
 import assertk.assertions.isNotNull
 import assertk.assertions.isNull
 import net.codinux.log.Log
+import net.codinux.log.LogEvent
 import net.codinux.log.LogLevel
 import net.codinux.log.LoggerFactory
 import kotlin.test.Test

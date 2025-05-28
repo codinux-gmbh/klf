@@ -3,6 +3,7 @@ package net.codinux.log.test
 import assertk.assertThat
 import assertk.assertions.hasSize
 import assertk.assertions.isEqualTo
+import net.codinux.log.LogEvent
 import net.codinux.log.LogLevel
 import net.codinux.log.appender.Appender
 import net.codinux.log.collection.toImmutableList
@@ -19,8 +20,8 @@ class WatchableAppender : Appender {
     override var logsException = true
 
 
-    override fun append(level: LogLevel, message: String, loggerName: String, threadName: String?, exception: Throwable?) {
-        _appendedLogEvents.add(LogEvent(level, message, loggerName, threadName, exception))
+    override fun append(event: LogEvent) {
+        _appendedLogEvents.add(event)
     }
 
 

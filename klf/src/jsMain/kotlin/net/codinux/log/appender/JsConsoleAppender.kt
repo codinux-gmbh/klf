@@ -1,5 +1,6 @@
 package net.codinux.log.appender
 
+import net.codinux.log.LogEvent
 import net.codinux.log.LogLevel
 import net.codinux.log.LoggerFactory
 
@@ -12,10 +13,11 @@ open class JsConsoleAppender : Appender {
 
   override val logsException = true
 
-  override fun append(level: LogLevel, message: String, loggerName: String, threadName: String?, exception: Throwable?) {
-    val formattedMessage = formatter.formatEvent(level, message, loggerName, threadName, exception)
+  override fun append(event: LogEvent) {
+    val formattedMessage = formatter.formatEvent(event)
+    val exception = event.exception
 
-    when (level) {
+    when (event.level) {
       LogLevel.Error -> {
         if (exception == null) {
           console.error(formattedMessage)

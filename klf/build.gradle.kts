@@ -119,6 +119,8 @@ kotlin {
         commonMain.dependencies {
             implementation("net.codinux.kotlin:kmp-base:$kmpBaseVersion")
             implementation("net.codinux.log:log-formatter:$logFormatterVersion")
+
+            api("net.codinux.log:log-data:1.0.0")
         }
         commonTest.dependencies {
             implementation(kotlin("test"))

@@ -1,6 +1,6 @@
 package net.codinux.log.appender
 
-import net.codinux.log.LogLevel
+import net.codinux.log.LogEvent
 
 open class NotifyAboutLogEventsAppender(
     includeThreadName: Boolean = false,
@@ -12,8 +12,8 @@ open class NotifyAboutLogEventsAppender(
 
     override val logsException = includeException
 
-    override fun append(level: LogLevel, message: String, loggerName: String, threadName: String?, exception: Throwable?) {
-        logEvent(LogEvent(level, message, loggerName, threadName, exception))
+    override fun append(event: LogEvent) {
+        logEvent(event)
     }
 
 }
