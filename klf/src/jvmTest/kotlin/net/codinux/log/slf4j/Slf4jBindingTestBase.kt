@@ -4,8 +4,8 @@ import assertk.assertThat
 import assertk.assertions.isEqualTo
 import net.codinux.log.Logger
 import net.codinux.log.LoggerFactory
-import org.junit.jupiter.api.Test
 import kotlin.reflect.KClass
+import kotlin.test.Test
 
 abstract class Slf4jBindingTestBase {
 

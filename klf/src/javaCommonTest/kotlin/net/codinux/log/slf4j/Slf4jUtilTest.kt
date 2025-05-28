@@ -3,7 +3,7 @@ package net.codinux.log.slf4j
 import assertk.assertThat
 import assertk.assertions.isEqualByComparingTo
 import assertk.assertions.isTrue
-import org.junit.jupiter.api.Test
+import kotlin.test.Test
 
 class Slf4jUtilTest {
 

@@ -2,9 +2,9 @@ package net.codinux.log.slf4j
 
 import assertk.assertThat
 import assertk.assertions.isEqualTo
+import kotlin.test.Test
 import org.apache.log4j.Logger
 import org.slf4j.impl.Reload4jLoggerAdapter
-import org.junit.jupiter.api.Test
 
 class Log4j1BindingTest : Slf4jBindingTestBase() {
 

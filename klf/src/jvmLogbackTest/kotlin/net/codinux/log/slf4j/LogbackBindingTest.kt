@@ -1,7 +1,7 @@
 package net.codinux.log.slf4j
 
 import ch.qos.logback.classic.Logger
-import org.junit.jupiter.api.Test
+import kotlin.test.Test
 
 class LogbackBindingTest : Slf4jBindingTestBase() {
 

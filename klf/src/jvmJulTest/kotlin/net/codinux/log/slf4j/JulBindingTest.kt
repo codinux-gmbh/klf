@@ -2,7 +2,7 @@ package net.codinux.log.slf4j
 
 import assertk.assertThat
 import assertk.assertions.isEqualTo
-import org.junit.jupiter.api.Test
+import kotlin.test.Test
 import org.slf4j.impl.JDK14LoggerAdapter
 import java.util.logging.Logger
 

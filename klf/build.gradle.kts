@@ -35,8 +35,6 @@ kotlin {
 
     jvm {
         testRuns["test"].executionTask.configure {
-            useJUnitPlatform()
-
             testLogging {     // This is for logging and can be removed.
                 events("passed", "skipped", "failed")
             }
@@ -234,11 +232,10 @@ fun createCompilation(name: String, compilations: NamedDomainObjectContainer<Kot
             // Compile against the main compilation's compile classpath and outputs:
             implementation(main.compileDependencyFiles + main.output.classesDirs + test.output.classesDirs)
             implementation(project.project(":klf"))
-            implementation(kotlin("test-junit"))
-            implementation("org.junit.jupiter:junit-jupiter-api:5.6.0")
-            runtimeOnly("org.junit.jupiter:junit-jupiter-engine")
-            implementation("com.willowtreeapps.assertk:assertk:$assertKVersion")
             implementation(mavenDependency)
+
+            implementation(kotlin("test"))
+            implementation("com.willowtreeapps.assertk:assertk:$assertKVersion")
         }
     }
 

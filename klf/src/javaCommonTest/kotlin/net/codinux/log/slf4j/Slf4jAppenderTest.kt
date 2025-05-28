@@ -7,8 +7,8 @@ import net.codinux.log.LogEvent
 import net.codinux.log.LogLevel
 import net.codinux.log.LoggerFactory
 import net.codinux.log.appender.Appender
-import org.junit.jupiter.api.Test
 import kotlin.reflect.jvm.jvmName
+import kotlin.test.Test
 
 class Slf4jAppenderTest {
 
