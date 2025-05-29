@@ -4,15 +4,27 @@ import assertk.assertThat
 import assertk.assertions.isEqualByComparingTo
 import assertk.assertions.isEqualTo
 import assertk.assertions.isTrue
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
+import net.codinux.log.LogEvent
+import net.codinux.log.LogLevel
 import net.codinux.log.Logger
 import net.codinux.log.LoggerFactory
+import net.codinux.log.appender.Appender
 import kotlin.reflect.KClass
+import kotlin.reflect.jvm.jvmName
 import kotlin.test.Test
 
 abstract class Slf4jBindingTestBase(
     protected val slf4jBinding: Slf4jBinding,
     protected val rootLoggerName: String = "ROOT"
 ) {
+
+    companion object {
+        private const val Message = "Info message"
+        private val LoggerName = Slf4jBindingTestBase::class.jvmName
+    }
 
 
     @Test
@@ -35,6 +47,21 @@ abstract class Slf4jBindingTestBase(
         val log = LoggerFactory.rootLogger
 
         assertThat(log.name).isEqualTo(rootLoggerName)
+    }
+
+    @Test
+    fun append() {
+        val mockAppender = mockk<Appender>()
+        every { mockAppender.loggedFields } returns Appender.MinLoggedFields
+        every { mockAppender.append(any()) } returns Unit
+
+        LoggerFactory.addAppender(mockAppender)
+        val log = LoggerFactory.getLogger(LoggerName)
+
+        log.info { Message }
+
+        // in tests logback is the bound logging framework -> we want to test if log messages gets directed to our mock Appender
+        verify { mockAppender.append(LogEvent(LogLevel.Info, Message, LoggerName, null, null)) }
     }
 
 
