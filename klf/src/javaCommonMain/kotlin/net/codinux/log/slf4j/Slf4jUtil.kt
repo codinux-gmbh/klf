@@ -41,6 +41,7 @@ object Slf4jUtil {
                 "ch.qos.logback.classic.LoggerContext" -> Slf4jBinding.Logback
                 "org.apache.logging.slf4j.Log4jLoggerFactory" -> Slf4jBinding.Log4j2
                 "org.slf4j.impl.Log4jLoggerFactory" -> Slf4jBinding.Log4j1
+                "org.slf4j.impl.Reload4jLoggerFactory",
                 "org.slf4j.reload4j.Reload4jLoggerFactory" -> Slf4jBinding.Reload4j
                 "org.slf4j.impl.JDK14LoggerFactory" -> Slf4jBinding.JUL
                 "org.slf4j.impl.Slf4jLoggerFactory" -> Slf4jBinding.JBossLogging // defined in org.jboss.slf4j:slf4j-jboss-logmanager
