@@ -4,7 +4,7 @@ import assertk.assertThat
 import assertk.assertions.isEqualTo
 import kotlin.test.Test
 import org.apache.log4j.Logger
-import org.slf4j.impl.Reload4jLoggerAdapter
+import org.slf4j.impl.Log4jLoggerAdapter
 
 // Log4jLoggerFactory translates "ROOT" to ""
 class Log4j1BindingTest : Slf4jBindingTestBase(Slf4jBinding.Log4j1, "root") {
@@ -12,7 +12,7 @@ class Log4j1BindingTest : Slf4jBindingTestBase(Slf4jBinding.Log4j1, "root") {
 
     @Test
     fun assertSlf4jBinding() {
-        assertSlf4jBinding(Reload4jLoggerAdapter::class)
+        assertSlf4jBinding(Log4jLoggerAdapter::class)
     }
 
     @Test

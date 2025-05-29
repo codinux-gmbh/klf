@@ -43,7 +43,7 @@ kotlin {
         // register additional compilations and test tasks for slf4j bindings tests
         createCompilation("logback", compilations, testRuns, "ch.qos.logback:logback-classic:$logbackVersion")
         createCompilation("log4j2", compilations, testRuns, "org.apache.logging.log4j:log4j-slf4j-impl:$log4j2Version")
-        createCompilation("log4j1", compilations, testRuns, "org.slf4j:slf4j-log4j12:$slf4jVersion")
+        createCompilation("log4j1", compilations, testRuns, "org.slf4j:slf4j-log4j12:1.7.33") // slf4j-log4j12:1.7.34 relocates to reload4j
         createCompilation("jul", compilations, testRuns, "org.slf4j:slf4j-jdk14:$slf4jVersion")
         createCompilation("slf4jSimple", compilations, testRuns, "org.slf4j:slf4j-simple:$slf4jVersion")
     }
