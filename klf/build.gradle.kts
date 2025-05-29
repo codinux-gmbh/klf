@@ -3,6 +3,7 @@
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinJvmCompilation
 import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
+import org.jetbrains.kotlin.gradle.targets.jvm.KotlinJvmTestRun
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -157,8 +158,8 @@ kotlin {
             jvmMain.get().dependsOn(this)
 
             dependencies {
-                compileOnly("org.slf4j:slf4j-api:$slf4jVersion")
-                compileOnly("org.apache.logging.log4j:log4j-core:$log4j2Version")
+                compileOnly("org.slf4j:slf4j-api:$slf4j1Version")
+                compileOnly("org.apache.logging.log4j:log4j-core:$log4j2ForSlf4j1Version")
             }
         }
         val javaCommonTest by creating {
@@ -236,7 +237,7 @@ tasks.withType<KotlinCompile>().configureEach {
 
 
 fun createCompilation(name: String, compilations: NamedDomainObjectContainer<KotlinJvmCompilation>,
-                      testRuns: NamedDomainObjectContainer<org.jetbrains.kotlin.gradle.targets.jvm.KotlinJvmTestRun>, mavenDependency: String) {
+                      testRuns: NamedDomainObjectContainer<KotlinJvmTestRun>, vararg mavenDependencies: String) {
     val test = compilations.getByName("test")
 
     val compilationName = name + "Test"
@@ -247,7 +248,9 @@ fun createCompilation(name: String, compilations: NamedDomainObjectContainer<Kot
         associateWith(test)
 
         defaultSourceSet.dependencies {
-            implementation(mavenDependency)
+            mavenDependencies.forEach { mavenDependency ->
+                implementation(mavenDependency)
+            }
 
             implementation(kotlin("test"))
             implementation("com.willowtreeapps.assertk:assertk:$assertKVersion")
