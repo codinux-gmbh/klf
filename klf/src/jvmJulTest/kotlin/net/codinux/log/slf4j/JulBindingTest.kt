@@ -6,10 +6,9 @@ import kotlin.test.Test
 import org.slf4j.impl.JDK14LoggerAdapter
 import java.util.logging.Logger
 
-class JulBindingTest : Slf4jBindingTestBase() {
+// JDK14LoggerFactory translates "ROOT" to ""
+class JulBindingTest : Slf4jBindingTestBase(Slf4jBinding.JUL, "") {
 
-    // JDK14LoggerFactory translates "ROOT" to ""
-    override val rootLoggerName = ""
 
     @Test
     fun assertSlf4jBinding() {

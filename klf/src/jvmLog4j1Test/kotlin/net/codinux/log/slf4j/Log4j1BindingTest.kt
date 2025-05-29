@@ -6,10 +6,9 @@ import kotlin.test.Test
 import org.apache.log4j.Logger
 import org.slf4j.impl.Reload4jLoggerAdapter
 
-class Log4j1BindingTest : Slf4jBindingTestBase() {
+// Log4jLoggerFactory translates "ROOT" to ""
+class Log4j1BindingTest : Slf4jBindingTestBase(Slf4jBinding.Log4j1, "root") {
 
-    // Log4jLoggerFactory translates "ROOT" to ""
-    override val rootLoggerName = "root"
 
     @Test
     fun assertSlf4jBinding() {

@@ -1,16 +1,34 @@
 package net.codinux.log.slf4j
 
 import assertk.assertThat
+import assertk.assertions.isEqualByComparingTo
 import assertk.assertions.isEqualTo
+import assertk.assertions.isTrue
 import net.codinux.log.Logger
 import net.codinux.log.LoggerFactory
 import kotlin.reflect.KClass
 import kotlin.test.Test
 
-abstract class Slf4jBindingTestBase {
+abstract class Slf4jBindingTestBase(
+    protected val slf4jBinding: Slf4jBinding,
+    protected val rootLoggerName: String = "ROOT"
+) {
 
-    protected open val rootLoggerName: String = "ROOT"
 
+    @Test
+    fun isSlf4jOnClasspath() {
+        assertThat(Slf4jUtil.isSlf4jOnClasspath).isTrue()
+    }
+
+    @Test
+    fun useSlf4j() {
+        assertThat(Slf4jUtil.useSlf4j).isTrue()
+    }
+
+    @Test
+    fun boundLoggingFramework() {
+        assertThat(Slf4jUtil.boundLoggingFramework).isEqualByComparingTo(slf4jBinding)
+    }
 
     @Test
     fun assertRootLoggerName() {
