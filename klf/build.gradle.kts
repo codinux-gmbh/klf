@@ -29,9 +29,15 @@ kotlin {
     jvmToolchain(11)
 
 
+    // slf4j 1
     val logbackVersion: String by project
     val slf4jVersion: String by project
     val log4j2Version: String by project
+
+    // slf4j 2
+    val slf4j2Version: String by project
+    val logbackForSlf4j2Version: String by project
+    val log4j2ForSlf4j2Version: String by project
 
     jvm {
         testRuns["test"].executionTask.configure {
@@ -40,13 +46,21 @@ kotlin {
             }
         }
 
-        // register additional compilations and test tasks for slf4j bindings tests
+        // register additional compilations and test tasks for slf4j 1 bindings tests
         createCompilation("logback", compilations, testRuns, "ch.qos.logback:logback-classic:$logbackVersion")
         createCompilation("log4j2", compilations, testRuns, "org.apache.logging.log4j:log4j-slf4j-impl:$log4j2Version")
         createCompilation("log4j1", compilations, testRuns, "org.slf4j:slf4j-log4j12:1.7.33") // slf4j-log4j12:1.7.34 relocates to reload4j
         createCompilation("reload4j", compilations, testRuns, "org.slf4j:slf4j-reload4j:$slf4jVersion")
         createCompilation("jul", compilations, testRuns, "org.slf4j:slf4j-jdk14:$slf4jVersion")
         createCompilation("slf4jSimple", compilations, testRuns, "org.slf4j:slf4j-simple:$slf4jVersion")
+
+        // slf4j 2
+        createCompilation("slf4j2Logback", compilations, testRuns, "ch.qos.logback:logback-classic:$logbackForSlf4j2Version")
+        createCompilation("slf4j2Log4j2", compilations, testRuns, "org.apache.logging.log4j:log4j-slf4j2-impl:$log4j2ForSlf4j2Version")
+        createCompilation("slf4j2Log4j1", compilations, testRuns, "org.slf4j:slf4j-log4j12:$slf4j2Version") // slf4j-log4j12:1.7.34 relocates to reload4j
+        createCompilation("slf4j2Reload4j", compilations, testRuns, "org.slf4j:slf4j-reload4j:$slf4j2Version")
+        createCompilation("slf4j2Jul", compilations, testRuns, "org.slf4j:slf4j-jdk14:$slf4j2Version")
+        createCompilation("slf4j2Slf4jSimple", compilations, testRuns, "org.slf4j:slf4j-simple:$slf4j2Version")
     }
 
     androidTarget { // name in Kotlin 1.9
