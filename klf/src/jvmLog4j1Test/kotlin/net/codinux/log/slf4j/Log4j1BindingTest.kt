@@ -6,7 +6,7 @@ import kotlin.test.Test
 import org.apache.log4j.Logger
 import org.slf4j.impl.Log4jLoggerAdapter
 
-// Log4jLoggerFactory translates "ROOT" to ""
+// Log4jLoggerFactory translates "ROOT" to "root"
 class Log4j1BindingTest : Slf4jBindingTestBase(Slf4jBinding.Log4j1, "root") {
 
 

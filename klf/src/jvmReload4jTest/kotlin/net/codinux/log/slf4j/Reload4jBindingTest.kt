@@ -3,7 +3,7 @@ package net.codinux.log.slf4j
 import kotlin.test.Test
 import org.slf4j.impl.Reload4jLoggerAdapter
 
-// Log4jLoggerFactory translates "ROOT" to ""
+// Log4jLoggerFactory translates "ROOT" to "root"
 class Reload4jBindingTest : Slf4jBindingTestBase(Slf4jBinding.Reload4j, "root") {
 
 
