@@ -3,11 +3,11 @@ package net.codinux.log.test
 import assertk.assertThat
 import assertk.assertions.hasSize
 import assertk.assertions.isEqualTo
+import net.codinux.collections.toImmutableList
 import net.codinux.log.LogEvent
 import net.codinux.log.LogField
 import net.codinux.log.LogLevel
 import net.codinux.log.appender.Appender
-import net.codinux.log.collection.toImmutableList
 
 class WatchableAppender : Appender {
 

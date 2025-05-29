@@ -128,12 +128,16 @@ kotlin {
     val kmpBaseVersion: String by project
     val logFormatterVersion: String by project
 
+    val immutableCollectionsVersion: String by project
+
     sourceSets {
         commonMain.dependencies {
             implementation("net.codinux.kotlin:kmp-base:$kmpBaseVersion")
             implementation("net.codinux.log:log-formatter:$logFormatterVersion")
 
             api("net.codinux.log:log-data:1.1.0")
+
+            implementation("net.codinux.collections:immutable-collections:$immutableCollectionsVersion")
         }
         commonTest.dependencies {
             implementation(kotlin("test"))

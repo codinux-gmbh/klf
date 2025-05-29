@@ -1,5 +1,7 @@
 package net.codinux.log
 
+import net.codinux.collections.ImmutableList
+import net.codinux.collections.toImmutableList
 import net.codinux.kotlin.collections.fastForEach
 import net.codinux.log.appender.Appender
 import net.codinux.log.collection.*
