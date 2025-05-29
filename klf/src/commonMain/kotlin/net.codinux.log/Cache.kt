@@ -1,7 +1,6 @@
 package net.codinux.log
 
-import net.codinux.log.collection.ConcurrentMap
-import net.codinux.log.collection.getOrPut
+import net.codinux.kotlin.concurrent.collections.ConcurrentMap
 
 open class Cache<Key, Value> {
 

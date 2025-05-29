@@ -129,6 +129,7 @@ kotlin {
     val logFormatterVersion: String by project
 
     val immutableCollectionsVersion: String by project
+    val concurrentCollectionsVersion: String by project
 
     sourceSets {
         commonMain.dependencies {
@@ -138,6 +139,7 @@ kotlin {
             api("net.codinux.log:log-data:1.1.0")
 
             implementation("net.codinux.collections:immutable-collections:$immutableCollectionsVersion")
+            implementation("net.codinux.collections:concurrent-collections:$concurrentCollectionsVersion")
         }
         commonTest.dependencies {
             implementation(kotlin("test"))
