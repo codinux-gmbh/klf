@@ -154,8 +154,6 @@ kotlin {
                 implementation("io.mockk:mockk:1.13.5") {
                     exclude(group = "org.slf4j")
                 }
-
-                implementation("ch.qos.logback:logback-classic:$logbackVersion")
             }
         }
 
