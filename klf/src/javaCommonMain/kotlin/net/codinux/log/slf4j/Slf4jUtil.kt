@@ -49,7 +49,10 @@ object Slf4jUtil {
                 "org.slf4j.impl.AndroidLoggerFactory" -> Slf4jBinding.Android // removed in slf4j 2.x
                 "org.slf4j.impl.JCLLoggerFactory" -> Slf4jBinding.JCL // removed in slf4j 2.x
                 "org.slf4j.helpers.SubstituteLoggerFactory" -> Slf4jBinding.SubstituteLogger // SubstituteLogger in most cases binds to NOP, but we cannot know to which logger it really binds
-                else -> Slf4jBinding.Unknown
+                else -> {
+                    println("Unknown slf4j binding detected: $loggerFactoryClass")
+                    Slf4jBinding.Unknown
+                }
             }
         } catch (e: Exception) {
             // TODO: add an ErrorHandler
