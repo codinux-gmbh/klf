@@ -39,11 +39,6 @@ public class JavaShowcase {
             public void appendToAppenders(@NotNull LogLevel level, @NotNull String loggerName, @NotNull String message, @Nullable Throwable exception) {
 
             }
-
-            @Override
-            public boolean getDoesAnyAppenderLogThreadName() {
-                return false;
-            }
         });
     }
 

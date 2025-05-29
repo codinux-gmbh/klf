@@ -12,8 +12,7 @@ abstract class LoggerFactoryBase : ILoggerFactory {
 
     protected open var immutableAppenders = ImmutableList<Appender>()
 
-    override var doesAnyAppenderLogThreadName: Boolean = false
-        protected set
+    protected open var doesAnyAppenderLogThreadName: Boolean = false
 
 
     override fun addAppender(appender: Appender) {
