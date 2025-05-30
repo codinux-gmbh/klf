@@ -3,10 +3,11 @@ package net.codinux.log.slf4j
 import net.codinux.log.LogLevel
 import net.codinux.log.slf4j.binding.*
 import org.slf4j.Logger
+import java.util.concurrent.ConcurrentHashMap
 
 object Slf4jLogLevelHandler {
 
-    private val bindingMap = mutableMapOf<Slf4jBinding, Slf4jBindingImplementation?>()
+    private val bindingMap = ConcurrentHashMap<Slf4jBinding, Slf4jBindingImplementation?>()
 
 
     fun getLevel(logger: Logger, binding: Slf4jBinding): LogLevel? =
