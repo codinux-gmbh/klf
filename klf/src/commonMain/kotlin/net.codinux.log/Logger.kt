@@ -11,15 +11,16 @@ interface Logger {
     var level: LogLevel?
 
 
-    val isErrorEnabled: Boolean
+    val isErrorEnabled: Boolean get() = isEnabled(LogLevel.Error)
 
-    val isWarnEnabled: Boolean
+    val isWarnEnabled: Boolean get() = isEnabled(LogLevel.Warn)
 
-    val isInfoEnabled: Boolean
+    val isInfoEnabled: Boolean get() = isEnabled(LogLevel.Info)
 
-    val isDebugEnabled: Boolean
+    val isDebugEnabled: Boolean get() = isEnabled(LogLevel.Debug)
 
-    val isTraceEnabled: Boolean
+    val isTraceEnabled: Boolean get() = isEnabled(LogLevel.Trace)
+
 
     fun getEffectiveLevel(): LogLevel =
         level ?: LoggerFactory.effectiveConfig.rootLevel

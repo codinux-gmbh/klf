@@ -12,17 +12,6 @@ abstract class LoggerBase @JvmOverloads constructor(
     abstract fun log(level: LogLevel, message: String, exception: Throwable?)
 
 
-    override val isErrorEnabled get() = isEnabled(LogLevel.Error)
-
-    override val isWarnEnabled get() = isEnabled(LogLevel.Warn)
-
-    override val isInfoEnabled get() = isEnabled(LogLevel.Info)
-
-    override val isDebugEnabled get() = isEnabled(LogLevel.Debug)
-
-    override val isTraceEnabled get() = isEnabled(LogLevel.Trace)
-
-
     override fun error(message: String, exception: Throwable?) {
         logIfEnabled(LogLevel.Error, exception, message)
     }
