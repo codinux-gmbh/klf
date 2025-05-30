@@ -9,6 +9,9 @@ open class JavaUtilLogSlf4jBinding : Slf4jBindingImplementation {
     override fun getLevel(logger: Logger): LogLevel? =
         getJulLogger(logger)?.level?.let { mapToKlfLogLevel(it) }
 
+    override fun getLevel(loggerName: String): LogLevel? =
+        getJulLogger(loggerName)?.level?.let { mapToKlfLogLevel(it) }
+
 
     // there are two JDK14LoggerAdapter implementations:
     // - org.slf4j.impl.JDK14LoggerAdapter for slf4j 1

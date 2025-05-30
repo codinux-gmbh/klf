@@ -8,15 +8,18 @@ import org.slf4j.Logger
 open class Log4j2Slf4jBinding : Slf4jBindingImplementation {
 
     override fun getLevel(logger: Logger): LogLevel? =
-        getLog4jLogger(logger)?.level?.let { mapToKlfLogLevel(it) }
+        getLog4j2Logger(logger)?.level?.let { mapToKlfLogLevel(it) }
+
+    override fun getLevel(loggerName: String): LogLevel? =
+        getLog4j2Logger(loggerName)?.level?.let { mapToKlfLogLevel(it) }
 
 
-    open fun getLog4jLogger(logger: Logger): org.apache.logging.log4j.Logger? =
+    open fun getLog4j2Logger(logger: Logger): org.apache.logging.log4j.Logger? =
         logger as? org.apache.logging.log4j.Logger // should never be true
 //            ?: (logger as? org.apache.logging.slf4j.Log4jLogger)?.let { getLog4jLogger(it) }
-            ?: getLog4jLogger(logger.name)
+            ?: getLog4j2Logger(logger.name)
 
-    open fun getLog4jLogger(loggerName: String): org.apache.logging.log4j.Logger? =
+    open fun getLog4j2Logger(loggerName: String): org.apache.logging.log4j.Logger? =
         LogManager.getLogger(loggerName)
 
 

@@ -1,9 +1,9 @@
 package net.codinux.log.slf4j.binding
 
-import ch.qos.logback.classic.Level
 import net.codinux.log.JvmDefaults
 import net.codinux.log.LogLevel
 import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.slf4j.spi.LocationAwareLogger
 import java.lang.reflect.Field
 
@@ -18,6 +18,9 @@ open class Slf4jSimpleSlf4jBinding : Slf4jBindingImplementation {
         (getCurrentLogLevelField(logger)?.get(logger) as? Int)?.let { levelInt ->
             mapToKlfLogLevel(levelInt)
         }
+
+    override fun getLevel(loggerName: String): LogLevel? =
+        getLevel(LoggerFactory.getLogger(loggerName))
 
 
     open fun mapToKlfLogLevel(levelInt: Int): LogLevel = when (levelInt) {

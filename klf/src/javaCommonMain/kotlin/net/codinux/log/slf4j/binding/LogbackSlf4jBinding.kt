@@ -12,6 +12,9 @@ open class LogbackSlf4jBinding : Slf4jBindingImplementation {
     override fun getLevel(logger: Logger): LogLevel? =
         getLogbackLogger(logger)?.level?.let { mapToKlfLogLevel(it) }
 
+    override fun getLevel(loggerName: String): LogLevel? =
+        getLogbackLogger(loggerName)?.level?.let { mapToKlfLogLevel(it) }
+
 
     open fun getLogbackLogger(logger: Logger): ch.qos.logback.classic.Logger? =
         logger as? ch.qos.logback.classic.Logger
