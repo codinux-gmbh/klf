@@ -12,6 +12,10 @@ object Slf4jLogLevelHandler {
     fun getLevel(logger: Logger, binding: Slf4jBinding): LogLevel? =
         getBindingImplementation(binding)?.getLevel(logger)
 
+    fun setLevel(logger: Logger, binding: Slf4jBinding, level: LogLevel?): Boolean =
+        getBindingImplementation(binding)?.setLevel(logger, level)
+            ?: false
+
     private fun getBindingImplementation(binding: Slf4jBinding): Slf4jBindingImplementation? =
         bindingMap.getOrPut(binding) { createBindingImplementation(binding) }
 

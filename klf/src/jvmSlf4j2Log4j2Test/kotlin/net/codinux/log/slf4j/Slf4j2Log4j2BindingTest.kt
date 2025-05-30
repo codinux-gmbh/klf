@@ -10,7 +10,7 @@ import org.apache.logging.log4j.core.Logger
 import org.apache.logging.log4j.core.LoggerContext
 import org.apache.logging.slf4j.Log4jLogger
 
-class Slf4j2Log4j2BindingTest : Slf4jBindingTestBase(Slf4jBinding.Log4j2) {
+class Slf4j2Log4j2BindingTest : Slf4jBindingTestBase(Slf4jBinding.Log4j2, Log4j2Slf4jBinding()) {
 
     @Test
     fun assertSlf4jBinding() {

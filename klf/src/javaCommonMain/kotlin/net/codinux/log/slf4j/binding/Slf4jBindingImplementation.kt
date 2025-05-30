@@ -9,4 +9,6 @@ interface Slf4jBindingImplementation {
 
     fun getLevel(loggerName: String): LogLevel?
 
+    fun setLevel(logger: Logger, level: LogLevel?): Boolean
+
 }

@@ -10,7 +10,7 @@ import org.apache.logging.log4j.core.LoggerContext
 import org.apache.logging.slf4j.Log4jLogger
 import kotlin.test.Test
 
-class Slf4j1Log4j2BindingTest : Slf4jBindingTestBase(Slf4jBinding.Log4j2) {
+class Slf4j1Log4j2BindingTest : Slf4jBindingTestBase(Slf4jBinding.Log4j2, Log4j2Slf4jBinding()) {
 
     @Test
     fun assertSlf4jBinding() {

@@ -1,11 +1,9 @@
 package net.codinux.log.slf4j.binding
 
 import ch.qos.logback.classic.Level
-import ch.qos.logback.classic.LoggerContext
 import net.codinux.log.LogLevel
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import org.slf4j.impl.StaticLoggerBinder
 
 open class LogbackSlf4jBinding : Slf4jBindingImplementation {
 
@@ -15,14 +13,21 @@ open class LogbackSlf4jBinding : Slf4jBindingImplementation {
     override fun getLevel(loggerName: String): LogLevel? =
         getLogbackLogger(loggerName)?.level?.let { mapToKlfLogLevel(it) }
 
+    override fun setLevel(logger: Logger, level: LogLevel?): Boolean =
+        getLogbackLogger(logger)?.let { logbackLogger ->
+            logbackLogger.level = level?.let { mapToLogbackLogLevel(it) } // except for root logger Logback accepts null for level
+            true
+        }
+            ?: false
+
 
     open fun getLogbackLogger(logger: Logger): ch.qos.logback.classic.Logger? =
         logger as? ch.qos.logback.classic.Logger
             ?: getLogbackLogger(logger.name)
 
     open fun getLogbackLogger(loggerName: String): ch.qos.logback.classic.Logger? =
-        (StaticLoggerBinder.getSingleton().loggerFactory as? LoggerContext)?.getLogger(loggerName)
-            ?: LoggerFactory.getLogger(loggerName) as? ch.qos.logback.classic.Logger
+//        (StaticLoggerBinder.getSingleton().loggerFactory as? LoggerContext)?.getLogger(loggerName) // does work in Logback 1.2, but not in Logback 1.5
+            LoggerFactory.getLogger(loggerName) as? ch.qos.logback.classic.Logger
 
 
     open fun mapToKlfLogLevel(level: Level): LogLevel = when (level) {

@@ -9,7 +9,7 @@ import org.slf4j.impl.JDK14LoggerAdapter
 import java.util.logging.Logger
 
 // JDK14LoggerFactory translates "ROOT" to ""
-class Slf4j1JulBindingTest : Slf4jBindingTestBase(Slf4jBinding.JUL, "") {
+class Slf4j1JulBindingTest : Slf4jBindingTestBase(Slf4jBinding.JUL, JavaUtilLogSlf4jBinding(), "") {
 
 
     @Test

@@ -9,6 +9,11 @@ import java.lang.reflect.Field
 
 open class Slf4jSimpleSlf4jBinding : Slf4jBindingImplementation {
 
+    companion object {
+        const val OffInt = LocationAwareLogger.ERROR_INT + 10 // implementation details from org.slf4j.impl.SimpleLogger
+    }
+
+
     protected open var triedToGetCurrentLogLevelField = false
 
     protected open var currentLogLevelField: Field? = null
@@ -22,9 +27,23 @@ open class Slf4jSimpleSlf4jBinding : Slf4jBindingImplementation {
     override fun getLevel(loggerName: String): LogLevel? =
         getLevel(LoggerFactory.getLogger(loggerName))
 
+    override fun setLevel(logger: Logger, level: LogLevel?): Boolean =
+        // setting logger's level via system property "org.slf4j.simpleLogger.log.<logger.name>" doesn't work
+        // reliably as it has to be set before first SimpleLogger instance with that logger name is created
+        getCurrentLogLevelField(logger)?.let { currentLogLevelField ->
+            val mappedLevel: Int = level?.let { mapToSlf4jSimpleLogLevelInt(level) }
+                // do not set currentLogLevel to null. The defaultLogLevel. If that doesn't work, use SimpleLogger's default level
+                ?: System.getProperty("org.slf4j.simpleLogger.defaultLogLevel", null)?.let { mapToSlf4jSimpleLogLevelStringToIntInt(it) }
+                ?: LocationAwareLogger.INFO_INT // SimpleLogger's default level, see SimpleLogger implementation
+
+            currentLogLevelField.set(logger, mappedLevel)
+            true
+        }
+            ?: false
+
 
     open fun mapToKlfLogLevel(levelInt: Int): LogLevel = when (levelInt) {
-        LocationAwareLogger.ERROR_INT + 10 -> LogLevel.Off // implementation details from org.slf4j.impl.SimpleLogger
+        OffInt -> LogLevel.Off
         LocationAwareLogger.ERROR_INT -> LogLevel.Error
         LocationAwareLogger.WARN_INT -> LogLevel.Warn
         LocationAwareLogger.INFO_INT -> LogLevel.Info
@@ -33,8 +52,37 @@ open class Slf4jSimpleSlf4jBinding : Slf4jBindingImplementation {
         else -> LogLevel.Off
     }
 
-    open fun mapToSlf4jSimpleLogLevelString(level: LogLevel): String = when (level) {
+    open fun mapToSlf4jSimpleLogLevelInt(level: LogLevel): Int = when (level) {
+        LogLevel.Off -> OffInt
+        LogLevel.Error -> LocationAwareLogger.ERROR_INT
+        LogLevel.Warn -> LocationAwareLogger.WARN_INT
+        LogLevel.Info -> LocationAwareLogger.INFO_INT
+        LogLevel.Debug -> LocationAwareLogger.DEBUG_INT
+        LogLevel.Trace -> LocationAwareLogger.TRACE_INT
+    }
+
+    open fun mapToSlf4jSimpleLogLevelStringToIntInt(level: String): Int? = when (level) {
         // for values see class documentation of SimpleLogger
+        "off" -> OffInt
+        "error" -> LocationAwareLogger.ERROR_INT
+        "warn" -> LocationAwareLogger.WARN_INT
+        "info" -> LocationAwareLogger.INFO_INT
+        "debug" -> LocationAwareLogger.DEBUG_INT
+        "trace" -> LocationAwareLogger.TRACE_INT
+        else -> null
+    }
+
+    open fun mapToKlfLogLevel(level: String): LogLevel? = when (level) {
+        "off" -> LogLevel.Off
+        "error" -> LogLevel.Error
+        "warn" -> LogLevel.Warn
+        "info" -> LogLevel.Info
+        "debug" -> LogLevel.Debug
+        "trace" -> LogLevel.Trace
+        else -> null
+    }
+
+    open fun mapToSlf4jSimpleLogLevelString(level: LogLevel): String = when (level) {
         LogLevel.Off -> "off"
         LogLevel.Error -> "error"
         LogLevel.Warn -> "warn"

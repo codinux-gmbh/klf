@@ -13,6 +13,13 @@ open class Log4j1Slf4jBinding : Slf4jBindingImplementation {
     override fun getLevel(loggerName: String): LogLevel? =
         getLog4j1Logger(loggerName)?.level?.let { mapToKlfLogLevel(it) }
 
+    override fun setLevel(logger: Logger, level: LogLevel?): Boolean =
+        getLog4j1Logger(logger)?.let { log4j1Logger ->
+            log4j1Logger.level = level?.let { mapToLog4j1LogLevel(level) }
+            true
+        }
+            ?: false
+
 
     open fun getLog4j1Logger(logger: Logger): org.apache.log4j.Logger? =
         getLog4j1Logger(logger.name)

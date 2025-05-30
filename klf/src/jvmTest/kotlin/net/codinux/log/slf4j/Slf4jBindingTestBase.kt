@@ -12,12 +12,14 @@ import net.codinux.log.LogLevel
 import net.codinux.log.Logger
 import net.codinux.log.LoggerFactory
 import net.codinux.log.appender.Appender
+import net.codinux.log.slf4j.binding.Slf4jBindingImplementation
 import kotlin.reflect.KClass
 import kotlin.reflect.jvm.jvmName
 import kotlin.test.Test
 
 abstract class Slf4jBindingTestBase(
     protected val slf4jBinding: Slf4jBinding,
+    protected val bindingImpl: Slf4jBindingImplementation,
     protected val rootLoggerName: String = "ROOT"
 ) {
 
@@ -71,13 +73,24 @@ abstract class Slf4jBindingTestBase(
 
     @Test
     fun getLogLevel() {
-        val loggerName = LoggerName + ".Unique" // make sure there doesn't already exist an instance of this logger, Slf4jSimple tests would fail otherwise
+        val loggerName = LoggerName
         val expectedLevel = LogLevel.Trace
 
         setLevelOnLoggerBinding(loggerName, expectedLevel)
 
         val klfLogger = LoggerFactory.getLogger(loggerName)
         assertThat(klfLogger.level).isEqualTo(expectedLevel)
+    }
+
+    @Test
+    fun setLogLevel() {
+        val expectedLevel = LogLevel.Debug
+        val loggerName = LoggerName
+        val klfLogger = LoggerFactory.getLogger(loggerName)
+
+        klfLogger.level = expectedLevel
+
+        assertThat(bindingImpl.getLevel(loggerName)).isEqualTo(expectedLevel)
     }
 
 

@@ -24,6 +24,9 @@ object Slf4jUtil {
 
     fun getLevel(logger: Logger): LogLevel? = Slf4jLogLevelHandler.getLevel(logger, boundLoggingFramework)
 
+    fun setLevel(logger: Logger, level: LogLevel?): Boolean =
+        Slf4jLogLevelHandler.setLevel(logger, boundLoggingFramework, level)
+
 
     fun getLoggingFrameworkRootLoggerName(loggingFramework: Slf4jBinding): String? = when (loggingFramework) {
         Slf4jBinding.Logback -> "ROOT"

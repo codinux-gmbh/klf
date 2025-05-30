@@ -6,7 +6,7 @@ import net.codinux.log.slf4j.binding.LogbackSlf4jBinding
 import org.slf4j.LoggerFactory
 import kotlin.test.Test
 
-class Slf4j1LogbackBindingTest : Slf4jBindingTestBase(Slf4jBinding.Logback) {
+class Slf4j1LogbackBindingTest : Slf4jBindingTestBase(Slf4jBinding.Logback, LogbackSlf4jBinding()) {
 
     @Test
     fun assertSlf4jBinding() {

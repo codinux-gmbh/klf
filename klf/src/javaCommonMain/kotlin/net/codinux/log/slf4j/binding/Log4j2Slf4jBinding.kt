@@ -3,6 +3,7 @@ package net.codinux.log.slf4j.binding
 import net.codinux.log.LogLevel
 import org.apache.logging.log4j.Level
 import org.apache.logging.log4j.LogManager
+import org.apache.logging.log4j.core.LoggerContext
 import org.slf4j.Logger
 
 open class Log4j2Slf4jBinding : Slf4jBindingImplementation {
@@ -12,6 +13,12 @@ open class Log4j2Slf4jBinding : Slf4jBindingImplementation {
 
     override fun getLevel(loggerName: String): LogLevel? =
         getLog4j2Logger(loggerName)?.level?.let { mapToKlfLogLevel(it) }
+
+    override fun setLevel(logger: Logger, level: LogLevel?): Boolean {
+        setLevel(logger.name, level?.let { mapToLog4jLogLevel(level) })
+
+        return true
+    }
 
 
     open fun getLog4j2Logger(logger: Logger): org.apache.logging.log4j.Logger? =
@@ -40,6 +47,23 @@ open class Log4j2Slf4jBinding : Slf4jBindingImplementation {
         LogLevel.Info -> Level.INFO
         LogLevel.Debug -> Level.DEBUG
         LogLevel.Trace -> Level.TRACE
+    }
+
+    protected open fun setLevel(loggerName: String, level: Level?) {
+        val context = LogManager.getContext(false) as LoggerContext
+        val config = context.configuration
+        val loggerConfig = config.getLoggerConfig(loggerName)
+
+        // If loggerConfig is for a parent logger, we need to add a specific one
+        if (loggerConfig.name != loggerName) {
+            val newLoggerConfig = org.apache.logging.log4j.core.config.LoggerConfig(loggerName, level, true)
+            newLoggerConfig.addAppender(loggerConfig.appenders.values.first(), level, null)
+            config.addLogger(loggerName, newLoggerConfig)
+        } else {
+            loggerConfig.level = level
+        }
+
+        context.updateLoggers()
     }
 
 }

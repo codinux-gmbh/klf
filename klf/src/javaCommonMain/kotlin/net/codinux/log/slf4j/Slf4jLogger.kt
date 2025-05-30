@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory
 open class Slf4jLogger(
     protected open val slf4jLogger: org.slf4j.Logger,
     protected open val appenderContainer: AppenderContainer,
-    override var level: LogLevel? = null
+    level: LogLevel? = null
 ) : Logger {
 
     constructor(name: String, appenderContainer: AppenderContainer, level: LogLevel? = null)
@@ -19,28 +19,28 @@ open class Slf4jLogger(
     override val name: String
         get() = slf4jLogger.name
 
+    override var level: LogLevel?
+        get() = Slf4jUtil.getLevel(slf4jLogger)
+        set (value) {
+            Slf4jUtil.setLevel(slf4jLogger, value)
+        }
 
-    override val isErrorEnabled: Boolean
-        get() = isLevelSetAndEnabled(LogLevel.Error) ?: slf4jLogger.isErrorEnabled
-
-    override val isWarnEnabled: Boolean
-        get() = isLevelSetAndEnabled(LogLevel.Warn) ?: slf4jLogger.isWarnEnabled
-
-    override val isInfoEnabled: Boolean
-        get() = isLevelSetAndEnabled(LogLevel.Info) ?: slf4jLogger.isInfoEnabled
-
-    override val isDebugEnabled: Boolean
-        get() = isLevelSetAndEnabled(LogLevel.Debug) ?: slf4jLogger.isDebugEnabled
-
-    override val isTraceEnabled: Boolean
-        get() = isLevelSetAndEnabled(LogLevel.Trace) ?: slf4jLogger.isTraceEnabled
-
-    /**
-     * Only calls [isEnabled] if [level] is set.
-     */
-    protected open fun isLevelSetAndEnabled(level: LogLevel) = this.level?.let {
-        isEnabled(level)
+    init {
+        if (level != null) {
+            this.level = level
+        }
     }
+
+
+    override val isErrorEnabled: Boolean get() = slf4jLogger.isErrorEnabled
+
+    override val isWarnEnabled: Boolean get() = slf4jLogger.isWarnEnabled
+
+    override val isInfoEnabled: Boolean get() = slf4jLogger.isInfoEnabled
+
+    override val isDebugEnabled: Boolean get() = slf4jLogger.isDebugEnabled
+
+    override val isTraceEnabled: Boolean get() = slf4jLogger.isTraceEnabled
 
 
     override fun error(message: String, exception: Throwable?) {
