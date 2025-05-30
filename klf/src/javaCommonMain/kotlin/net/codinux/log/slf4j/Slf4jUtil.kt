@@ -1,7 +1,9 @@
 package net.codinux.log.slf4j
 
 import net.codinux.log.JvmDefaults
+import net.codinux.log.LogLevel
 import org.slf4j.ILoggerFactory
+import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.slf4j.helpers.NOPLoggerFactory
 
@@ -18,6 +20,9 @@ object Slf4jUtil {
     val boundLoggingFrameworkRootLoggerName: String? by lazy {
         getLoggingFrameworkRootLoggerName(boundLoggingFramework)
     }
+
+
+    fun getLevel(logger: Logger): LogLevel? = Slf4jLogLevelHandler.getLevel(logger, boundLoggingFramework)
 
 
     fun getLoggingFrameworkRootLoggerName(loggingFramework: Slf4jBinding): String? = when (loggingFramework) {

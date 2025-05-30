@@ -165,6 +165,7 @@ kotlin {
 
             dependencies {
                 compileOnly("org.slf4j:slf4j-api:$slf4j1Version")
+                compileOnly("ch.qos.logback:logback-classic:$logbackForSlf4j1Version")
                 compileOnly("org.apache.logging.log4j:log4j-core:$log4j2ForSlf4j1Version")
             }
         }

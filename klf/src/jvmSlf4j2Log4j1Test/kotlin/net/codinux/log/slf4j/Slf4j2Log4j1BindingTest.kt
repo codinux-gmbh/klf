@@ -2,6 +2,9 @@ package net.codinux.log.slf4j
 
 import assertk.assertThat
 import assertk.assertions.isEqualTo
+import net.codinux.log.LogLevel
+import net.codinux.log.slf4j.binding.Log4j1Slf4jBinding
+import org.apache.log4j.LogManager
 import kotlin.test.Test
 import org.apache.log4j.Logger
 import org.slf4j.reload4j.Reload4jLoggerAdapter
@@ -22,6 +25,13 @@ class Slf4j2Log4j1BindingTest : Slf4jBindingTestBase(Slf4jBinding.Reload4j, "roo
         val logger: Logger = getFieldValue(slf4jLogger, "logger")
 
         assertThat(logger.name).isEqualTo(Slf4jUtil.getLoggingFrameworkRootLoggerName(Slf4jBinding.Log4j1)) // logger name has to be "root"
+    }
+
+
+    override fun setLevelOnLoggerBinding(loggerName: String, level: LogLevel) {
+        val log4j1Logger = LogManager.getLogger(loggerName)
+
+        log4j1Logger.level = Log4j1Slf4jBinding().mapToLog4j1LogLevel(level)
     }
 
 }

@@ -27,6 +27,9 @@ abstract class Slf4jBindingTestBase(
     }
 
 
+    protected abstract fun setLevelOnLoggerBinding(loggerName: String, level: LogLevel)
+
+
     @Test
     fun isSlf4jOnClasspath() {
         assertThat(Slf4jUtil.isSlf4jOnClasspath).isTrue()
@@ -62,6 +65,19 @@ abstract class Slf4jBindingTestBase(
 
         // in tests logback is the bound logging framework -> we want to test if log messages gets directed to our mock Appender
         verify { mockAppender.append(LogEvent(LogLevel.Info, Message, LoggerName, null, null)) }
+    }
+
+
+
+    @Test
+    fun getLogLevel() {
+        val loggerName = LoggerName + ".Unique" // make sure there doesn't already exist an instance of this logger, Slf4jSimple tests would fail otherwise
+        val expectedLevel = LogLevel.Trace
+
+        setLevelOnLoggerBinding(loggerName, expectedLevel)
+
+        val klfLogger = LoggerFactory.getLogger(loggerName)
+        assertThat(klfLogger.level).isEqualTo(expectedLevel)
     }
 
 
