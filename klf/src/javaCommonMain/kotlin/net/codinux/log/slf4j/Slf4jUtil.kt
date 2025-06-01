@@ -36,14 +36,8 @@ object Slf4jUtil {
         boundLoggingFrameworkImplementation?.setLevel(slf4jLogger, level)
             ?: false
 
-    fun getLoggingFrameworkRootLoggerName(loggingFramework: Slf4jBinding): String? = when (loggingFramework) {
-        Slf4jBinding.Logback -> "ROOT"
-        Slf4jBinding.Log4j2 -> ""
-        Slf4jBinding.Log4j1, Slf4jBinding.Reload4j -> "root"
-        Slf4jBinding.JUL, Slf4jBinding.JBossLogging -> ""
-        // slf4j Simple and slf4j Android don't have a root logger (TODO: what about JCL?)
-        else -> null
-    }
+    fun getLoggingFrameworkRootLoggerName(loggingFramework: Slf4jBinding): String? =
+        getBindingImplementation(loggingFramework)?.rootLoggerName
 
     private fun getBindingImplementation(binding: Slf4jBinding): Slf4jBindingImplementation? =
         bindingMap.getOrPut(binding) { createBindingImplementation(binding) }

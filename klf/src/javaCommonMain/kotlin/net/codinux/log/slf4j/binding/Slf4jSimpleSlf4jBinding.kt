@@ -19,6 +19,9 @@ open class Slf4jSimpleSlf4jBinding : Slf4jBindingImplementation {
     protected open var currentLogLevelField: Field? = null
 
 
+    override val rootLoggerName = null
+
+
     override fun getLevel(logger: Logger): LogLevel? =
         (getCurrentLogLevelField(logger)?.get(logger) as? Int)?.let { levelInt ->
             mapToKlfLogLevel(levelInt)

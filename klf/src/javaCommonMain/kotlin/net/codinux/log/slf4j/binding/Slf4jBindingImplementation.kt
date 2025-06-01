@@ -5,6 +5,9 @@ import org.slf4j.Logger
 
 interface Slf4jBindingImplementation {
 
+    val rootLoggerName: String?
+
+
     fun getLevel(logger: Logger): LogLevel?
 
     fun getLevel(loggerName: String): LogLevel?

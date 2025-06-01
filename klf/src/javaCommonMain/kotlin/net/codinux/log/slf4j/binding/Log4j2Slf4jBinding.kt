@@ -8,6 +8,9 @@ import org.slf4j.Logger
 
 open class Log4j2Slf4jBinding : Slf4jBindingImplementation {
 
+    override val rootLoggerName = ""
+
+
     override fun getLevel(logger: Logger): LogLevel? =
         getLog4j2Logger(logger)?.level?.let { mapToKlfLogLevel(it) }
 
