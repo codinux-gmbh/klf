@@ -2,10 +2,12 @@ package net.codinux.log.slf4j
 
 import net.codinux.log.JvmDefaults
 import net.codinux.log.LogLevel
+import net.codinux.log.slf4j.binding.*
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.slf4j.helpers.NOPLoggerFactory
+import java.util.concurrent.ConcurrentHashMap
 
 object Slf4jUtil {
 
@@ -22,11 +24,15 @@ object Slf4jUtil {
     }
 
 
-    fun getLevel(slf4jLogger: Logger): LogLevel? = Slf4jLogLevelHandler.getLevel(slf4jLogger, boundLoggingFramework)
+    private val bindingMap = ConcurrentHashMap<Slf4jBinding, Slf4jBindingImplementation?>()
+
+
+    fun getLevel(slf4jLogger: Logger): LogLevel? =
+        getBindingImplementation(boundLoggingFramework)?.getLevel(slf4jLogger)
 
     fun setLevel(slf4jLogger: Logger, level: LogLevel?): Boolean =
-        Slf4jLogLevelHandler.setLevel(slf4jLogger, boundLoggingFramework, level)
-
+        getBindingImplementation(boundLoggingFramework)?.setLevel(slf4jLogger, level)
+            ?: false
 
     fun getLoggingFrameworkRootLoggerName(loggingFramework: Slf4jBinding): String? = when (loggingFramework) {
         Slf4jBinding.Logback -> "ROOT"
@@ -34,6 +40,19 @@ object Slf4jUtil {
         Slf4jBinding.Log4j1, Slf4jBinding.Reload4j -> "root"
         Slf4jBinding.JUL, Slf4jBinding.JBossLogging -> ""
         // slf4j Simple and slf4j Android don't have a root logger (TODO: what about JCL?)
+        else -> null
+    }
+
+    private fun getBindingImplementation(binding: Slf4jBinding): Slf4jBindingImplementation? =
+        bindingMap.getOrPut(binding) { createBindingImplementation(binding) }
+
+    private fun createBindingImplementation(binding: Slf4jBinding): Slf4jBindingImplementation? = when (binding) {
+        Slf4jBinding.Logback -> LogbackSlf4jBinding()
+        Slf4jBinding.Log4j2 -> Log4j2Slf4jBinding()
+        Slf4jBinding.Log4j1 -> Log4j1Slf4jBinding()
+        Slf4jBinding.Reload4j -> Reload4jSlf4jBinding()
+        Slf4jBinding.JUL -> JavaUtilLogSlf4jBinding()
+        Slf4jBinding.Slf4jSimple -> Slf4jSimpleSlf4jBinding()
         else -> null
     }
 
