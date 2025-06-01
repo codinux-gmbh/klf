@@ -48,7 +48,7 @@ object LoggerFactory {
     @JvmStatic
     fun getLogger(name: String?): Logger {
         // name can only be null when using one of the static log methods of net.codinux.log.Log without a logger name or class
-        val actualName = name ?: loggerNameService.resolveDefaultLoggerName()
+        val actualName = name ?: loggerNameService.resolveDefaultLoggerName(effectiveConfig)
 
         return loggerCacheForName.getOrPut(actualName) {
             factory.createLogger(actualName)

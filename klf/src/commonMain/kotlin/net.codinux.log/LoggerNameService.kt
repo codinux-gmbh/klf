@@ -2,6 +2,7 @@ package net.codinux.log
 
 import net.codinux.log.classname.ClassNameResolver
 import net.codinux.log.classname.ClassType
+import net.codinux.log.config.EffectiveLoggerConfig
 import kotlin.reflect.KClass
 
 open class LoggerNameService {
@@ -26,14 +27,14 @@ open class LoggerNameService {
         return components.packageNamePrefix + className
     }
 
-    open fun resolveDefaultLoggerName(): String {
-        if (LoggerFactory.effectiveConfig.useCallerMethodIfLoggerNameNotSet) {
+    open fun resolveDefaultLoggerName(config: EffectiveLoggerConfig): String {
+        if (config.useCallerMethodIfLoggerNameNotSet) {
             Platform.getLoggerNameFromCallingMethod()?.let { fromCallingMethod ->
                 return fromCallingMethod
             }
         }
 
-        return LoggerFactory.effectiveConfig.defaultLoggerName ?: Platform.appName ?: "net.codinux.log.klf"
+        return config.defaultLoggerName ?: Platform.appName ?: "net.codinux.log.klf"
     }
 
 }
