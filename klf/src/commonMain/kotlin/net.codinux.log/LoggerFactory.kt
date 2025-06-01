@@ -61,4 +61,7 @@ object LoggerFactory {
             getLogger(loggerNameService.getLoggerName(forClass))
         }
 
+    @JvmStatic
+    inline fun <reified R : Any> getLogger(): Logger = getLogger(R::class)
+
 }
