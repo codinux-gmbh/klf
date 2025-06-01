@@ -7,6 +7,15 @@ import kotlin.jvm.JvmStatic
 import kotlin.native.concurrent.ThreadLocal
 import kotlin.reflect.KClass
 
+/**
+ * The central entry point of klf.
+ *
+ * Used to:
+ * - Configure klf like `LoggerFactory.config.rootLevelDefault = LogLevel.Warn`, `LoggerFactory.debugConfig.logEventFormatter = YourLogEventFormatter`.
+ * - Retrieve logger instances like `by logger()` (indirectly), `LoggerFactory.getLogger(UserService::class)`, `LoggerFactory.getLogger("org.company.feature.service.UserService")`.
+ * - Register or remove appenders that control where log output is written (e.g., console, file, remote): `LoggerFactory.addAppender(YourAppender)`.
+ * - Set a custom [ILoggerFactory]: `LoggerFactory.init(YourLoggerFactory)`. This has to be called before `ILoggerFactory` is used for the first time.
+ */
 @ThreadLocal // actually not needed anymore on Kotlin 1.7 and above but to make compiler happy
 object LoggerFactory {
 
