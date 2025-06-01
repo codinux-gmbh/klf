@@ -2,18 +2,18 @@ package net.codinux.log.slf4j
 
 import net.codinux.log.LogLevel
 import net.codinux.log.Logger
-import net.codinux.log.appender.AppenderContainer
+import net.codinux.log.appender.AppenderCollection
 import org.slf4j.LoggerFactory
 
 
 open class Slf4jLogger(
     protected open val slf4jLogger: org.slf4j.Logger,
-    protected open val appenderContainer: AppenderContainer,
+    protected open val appenderCollection: AppenderCollection,
     level: LogLevel? = null
 ) : Logger {
 
-    constructor(name: String, appenderContainer: AppenderContainer, level: LogLevel? = null)
-            : this(LoggerFactory.getLogger(name), appenderContainer, level)
+    constructor(name: String, appenderCollection: AppenderCollection, level: LogLevel? = null)
+            : this(LoggerFactory.getLogger(name), appenderCollection, level)
 
 
     override val name: String
@@ -119,7 +119,7 @@ open class Slf4jLogger(
 
 
     protected open fun callAdditionalAppenders(level: LogLevel, message: String, exception: Throwable?) {
-        appenderContainer.appendToAppenders(level, name, message, exception)
+        appenderCollection.appendToAppenders(level, name, message, exception)
     }
 
 }

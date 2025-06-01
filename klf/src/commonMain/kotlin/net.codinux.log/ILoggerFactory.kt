@@ -1,8 +1,8 @@
 package net.codinux.log
 
-import net.codinux.log.appender.AppenderContainer
+import net.codinux.log.appender.AppenderCollection
 
-interface ILoggerFactory : AppenderContainer {
+interface ILoggerFactory : AppenderCollection {
 
     val rootLogger: Logger
 

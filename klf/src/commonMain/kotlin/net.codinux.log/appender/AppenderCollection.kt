@@ -2,7 +2,7 @@ package net.codinux.log.appender
 
 import net.codinux.log.LogLevel
 
-interface AppenderContainer {
+interface AppenderCollection {
 
     fun addAppender(appender: Appender)
 
