@@ -11,7 +11,7 @@ object Slf4jUtil {
 
     val isSlf4jOnClasspath: Boolean by lazy { JvmDefaults.isClassAvailable("org.slf4j.Logger") }
 
-    val slf4jLoggerFactory: ILoggerFactory by lazy { LoggerFactory.getILoggerFactory() }
+    private val slf4jLoggerFactory: ILoggerFactory by lazy { LoggerFactory.getILoggerFactory() }
 
     val boundLoggingFramework: Slf4jBinding by lazy { determineSlf4jBinding() }
 
