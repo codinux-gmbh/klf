@@ -22,10 +22,10 @@ object Slf4jUtil {
     }
 
 
-    fun getLevel(logger: Logger): LogLevel? = Slf4jLogLevelHandler.getLevel(logger, boundLoggingFramework)
+    fun getLevel(slf4jLogger: Logger): LogLevel? = Slf4jLogLevelHandler.getLevel(slf4jLogger, boundLoggingFramework)
 
-    fun setLevel(logger: Logger, level: LogLevel?): Boolean =
-        Slf4jLogLevelHandler.setLevel(logger, boundLoggingFramework, level)
+    fun setLevel(slf4jLogger: Logger, level: LogLevel?): Boolean =
+        Slf4jLogLevelHandler.setLevel(slf4jLogger, boundLoggingFramework, level)
 
 
     fun getLoggingFrameworkRootLoggerName(loggingFramework: Slf4jBinding): String? = when (loggingFramework) {
