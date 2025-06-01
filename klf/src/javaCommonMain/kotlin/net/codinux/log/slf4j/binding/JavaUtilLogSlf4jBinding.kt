@@ -6,7 +6,7 @@ import java.util.logging.Level
 
 open class JavaUtilLogSlf4jBinding : Slf4jBindingImplementation {
 
-    override val rootLoggerName = ""
+    override val rootLoggerName = "" // buried in private class RootLogger
 
 
     override fun getLevel(logger: Logger): LogLevel? =
