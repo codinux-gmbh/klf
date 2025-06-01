@@ -1,8 +1,6 @@
 package net.codinux.log
 
 import net.codinux.log.appender.Appender
-import net.codinux.log.classname.ClassNameResolver
-import net.codinux.log.classname.ClassType
 import net.codinux.log.config.EffectiveLoggerConfig
 import net.codinux.log.config.LoggerConfig
 import kotlin.jvm.JvmStatic
@@ -28,20 +26,45 @@ object LoggerFactory {
     internal val effectiveConfig: EffectiveLoggerConfig = EffectiveLoggerConfig(config, debugConfig, Defaults.isRunningInDebugMode)
 
 
-    private var factory: ILoggerFactory = Platform.createDefaultLoggerFactory()
+    // to not call directly, always use getFactory()
+    private lateinit var factory: ILoggerFactory
 
-    @JvmStatic
-    fun setLoggerFactory(factory: ILoggerFactory) {
+    /**
+     * To provide a custom [ILoggerFactory] call this method before `ILoggerFactory` is used
+     * for the first time, that is before any of these methods are called:
+     * - [LoggerFactory.getLogger]
+     * - [LoggerFactory.addAppender]
+     * - [LoggerFactory.rootLogger]
+     *
+     * Otherwise an [IllegalStateException] will be thrown.
+     */
+    fun init(factory: ILoggerFactory) {
+        if (this::factory.isInitialized) {
+            throw IllegalStateException("ILoggerFactory has already been created. Call init(ILoggerFactory) before " +
+                    "ILoggerFactory gets used for the first time.")
+        }
+
         this.factory = factory
     }
 
+    private fun getFactory(): ILoggerFactory {
+        if (this::factory.isInitialized) {
+            return factory
+        }
+
+        factory = Platform.createDefaultLoggerFactory()
+
+        return factory
+    }
+
+
     @JvmStatic
     val rootLogger: Logger
-        get() = factory.rootLogger
+        get() = getFactory().rootLogger
 
     @JvmStatic
     fun addAppender(appender: Appender) {
-        this.factory.addAppender(appender)
+        this.getFactory().addAppender(appender)
     }
 
 
@@ -51,7 +74,7 @@ object LoggerFactory {
         val actualName = name ?: loggerNameService.resolveDefaultLoggerName(effectiveConfig)
 
         return loggerCacheForName.getOrPut(actualName) {
-            factory.createLogger(actualName)
+            getFactory().createLogger(actualName)
         }
     }
 
