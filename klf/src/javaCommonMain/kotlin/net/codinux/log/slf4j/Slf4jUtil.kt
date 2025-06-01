@@ -17,6 +17,8 @@ object Slf4jUtil {
 
     val boundLoggingFramework: Slf4jBinding by lazy { determineSlf4jBinding() }
 
+    private val boundLoggingFrameworkImplementation: Slf4jBindingImplementation? by lazy { getBindingImplementation(boundLoggingFramework) }
+
     val useSlf4j: Boolean by lazy { isSlf4jOnClasspath && boundLoggingFramework != Slf4jBinding.NOP }
 
     val boundLoggingFrameworkRootLoggerName: String? by lazy {
@@ -28,10 +30,10 @@ object Slf4jUtil {
 
 
     fun getLevel(slf4jLogger: Logger): LogLevel? =
-        getBindingImplementation(boundLoggingFramework)?.getLevel(slf4jLogger)
+        boundLoggingFrameworkImplementation?.getLevel(slf4jLogger)
 
     fun setLevel(slf4jLogger: Logger, level: LogLevel?): Boolean =
-        getBindingImplementation(boundLoggingFramework)?.setLevel(slf4jLogger, level)
+        boundLoggingFrameworkImplementation?.setLevel(slf4jLogger, level)
             ?: false
 
     fun getLoggingFrameworkRootLoggerName(loggingFramework: Slf4jBinding): String? = when (loggingFramework) {
