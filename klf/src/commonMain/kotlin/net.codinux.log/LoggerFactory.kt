@@ -32,7 +32,8 @@ object LoggerFactory {
     @JvmStatic
     val debugConfig: LoggerConfig = LoggerConfig(defaultRootLevel = LogLevel.Debug)
 
-    internal val effectiveConfig: EffectiveLoggerConfig = EffectiveLoggerConfig(config, debugConfig, Defaults.isRunningInDebugMode)
+    // create lazily so that user can set config and debugConfig before effective config gets derived
+    internal val effectiveConfig: EffectiveLoggerConfig by lazy { EffectiveLoggerConfig(config, debugConfig, Defaults.isRunningInDebugMode) }
 
 
     // to not call directly, always use getFactory()
