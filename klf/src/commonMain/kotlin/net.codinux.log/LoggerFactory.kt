@@ -12,6 +12,10 @@ import kotlin.reflect.KClass
 @ThreadLocal // actually not needed anymore on Kotlin 1.7 and above but to make compiler happy
 object LoggerFactory {
 
+    private val loggerCache = Cache<KClass<*>, Logger>()
+
+    private val loggerCacheForName = Cache<String, Logger>()
+
     private val loggerNameService = LoggerNameService.Default
 
 
@@ -24,7 +28,7 @@ object LoggerFactory {
     internal val effectiveConfig: EffectiveLoggerConfig = EffectiveLoggerConfig(config, debugConfig, Defaults.isRunningInDebugMode)
 
 
-    internal var factory: ILoggerFactory = Platform.createDefaultLoggerFactory()
+    private var factory: ILoggerFactory = Platform.createDefaultLoggerFactory()
 
     @JvmStatic
     fun setLoggerFactory(factory: ILoggerFactory) {
@@ -42,9 +46,19 @@ object LoggerFactory {
 
 
     @JvmStatic
-    fun getLogger(name: String?): Logger = loggerNameService.getLogger(name)
+    fun getLogger(name: String?): Logger {
+        // name can only be null when using one of the static log methods of net.codinux.log.Log without a logger name or class
+        val actualName = name ?: loggerNameService.resolveDefaultLoggerName()
+
+        return loggerCacheForName.getOrPut(actualName) {
+            factory.createLogger(actualName)
+        }
+    }
 
     @JvmStatic
-    fun getLogger(forClass: KClass<*>): Logger = loggerNameService.getLogger(forClass)
+    fun getLogger(forClass: KClass<*>): Logger =
+        loggerCache.getOrPut(forClass) {
+            getLogger(loggerNameService.getLoggerName(forClass))
+        }
 
 }
