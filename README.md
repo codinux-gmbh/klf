@@ -144,7 +144,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        net.codinux.log.android.AndroidContext.applicationContext = this.applicationContext
+        net.codinux.kotlin.android.AndroidContext.applicationContext = this.applicationContext
 
         // ...
     }

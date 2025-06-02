@@ -1,6 +1,6 @@
 package net.codinux.log
 
-import net.codinux.log.android.AndroidContext
+import net.codinux.kotlin.android.AndroidContext
 import net.codinux.log.appender.Appender
 import net.codinux.log.appender.LogcatAppender
 
@@ -15,7 +15,7 @@ internal actual object Platform {
 
     actual val appName: String? by lazy {
       try {
-          AndroidContext.applicationContext?.applicationContext?.let { context ->
+          AndroidContext.getApplicationContextIfInitialized()?.let { context ->
               context.applicationInfo?.let { applicationInfo ->
                   applicationInfo.loadLabel(context.packageManager)?.let { label ->
                       "${applicationInfo.packageName ?: applicationInfo.processName}.$label"
