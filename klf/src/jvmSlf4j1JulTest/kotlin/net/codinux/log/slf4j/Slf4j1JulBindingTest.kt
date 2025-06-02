@@ -9,7 +9,7 @@ import org.slf4j.impl.JDK14LoggerAdapter
 import java.util.logging.Logger
 
 // JDK14LoggerFactory translates "ROOT" to ""
-class Slf4j1JulBindingTest : Slf4jBindingTestBase(Slf4jBinding.JUL, JavaUtilLogSlf4jBinding(), "") {
+class Slf4j1JulBindingTest : Slf4jBindingTestBase(Slf4jBinding.JavaUtilLog, JavaUtilLogSlf4jBinding(), "") {
 
 
     @Test
@@ -23,7 +23,7 @@ class Slf4j1JulBindingTest : Slf4jBindingTestBase(Slf4jBinding.JUL, JavaUtilLogS
 
         val logger: Logger = getFieldValue(slf4jLogger, "logger")
 
-        assertThat(logger.name).isEqualTo(Slf4jUtil.getLoggingFrameworkRootLoggerName(Slf4jBinding.JUL)) // logger name has to be ""
+        assertThat(logger.name).isEqualTo(Slf4jUtil.getLoggingFrameworkRootLoggerName(Slf4jBinding.JavaUtilLog)) // logger name has to be ""
     }
 
 

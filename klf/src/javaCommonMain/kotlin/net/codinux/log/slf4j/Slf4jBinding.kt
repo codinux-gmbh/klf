@@ -32,7 +32,7 @@ enum class Slf4jBinding {
     /**
      * Java Util Log (also referenced as JDK 1.4 logging)
      */
-    JUL,
+    JavaUtilLog,
 
     JBossLogging,
 
