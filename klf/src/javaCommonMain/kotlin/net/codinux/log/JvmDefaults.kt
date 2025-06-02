@@ -25,9 +25,8 @@ object JvmDefaults {
     // index 1 is this method
     // index 2 is Platform.getLoggerNameFromCallingMethod()
     // index 3 is LoggerNameService.resolveDefaultLoggerName()
-    // index 4 is LoggerNameService.getLogger(String?)
-    // index 5 is LoggerFactory.getLogger(String?)
-    return stackTrace.drop(getStackTraceElement + 6).firstOrNull()?.let { stackTraceElement ->
+    // index 4 is LoggerFactory.getLogger(String?)
+    return stackTrace.drop(getStackTraceElement + 5).firstOrNull()?.let { stackTraceElement ->
       LoggerNameResolver.getLoggerNameFromMethod(stackTraceElement.className, stackTraceElement.methodName)
     }
   }
