@@ -18,15 +18,11 @@ object JvmDefaults {
   fun getLoggerNameFromCallingMethod(): String? {
     val stackTrace = Thread.currentThread().stackTrace
 
-    // on JVM the first element is "java.lang.Thread.getStackTrace", on Android "dalvik.system.VMStack.getThreadStackTrace" and then "java.lang.Thread.getStackTrace"
-    val getStackTraceElement = stackTrace.indexOfFirst { it.className == "java.lang.Thread" && it.methodName == "getStackTrace" }
+    // the only entry point to klf to get here is when LoggerFactory.getLogger(String?) called with null as argument
+    // so find that method in the stack trace. The method that called that one is the one we are searching for
+    val getLoggerStackTraceElement = stackTrace.indexOfFirst { it.className == "net.codinux.log.LoggerFactory" && it.methodName == "getLogger" }
 
-    // index 0 is Thread.getStackTrace() (or on Android dalvik.system.VMStack.getThreadStackTrace, which moves all indices at by one)
-    // index 1 is this method
-    // index 2 is Platform.getLoggerNameFromCallingMethod()
-    // index 3 is LoggerNameService.resolveDefaultLoggerName()
-    // index 4 is LoggerFactory.getLogger(String?)
-    return stackTrace.drop(getStackTraceElement + 5).firstOrNull()?.let { stackTraceElement ->
+    return stackTrace.drop(getLoggerStackTraceElement + 1).firstOrNull()?.let { stackTraceElement ->
       LoggerNameResolver.getLoggerNameFromMethod(stackTraceElement.className, stackTraceElement.methodName)
     }
   }
