@@ -77,5 +77,5 @@ class LoggerConfig(
     var useCallerMethodIfLoggerNameNotSet: Boolean = useCallerMethodIfLoggerNameNotSetDefault
 
 
-    override fun toString() = "rootLevel = $, defaultLoggerName = $defaultLoggerName, useCallerMethodIfLoggerNameNotSet = $useCallerMethodIfLoggerNameNotSet"
+    override fun toString() = "rootLevel = $rootLevel, defaultLoggerName = $defaultLoggerName, useCallerMethodIfLoggerNameNotSet = $useCallerMethodIfLoggerNameNotSet"
 }
