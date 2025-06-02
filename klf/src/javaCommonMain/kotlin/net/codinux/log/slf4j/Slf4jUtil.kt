@@ -11,6 +11,9 @@ import java.util.concurrent.ConcurrentHashMap
 
 object Slf4jUtil {
 
+    private val bindingMap = ConcurrentHashMap<Slf4jBinding, Slf4jBindingImplementation?>()
+
+
     val isSlf4jOnClasspath: Boolean by lazy { JvmDefaults.isClassAvailable("org.slf4j.Logger") }
 
     private val slf4jLoggerFactory: ILoggerFactory by lazy { LoggerFactory.getILoggerFactory() }
@@ -26,9 +29,6 @@ object Slf4jUtil {
     }
 
 
-    private val bindingMap = ConcurrentHashMap<Slf4jBinding, Slf4jBindingImplementation?>()
-
-
     fun getLevel(slf4jLogger: Logger): LogLevel? =
         boundLoggingFrameworkImplementation?.getLevel(slf4jLogger)
 
@@ -40,7 +40,9 @@ object Slf4jUtil {
         getBindingImplementation(loggingFramework)?.rootLoggerName
 
     private fun getBindingImplementation(binding: Slf4jBinding): Slf4jBindingImplementation? =
-        bindingMap.getOrPut(binding) { createBindingImplementation(binding) }
+        // ConcurrentHashMap throws a NullPointerException if value is null, so add NoopSlf4jBinding ...
+        bindingMap.getOrPut(binding) { createBindingImplementation(binding) ?: NoopSlf4jBinding }
+            .takeUnless { it is NoopSlf4jBinding } // ... and filter it out on retrieval
 
     private fun createBindingImplementation(binding: Slf4jBinding): Slf4jBindingImplementation? = when (binding) {
         Slf4jBinding.Logback -> LogbackSlf4jBinding()
