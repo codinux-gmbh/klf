@@ -17,10 +17,10 @@ class LogTest {
         private val appender: WatchableAppender
 
         init {
-            // otherwise on JVM slf4j's org.slf4j.helpers.NOPLoggerFactory is used. Loggers then have the name "NOP"
-            LoggerFactory.setLoggerFactory(DefaultLoggerFactory())
-
             LoggerFactory.config.rootLevel = LogLevel.Trace // so that by default all logs get written
+
+            // otherwise on JVM slf4j's org.slf4j.helpers.NOPLoggerFactory is used. Loggers then have the name "NOP"
+            LoggerFactory.initForTests(DefaultLoggerFactory())
 
             appender = WatchableAppender().apply {
                 LoggerFactory.addAppender(this)
@@ -148,7 +148,7 @@ class LogTest {
 
         LoggerFactory.config.rootLevel = LogLevel.Trace // reset it for other tests
 
-        assertThat(appender.hasNoLogEvents).isTrue()
+        assertThat(appender::hasNoLogEvents).isTrue()
     }
 
 }

@@ -21,7 +21,7 @@ class ConsoleAppenderTest {
 
   init {
     // otherwise on slf4j is used instead of ConsoleAppender
-    LoggerFactory.setLoggerFactory(DefaultLoggerFactory())
+    LoggerFactory.initForTests(DefaultLoggerFactory())
   }
 
 

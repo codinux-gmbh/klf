@@ -10,7 +10,7 @@ import java.util.Collections;
 public class JavaShowcase {
 
     public void showUsageInJava() {
-        LoggerFactory.setLoggerFactory(new ILoggerFactory() {
+        LoggerFactory.init(new ILoggerFactory() {
 
             @NotNull
             @Override

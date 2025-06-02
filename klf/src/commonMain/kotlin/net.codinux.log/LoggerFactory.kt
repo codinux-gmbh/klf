@@ -57,6 +57,14 @@ object LoggerFactory {
         this.factory = factory
     }
 
+    // for tests
+    internal fun initForTests(factory: ILoggerFactory) {
+        this.factory = factory
+
+        this.loggerCache.clear()
+        this.loggerCacheForName.clear()
+    }
+
     private fun getFactory(): ILoggerFactory {
         if (this::factory.isInitialized) {
             return factory

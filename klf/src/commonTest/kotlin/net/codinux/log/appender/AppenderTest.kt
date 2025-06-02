@@ -21,7 +21,7 @@ class AppenderTest {
 
         init {
             // otherwise on JVM slf4j's org.slf4j.helpers.NOPLoggerFactory is used. Loggers then have the name "NOP"
-            LoggerFactory.setLoggerFactory(DefaultLoggerFactory())
+            LoggerFactory.initForTests(DefaultLoggerFactory())
 
             LoggerFactory.config.rootLevel = LogLevel.Trace // so that by default all logs get written
 

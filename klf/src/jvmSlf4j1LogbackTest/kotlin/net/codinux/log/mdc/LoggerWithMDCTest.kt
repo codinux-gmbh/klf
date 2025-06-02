@@ -24,7 +24,7 @@ class LoggerWithMDCTest {
 
     init {
         // ensure slf4j gets used
-        LoggerFactory.setLoggerFactory(Slf4jLoggerFactory())
+        LoggerFactory.initForTests(Slf4jLoggerFactory())
 
         (org.slf4j.LoggerFactory.getILoggerFactory() as? LoggerContext)?.let { context ->
             context.getLogger(Logger.ROOT_LOGGER_NAME).addAppender(appender)
