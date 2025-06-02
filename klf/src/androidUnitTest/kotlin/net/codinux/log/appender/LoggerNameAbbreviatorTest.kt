@@ -20,7 +20,7 @@ class LoggerNameAbbreviatorTest {
     fun `getAndroidLogTagOfLogTagMaxLength - PackageAndClassNameLongerThanMaxTagNameLength`() {
         val result = underTest.getLoggerTagOfMaxLength(ClassWithoutPackageName::class.qualifiedName!!, LogcatAppender.MaxAndroidLogTagSizeBeforeApi26)
 
-        assertThat(result).isEqualTo("*lassWithoutPackageName") // TODO: bug in ClassNameAbbreviator, should be "ClassWithoutPackageName"
+        assertThat(result).isEqualTo("ClassWithoutPackageName")
     }
 
     @Test
