@@ -10,4 +10,8 @@ open class Cache<Key, Value> {
         return cache.getOrPut(key) { createObject(key) }
     }
 
+    open fun clear() {
+        cache.clear()
+    }
+
 }
