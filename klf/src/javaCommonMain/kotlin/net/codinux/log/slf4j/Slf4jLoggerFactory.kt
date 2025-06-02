@@ -2,7 +2,7 @@ package net.codinux.log.slf4j
 
 import net.codinux.log.ILoggerFactory
 import net.codinux.log.LoggerFactory
-import net.codinux.log.AppenderCollectionImpl
+import net.codinux.log.appender.AppenderCollectionImpl
 import net.codinux.log.slf4j.binding.Log4j2Configurator
 
 open class Slf4jLoggerFactory : AppenderCollectionImpl(), ILoggerFactory {

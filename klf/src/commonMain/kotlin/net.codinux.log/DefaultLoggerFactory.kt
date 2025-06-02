@@ -1,5 +1,7 @@
 package net.codinux.log
 
+import net.codinux.log.appender.AppenderCollectionImpl
+
 open class DefaultLoggerFactory : AppenderCollectionImpl(), ILoggerFactory {
 
   companion object {

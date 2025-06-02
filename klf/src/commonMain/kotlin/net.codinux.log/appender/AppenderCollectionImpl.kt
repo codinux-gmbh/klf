@@ -1,11 +1,13 @@
-package net.codinux.log
+package net.codinux.log.appender
 
 import net.codinux.collections.ImmutableList
 import net.codinux.collections.toImmutableList
 import net.codinux.kotlin.collections.fastForEach
 import net.codinux.kotlin.concurrent.collections.ConcurrentSet
-import net.codinux.log.appender.Appender
-import net.codinux.log.appender.AppenderCollection
+import net.codinux.log.Defaults
+import net.codinux.log.LogEvent
+import net.codinux.log.LogField
+import net.codinux.log.LogLevel
 
 open class AppenderCollectionImpl : AppenderCollection {
 
