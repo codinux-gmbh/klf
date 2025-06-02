@@ -26,14 +26,14 @@ class LogEventFormatterTest {
 
     @Test
     fun messageWithoutException() {
-        val result = underTest.formatMessage(Message, null)
+        val result = underTest.formatMessage(event(Message, null))
 
         assertThat(result).isEqualTo(Message)
     }
 
     @Test
     fun messageWithUncheckedException() {
-        val result = underTest.formatMessage(Message, IllegalArgumentException(ExceptionMessage))
+        val result = underTest.formatMessage(event(Message, IllegalArgumentException(ExceptionMessage)))
 
         assertThat(result).contains(Message)
         assertThat(result).contains("IllegalArgumentException")
@@ -43,7 +43,7 @@ class LogEventFormatterTest {
 
     @Test
     fun messageWithThrowable() {
-        val result = underTest.formatMessage(Message, Error(ExceptionMessage))
+        val result = underTest.formatMessage(event(Message, Error(ExceptionMessage)))
 
         assertThat(result).contains(Message)
         assertThat(result).contains("Error")
@@ -145,6 +145,9 @@ class LogEventFormatterTest {
         assertThat(result).doesNotContain(LogLevel.Warn.name)
         assertThat(result).contains(LogLevel.Error.name)
     }
+
+
+    private fun event(message: String, exception: Throwable?) = LogEvent(RootLevel, message, "", null, exception)
 
     private fun formatEvent(level: LogLevel, message: String, loggerName: String, threadName: String? = null, exception: Throwable? = null): String =
         underTest.formatEvent(LogEvent(level, message, loggerName, threadName, exception))

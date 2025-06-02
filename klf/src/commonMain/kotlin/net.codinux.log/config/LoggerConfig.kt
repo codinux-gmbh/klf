@@ -10,7 +10,7 @@ class LoggerConfig(
     companion object {
         val rootLevelDefault = LogLevel.Info
 
-        val defaultLogEventFormatter: LogEventFormatter = LogEventFormatter.Default
+        val defaultLogEventFormatter: LogEventFormatter = LogEventFormatter.Simple
 
         val defaultLoggerNameDefault: String? = null
 
