@@ -5,8 +5,9 @@ import net.codinux.collections.toImmutableList
 import net.codinux.kotlin.collections.fastForEach
 import net.codinux.kotlin.concurrent.collections.ConcurrentSet
 import net.codinux.log.appender.Appender
+import net.codinux.log.appender.AppenderCollection
 
-abstract class LoggerFactoryBase : ILoggerFactory {
+open class AppenderCollectionImpl : AppenderCollection {
 
     protected open val appenders = ConcurrentSet<Appender>()
 

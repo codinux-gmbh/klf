@@ -1,6 +1,6 @@
 package net.codinux.log
 
-open class DefaultLoggerFactory : LoggerFactoryBase() {
+open class DefaultLoggerFactory : AppenderCollectionImpl(), ILoggerFactory {
 
   companion object {
     const val RootLoggerName = ""

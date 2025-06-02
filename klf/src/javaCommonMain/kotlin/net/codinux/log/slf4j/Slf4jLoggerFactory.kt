@@ -1,10 +1,11 @@
 package net.codinux.log.slf4j
 
+import net.codinux.log.ILoggerFactory
 import net.codinux.log.LoggerFactory
-import net.codinux.log.LoggerFactoryBase
+import net.codinux.log.AppenderCollectionImpl
 import net.codinux.log.slf4j.binding.Log4j2Configurator
 
-open class Slf4jLoggerFactory : LoggerFactoryBase() {
+open class Slf4jLoggerFactory : AppenderCollectionImpl(), ILoggerFactory {
 
     protected open val log4j2Configurator: Log4j2Configurator by lazy { Log4j2Configurator() }
 
