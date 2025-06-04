@@ -11,7 +11,9 @@ final class Target_net_codinux_log_LoggerFactory {
     @Substitute
     public static Logger getLogger(kotlin.reflect.KClass<?> forClass) {
         // calling LoggerFactory.getLogger(forClass) during native image build works as there all reflection information is available
-        return LoggerNameService.Companion.getDefault().getLogger(forClass);
+        String loggerName = LoggerNameService.Companion.getDefault().getLoggerName(forClass);
+
+        return LoggerFactory.getLogger(loggerName);
     }
 
 }
