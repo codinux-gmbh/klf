@@ -3,7 +3,7 @@ package net.codinux.log.slf4j.binding
 import net.codinux.log.LogLevel
 import org.slf4j.Logger
 
-object NoopSlf4jBinding : Slf4jBindingImplementation {
+object NopSlf4jBinding : Slf4jBindingImplementation {
 
     override val rootLoggerName = null
 

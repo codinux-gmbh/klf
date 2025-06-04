@@ -42,8 +42,8 @@ object Slf4jUtil {
 
     private fun getBindingImplementation(binding: Slf4jBinding): Slf4jBindingImplementation? =
         // ConcurrentHashMap throws a NullPointerException if value is null, so add NoopSlf4jBinding ...
-        bindingMap.getOrPut(binding) { createBindingImplementation(binding) ?: NoopSlf4jBinding }
-            .takeUnless { it is NoopSlf4jBinding } // ... and filter it out on retrieval
+        bindingMap.getOrPut(binding) { createBindingImplementation(binding) ?: NopSlf4jBinding }
+            .takeUnless { it is NopSlf4jBinding } // ... and filter it out on retrieval
 
     private fun createBindingImplementation(binding: Slf4jBinding): Slf4jBindingImplementation? = when (binding) {
         Slf4jBinding.Logback -> LogbackSlf4jBinding()
