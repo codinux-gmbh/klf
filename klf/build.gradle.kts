@@ -31,8 +31,8 @@ kotlin {
 
 
     // slf4j 1
-    val logbackForSlf4j1Version: String by project
     val slf4j1Version: String by project
+    val logbackForSlf4j1Version: String by project
     val log4j2ForSlf4j1Version: String by project
 
     // slf4j 2
