@@ -3,6 +3,7 @@ package net.codinux.log
 import net.codinux.kotlin.android.AndroidContext
 import net.codinux.log.appender.Appender
 import net.codinux.log.appender.LogcatAppender
+import net.codinux.log.status.StatusManager
 
 internal actual object Platform {
 
@@ -30,7 +31,9 @@ internal actual object Platform {
               if (hasLoggedThatAppNameCannotBeRetrievedAsApplicationContextIsNotSet == false) {
                   hasLoggedThatAppNameCannotBeRetrievedAsApplicationContextIsNotSet = true
 
-                  // TODO: call ErrorLogger
+                  StatusManager.newError(this, "Cannot determine Android app name as " +
+                          "net.codinux.kotlin.android.AndroidContext.applicationContext is not set.\nTo be able to " +
+                          "determine Android app name and use it as default logger name, please set AndroidContext.applicationContext.")
               }
 
               null

@@ -16,6 +16,15 @@ object StatusManager {
     private val listeners = ConcurrentSet<StatusListener>()
 
 
+    fun newError(origin: Any, message: String, exception: Throwable? = null) =
+        addStatus(Status.error(origin, message, exception))
+
+    fun newWarning(origin: Any, message: String, exception: Throwable? = null) =
+        addStatus(Status.warning(origin, message, exception))
+
+    fun newInfo(origin: Any, message: String, exception: Throwable? = null) =
+        addStatus(Status.info(origin, message, exception))
+
     fun addStatus(status: Status) {
         callListeners(status)
 
@@ -27,6 +36,7 @@ object StatusManager {
             }
         }
     }
+
 
     fun getCopyOfStatusList(): List<Status> = bufferedStatus.toList()
 

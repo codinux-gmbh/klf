@@ -3,6 +3,7 @@ package net.codinux.log.slf4j
 import net.codinux.log.JvmDefaults
 import net.codinux.log.LogLevel
 import net.codinux.log.slf4j.binding.*
+import net.codinux.log.status.StatusManager
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -82,8 +83,7 @@ object Slf4jUtil {
                 }
             }
         } catch (e: Exception) {
-            // TODO: add an ErrorHandler
-            println("Could not determine logging framework that slf4j binds to: $e")
+            StatusManager.newError(this, "Could not determine logging framework that slf4j binds to", e)
 
             Slf4jBinding.Unknown
         }

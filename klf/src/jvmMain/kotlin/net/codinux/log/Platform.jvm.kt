@@ -2,6 +2,7 @@ package net.codinux.log
 
 import net.codinux.log.appender.Appender
 import net.codinux.log.appender.ConsoleAppender
+import net.codinux.log.status.StatusManager
 
 internal actual object Platform {
 
@@ -22,8 +23,8 @@ internal actual object Platform {
                 .path
 
             jarPath.split('/').last { it.isNotBlank() }
-        } catch (e: Throwable) { // TODO: log to error logger
-            Log.error<Platform>(e) { "Could not get app name from jar name (is a security manager installed?)" }
+        } catch (e: Throwable) {
+            StatusManager.newError(this, "Could not get app name from jar name (is a security manager installed?)", e)
 
             null
         }

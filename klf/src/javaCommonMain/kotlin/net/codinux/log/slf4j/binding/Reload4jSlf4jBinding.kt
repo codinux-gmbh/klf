@@ -1,6 +1,7 @@
 package net.codinux.log.slf4j.binding
 
 import net.codinux.log.JvmDefaults
+import net.codinux.log.status.StatusManager
 import org.slf4j.Logger
 import java.lang.reflect.Field
 
@@ -29,7 +30,9 @@ open class Reload4jSlf4jBinding : Log4j1Slf4jBinding(), Slf4jBindingImplementati
             null
         }
     } catch (e: Throwable) {
-        // TODO: log on ErrorLogger
+        StatusManager.newError(this, "Could not get logger field of Reload4jLoggerAdapter class, " +
+                "therefore cannot get or set Reload4j Loggers' LogLevel", e)
+
         null
     }
 

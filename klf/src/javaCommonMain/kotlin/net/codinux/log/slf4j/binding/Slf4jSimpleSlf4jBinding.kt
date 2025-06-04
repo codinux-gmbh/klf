@@ -2,6 +2,7 @@ package net.codinux.log.slf4j.binding
 
 import net.codinux.log.JvmDefaults
 import net.codinux.log.LogLevel
+import net.codinux.log.status.StatusManager
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.slf4j.spi.LocationAwareLogger
@@ -119,7 +120,9 @@ open class Slf4jSimpleSlf4jBinding : Slf4jBindingImplementation {
             currentLogLevelField = it
         }
     } catch (e: Throwable) {
-        // TODO: log on error logger
+        StatusManager.newError(this, "Could not get currentLogLevel field of SimpleLogger class, " +
+                "therefore cannot get or set Slf4jSimple Loggers' LogLevel", e)
+
         null
     }
 
