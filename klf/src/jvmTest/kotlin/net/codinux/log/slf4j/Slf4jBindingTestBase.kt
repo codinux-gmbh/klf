@@ -15,7 +15,6 @@ import kotlin.reflect.jvm.jvmName
 import kotlin.test.Test
 
 abstract class Slf4jBindingTestBase(
-    protected val slf4jBinding: Slf4jBinding,
     protected val bindingAdapter: Slf4jBindingAdapter,
 ) {
 
@@ -40,7 +39,7 @@ abstract class Slf4jBindingTestBase(
 
     @Test
     fun boundLoggingFramework() {
-        assertThat(Slf4jUtil.boundLoggingFramework).isEqualByComparingTo(slf4jBinding)
+        assertThat(Slf4jUtil.boundLoggingFramework).isEqualByComparingTo(bindingAdapter.binding)
     }
 
     @Test

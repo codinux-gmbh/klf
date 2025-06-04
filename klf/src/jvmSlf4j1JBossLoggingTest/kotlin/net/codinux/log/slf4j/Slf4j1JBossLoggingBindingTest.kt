@@ -9,7 +9,7 @@ import org.jboss.logging.Logger
 import org.jboss.slf4j.JBossLoggerAdapter
 import kotlin.test.Test
 
-class Slf4j1JBossLoggingBindingTest : Slf4jBindingTestBase(Slf4jBinding.JBossLogging, JBossLoggingSlf4jBinding()) {
+class Slf4j1JBossLoggingBindingTest : Slf4jBindingTestBase(JBossLoggingSlf4jBinding()) {
 
 
     @Test

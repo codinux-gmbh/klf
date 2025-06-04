@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory
 import kotlin.test.Test
 import org.slf4j.simple.SimpleLogger
 
-class Slf4j2Slf4jSimpleBindingTest : Slf4jBindingTestBase(Slf4jBinding.Slf4jSimple, Slf4jSimpleSlf4jBinding()) {
+class Slf4j2Slf4jSimpleBindingTest : Slf4jBindingTestBase(Slf4jSimpleSlf4jBinding()) {
 
     @Test
     fun assertSlf4jBinding() {

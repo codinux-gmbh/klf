@@ -8,7 +8,7 @@ import kotlin.test.Test
 import org.slf4j.jul.JDK14LoggerAdapter
 import java.util.logging.Logger
 
-class Slf4j2JulBindingTest : Slf4jBindingTestBase(Slf4jBinding.JavaUtilLog, JavaUtilLogSlf4jBinding()) {
+class Slf4j2JulBindingTest : Slf4jBindingTestBase(JavaUtilLogSlf4jBinding()) {
 
 
     @Test

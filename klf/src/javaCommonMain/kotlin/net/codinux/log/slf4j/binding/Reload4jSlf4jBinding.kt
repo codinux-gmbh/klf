@@ -1,11 +1,14 @@
 package net.codinux.log.slf4j.binding
 
 import net.codinux.log.JvmDefaults
+import net.codinux.log.slf4j.Slf4jBinding
 import net.codinux.log.status.StatusManager
 import org.slf4j.Logger
 import java.lang.reflect.Field
 
 open class Reload4jSlf4jBinding : Log4j1Slf4jBinding(), Slf4jBindingAdapter {
+
+    override val binding = Slf4jBinding.Reload4j
 
     protected open val loggerField: Field? by lazy { getReload4jLoggerAdapterLoggerField() }
 

@@ -2,10 +2,13 @@ package net.codinux.log.slf4j.binding
 
 import ch.qos.logback.classic.Level
 import net.codinux.log.LogLevel
+import net.codinux.log.slf4j.Slf4jBinding
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 open class LogbackSlf4jBinding : Slf4jBindingAdapter {
+
+    override val binding = Slf4jBinding.Logback
 
     override val rootLoggerName = ch.qos.logback.classic.Logger.ROOT_LOGGER_NAME // equals "ROOT"
 

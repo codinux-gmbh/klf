@@ -1,11 +1,14 @@
 package net.codinux.log.slf4j.binding
 
 import net.codinux.log.LogLevel
+import net.codinux.log.slf4j.Slf4jBinding
 import org.apache.log4j.Level
 import org.apache.log4j.LogManager
 import org.slf4j.Logger
 
 open class Log4j1Slf4jBinding : Slf4jBindingAdapter {
+
+    override val binding = Slf4jBinding.Log4j1
 
     override val rootLoggerName = "root" // hard coded in RootLogger
 

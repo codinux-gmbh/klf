@@ -2,6 +2,7 @@ package net.codinux.log.slf4j.binding
 
 import net.codinux.log.JvmDefaults
 import net.codinux.log.LogLevel
+import net.codinux.log.slf4j.Slf4jBinding
 import net.codinux.log.status.StatusManager
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -19,6 +20,8 @@ open class Slf4jSimpleSlf4jBinding : Slf4jBindingAdapter {
 
     protected open var currentLogLevelField: Field? = null
 
+
+    override val binding = Slf4jBinding.Slf4jSimple
 
     override val rootLoggerName = null
 

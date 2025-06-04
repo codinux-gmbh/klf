@@ -7,7 +7,7 @@ import org.apache.log4j.LogManager
 import kotlin.test.Test
 import org.slf4j.reload4j.Reload4jLoggerAdapter
 
-class Slf4j2Reload4jBindingTest : Slf4jBindingTestBase(Slf4jBinding.Reload4j, Reload4jSlf4jBinding()) {
+class Slf4j2Reload4jBindingTest : Slf4jBindingTestBase(Reload4jSlf4jBinding()) {
 
 
     @Test
