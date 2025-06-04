@@ -3,6 +3,8 @@ package net.codinux.log
 import net.codinux.log.appender.Appender
 import net.codinux.log.config.EffectiveLoggerConfig
 import net.codinux.log.config.LoggerConfig
+import net.codinux.log.status.StatusManager
+import net.codinux.log.status.StdOutStatusListener
 import kotlin.jvm.JvmStatic
 import kotlin.native.concurrent.ThreadLocal
 import kotlin.reflect.KClass
@@ -38,6 +40,12 @@ object LoggerFactory {
 
     // to not call directly, always use getFactory()
     private lateinit var factory: ILoggerFactory
+
+
+    init {
+        StatusManager.addListener(StdOutStatusListener())
+    }
+
 
     /**
      * To provide a custom [ILoggerFactory] call this method before `ILoggerFactory` is used
