@@ -9,14 +9,14 @@ import io.mockk.mockk
 import io.mockk.verify
 import net.codinux.log.*
 import net.codinux.log.appender.Appender
-import net.codinux.log.slf4j.binding.Slf4jBindingImplementation
+import net.codinux.log.slf4j.binding.Slf4jBindingAdapter
 import kotlin.reflect.KClass
 import kotlin.reflect.jvm.jvmName
 import kotlin.test.Test
 
 abstract class Slf4jBindingTestBase(
     protected val slf4jBinding: Slf4jBinding,
-    protected val bindingImpl: Slf4jBindingImplementation,
+    protected val bindingAdapter: Slf4jBindingAdapter,
     protected val rootLoggerName: String = "ROOT"
 ) {
 
@@ -88,7 +88,7 @@ abstract class Slf4jBindingTestBase(
 
         klfLogger.level = expectedLevel
 
-        assertThat(bindingImpl.getLevel(loggerName)).isEqualTo(expectedLevel)
+        assertThat(bindingAdapter.getLevel(loggerName)).isEqualTo(expectedLevel)
     }
 
 

@@ -3,7 +3,7 @@ package net.codinux.log.slf4j.binding
 import net.codinux.log.LogLevel
 import org.slf4j.Logger
 
-interface Slf4jBindingImplementation {
+interface Slf4jBindingAdapter {
 
     val rootLoggerName: String?
 

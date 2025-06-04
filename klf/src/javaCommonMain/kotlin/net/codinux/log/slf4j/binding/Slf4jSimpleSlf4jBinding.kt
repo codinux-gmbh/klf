@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory
 import org.slf4j.spi.LocationAwareLogger
 import java.lang.reflect.Field
 
-open class Slf4jSimpleSlf4jBinding : Slf4jBindingImplementation {
+open class Slf4jSimpleSlf4jBinding : Slf4jBindingAdapter {
 
     companion object {
         const val OffInt = LocationAwareLogger.ERROR_INT + 10 // implementation details from org.slf4j.impl.SimpleLogger

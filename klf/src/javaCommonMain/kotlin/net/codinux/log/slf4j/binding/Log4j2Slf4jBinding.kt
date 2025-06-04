@@ -6,7 +6,7 @@ import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.core.LoggerContext
 import org.slf4j.Logger
 
-open class Log4j2Slf4jBinding : Slf4jBindingImplementation {
+open class Log4j2Slf4jBinding : Slf4jBindingAdapter {
 
     override val rootLoggerName = LogManager.ROOT_LOGGER_NAME // equals ""
 

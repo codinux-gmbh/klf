@@ -4,7 +4,7 @@ import net.codinux.log.LogLevel
 import org.slf4j.Logger
 import java.util.logging.Level
 
-open class JavaUtilLogSlf4jBinding : Slf4jBindingImplementation {
+open class JavaUtilLogSlf4jBinding : Slf4jBindingAdapter {
 
     override val rootLoggerName = "" // buried in private class RootLogger
 

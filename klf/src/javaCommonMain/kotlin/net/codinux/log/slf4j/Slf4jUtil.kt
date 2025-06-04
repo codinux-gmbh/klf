@@ -12,7 +12,7 @@ import java.util.concurrent.ConcurrentHashMap
 
 object Slf4jUtil {
 
-    private val bindingMap = ConcurrentHashMap<Slf4jBinding, Slf4jBindingImplementation?>()
+    private val bindingMap = ConcurrentHashMap<Slf4jBinding, Slf4jBindingAdapter?>()
 
 
     val isSlf4jOnClasspath: Boolean by lazy { JvmDefaults.isClassAvailable("org.slf4j.Logger") }
@@ -21,7 +21,7 @@ object Slf4jUtil {
 
     val boundLoggingFramework: Slf4jBinding by lazy { determineSlf4jBinding() }
 
-    private val boundLoggingFrameworkImplementation: Slf4jBindingImplementation? by lazy { getBindingImplementation(boundLoggingFramework) }
+    private val boundLoggingFrameworkAdapter: Slf4jBindingAdapter? by lazy { getBindingAdapter(boundLoggingFramework) }
 
     val useSlf4j: Boolean by lazy { isSlf4jOnClasspath && boundLoggingFramework != Slf4jBinding.NOP }
 
@@ -31,21 +31,21 @@ object Slf4jUtil {
 
 
     fun getLevel(slf4jLogger: Logger): LogLevel? =
-        boundLoggingFrameworkImplementation?.getLevel(slf4jLogger)
+        boundLoggingFrameworkAdapter?.getLevel(slf4jLogger)
 
     fun setLevel(slf4jLogger: Logger, level: LogLevel?): Boolean =
-        boundLoggingFrameworkImplementation?.setLevel(slf4jLogger, level)
+        boundLoggingFrameworkAdapter?.setLevel(slf4jLogger, level)
             ?: false
 
     fun getLoggingFrameworkRootLoggerName(loggingFramework: Slf4jBinding): String? =
-        getBindingImplementation(loggingFramework)?.rootLoggerName
+        getBindingAdapter(loggingFramework)?.rootLoggerName
 
-    private fun getBindingImplementation(binding: Slf4jBinding): Slf4jBindingImplementation? =
+    private fun getBindingAdapter(binding: Slf4jBinding): Slf4jBindingAdapter? =
         // ConcurrentHashMap throws a NullPointerException if value is null, so add NoopSlf4jBinding ...
-        bindingMap.getOrPut(binding) { createBindingImplementation(binding) ?: NopSlf4jBinding }
+        bindingMap.getOrPut(binding) { createBindingAdapter(binding) ?: NopSlf4jBinding }
             .takeUnless { it is NopSlf4jBinding } // ... and filter it out on retrieval
 
-    private fun createBindingImplementation(binding: Slf4jBinding): Slf4jBindingImplementation? = when (binding) {
+    private fun createBindingAdapter(binding: Slf4jBinding): Slf4jBindingAdapter? = when (binding) {
         Slf4jBinding.Logback -> LogbackSlf4jBinding()
         Slf4jBinding.Log4j2 -> Log4j2Slf4jBinding()
         Slf4jBinding.Log4j1 -> Log4j1Slf4jBinding()

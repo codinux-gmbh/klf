@@ -5,7 +5,7 @@ import org.apache.log4j.Level
 import org.apache.log4j.LogManager
 import org.slf4j.Logger
 
-open class Log4j1Slf4jBinding : Slf4jBindingImplementation {
+open class Log4j1Slf4jBinding : Slf4jBindingAdapter {
 
     override val rootLoggerName = "root" // hard coded in RootLogger
 
