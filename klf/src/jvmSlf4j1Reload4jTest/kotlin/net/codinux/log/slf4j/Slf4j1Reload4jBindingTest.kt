@@ -7,8 +7,7 @@ import org.apache.log4j.LogManager
 import org.slf4j.impl.Reload4jLoggerAdapter
 import kotlin.test.Test
 
-// Log4jLoggerFactory translates "ROOT" to "root"
-class Slf4j1Reload4jBindingTest : Slf4jBindingTestBase(Slf4jBinding.Reload4j, Reload4jSlf4jBinding(), "root") {
+class Slf4j1Reload4jBindingTest : Slf4jBindingTestBase(Slf4jBinding.Reload4j, Reload4jSlf4jBinding()) {
 
 
     @Test

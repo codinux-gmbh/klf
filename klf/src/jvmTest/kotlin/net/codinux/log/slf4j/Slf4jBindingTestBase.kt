@@ -17,7 +17,6 @@ import kotlin.test.Test
 abstract class Slf4jBindingTestBase(
     protected val slf4jBinding: Slf4jBinding,
     protected val bindingAdapter: Slf4jBindingAdapter,
-    protected val rootLoggerName: String = "ROOT"
 ) {
 
     companion object {
@@ -49,7 +48,7 @@ abstract class Slf4jBindingTestBase(
         val log = LoggerFactory.rootLogger
 
         assertThat(log.name).isEqualTo(RootLogger.RootLoggerName)
-        assertThat((log as Slf4jLogger).slf4jLogger.name).isEqualTo(rootLoggerName)
+        assertThat((log as Slf4jLogger).slf4jLogger.name).isEqualTo(bindingAdapter.slf4jRootLoggerName)
     }
 
     @Test

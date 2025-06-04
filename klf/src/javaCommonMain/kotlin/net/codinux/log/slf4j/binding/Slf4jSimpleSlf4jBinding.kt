@@ -22,6 +22,8 @@ open class Slf4jSimpleSlf4jBinding : Slf4jBindingAdapter {
 
     override val rootLoggerName = null
 
+    override val slf4jRootLoggerName = Logger.ROOT_LOGGER_NAME // equals "ROOT"
+
 
     override fun getLevel(logger: Logger): LogLevel? =
         (getCurrentLogLevelField(logger)?.get(logger) as? Int)?.let { levelInt ->

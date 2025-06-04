@@ -8,7 +8,7 @@ import net.codinux.log.slf4j.binding.JavaUtilLogSlf4jBinding
 import kotlin.test.Test
 import java.util.logging.Logger
 
-class Slf4j2JBossLoggingBindingTest : Slf4jBindingTestBase(Slf4jBinding.JBossLogging, JBossLoggingSlf4jBinding(), "ROOT") {
+class Slf4j2JBossLoggingBindingTest : Slf4jBindingTestBase(Slf4jBinding.JBossLogging, JBossLoggingSlf4jBinding()) {
 
 
     @Test

@@ -10,6 +10,8 @@ open class Log4j2Slf4jBinding : Slf4jBindingAdapter {
 
     override val rootLoggerName = LogManager.ROOT_LOGGER_NAME // equals ""
 
+    override val slf4jRootLoggerName = Logger.ROOT_LOGGER_NAME // equals "ROOT"
+
 
     override fun getLevel(logger: Logger): LogLevel? =
         getLog4j2Logger(logger)?.level?.let { mapToKlfLogLevel(it) }
