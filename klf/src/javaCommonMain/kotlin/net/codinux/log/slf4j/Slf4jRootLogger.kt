@@ -1,8 +1,8 @@
 package net.codinux.log.slf4j
 
-import net.codinux.log.DelegateToAppendersRootLogger
 import net.codinux.log.LogLevel
 import net.codinux.log.LoggerFactory
+import net.codinux.log.RootLogger
 import net.codinux.log.appender.AppenderCollection
 import net.codinux.log.config.EffectiveLoggerConfig
 
@@ -16,9 +16,9 @@ import net.codinux.log.config.EffectiveLoggerConfig
 class Slf4jRootLogger(
     private val effectiveConfig: EffectiveLoggerConfig,
     appenderCollection: AppenderCollection,
-) : Slf4jLogger(org.slf4j.LoggerFactory.getLogger(org.slf4j.Logger.ROOT_LOGGER_NAME), appenderCollection) {
+) : Slf4jLogger(org.slf4j.LoggerFactory.getLogger(org.slf4j.Logger.ROOT_LOGGER_NAME), appenderCollection), RootLogger {
 
-    override val name: String = DelegateToAppendersRootLogger.RootLoggerName
+    override val name: String = RootLogger.RootLoggerName
 
     override var level: LogLevel?
         get() = effectiveConfig.rootLevel

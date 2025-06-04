@@ -85,7 +85,7 @@ object LoggerFactory {
 
 
     @JvmStatic
-    val rootLogger: Logger
+    val rootLogger: RootLogger
         get() = getFactory().rootLogger
 
     @JvmStatic

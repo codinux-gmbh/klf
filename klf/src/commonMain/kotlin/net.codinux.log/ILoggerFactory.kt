@@ -4,7 +4,7 @@ import net.codinux.log.appender.AppenderCollection
 
 interface ILoggerFactory : AppenderCollection {
 
-    val rootLogger: Logger
+    val rootLogger: RootLogger
 
     fun createLogger(name: String): Logger
 

@@ -48,7 +48,7 @@ abstract class Slf4jBindingTestBase(
     fun assertRootLoggerName() {
         val log = LoggerFactory.rootLogger
 
-        assertThat(log.name).isEqualTo(DelegateToAppendersRootLogger.RootLoggerName)
+        assertThat(log.name).isEqualTo(RootLogger.RootLoggerName)
         assertThat((log as Slf4jLogger).slf4jLogger.name).isEqualTo(rootLoggerName)
     }
 
