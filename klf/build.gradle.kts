@@ -52,6 +52,7 @@ kotlin {
         createCompilation("slf4j1Log4j2", compilations, testRuns, "org.apache.logging.log4j:log4j-slf4j-impl:$log4j2ForSlf4j1Version")
         createCompilation("slf4j1Log4j1", compilations, testRuns, "org.slf4j:slf4j-log4j12:1.7.33") // slf4j-log4j12:1.7.34 relocates to reload4j
         createCompilation("slf4j1Reload4j", compilations, testRuns, "org.slf4j:slf4j-reload4j:$slf4j1Version")
+        createCompilation("slf4j1JBossLogging", compilations, testRuns, "org.jboss.slf4j:slf4j-jboss-logging:1.2.1.Final")
         createCompilation("slf4j1Jul", compilations, testRuns, "org.slf4j:slf4j-jdk14:$slf4j1Version")
         createCompilation("slf4j1Slf4jSimple", compilations, testRuns, "org.slf4j:slf4j-simple:$slf4j1Version")
 
@@ -60,6 +61,8 @@ kotlin {
         createCompilation("slf4j2Log4j2", compilations, testRuns, "org.apache.logging.log4j:log4j-slf4j2-impl:$log4j2ForSlf4j2Version")
         createCompilation("slf4j2Log4j1", compilations, testRuns, "org.slf4j:slf4j-log4j12:$slf4j2Version") // slf4j-log4j12:1.7.34 relocates to reload4j
         createCompilation("slf4j2Reload4j", compilations, testRuns, "org.slf4j:slf4j-reload4j:$slf4j2Version")
+        createCompilation("slf4j2JBossLogging", compilations, testRuns, "org.jboss.slf4j:slf4j-jboss-logmanager:2.0.1.Final",
+            "org.jboss.logmanager:jboss-logmanager:2.1.19.Final", "org.slf4j:slf4j-api:$slf4j2Version")
         createCompilation("slf4j2Jul", compilations, testRuns, "org.slf4j:slf4j-jdk14:$slf4j2Version")
         createCompilation("slf4j2Slf4jSimple", compilations, testRuns, "org.slf4j:slf4j-simple:$slf4j2Version")
     }

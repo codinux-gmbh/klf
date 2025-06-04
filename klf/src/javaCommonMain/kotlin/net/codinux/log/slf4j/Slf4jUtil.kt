@@ -50,6 +50,7 @@ object Slf4jUtil {
         Slf4jBinding.Log4j2 -> Log4j2Slf4jBinding()
         Slf4jBinding.Log4j1 -> Log4j1Slf4jBinding()
         Slf4jBinding.Reload4j -> Reload4jSlf4jBinding()
+        Slf4jBinding.JBossLogging -> JBossLoggingSlf4jBinding()
         Slf4jBinding.JavaUtilLog -> JavaUtilLogSlf4jBinding()
         Slf4jBinding.Slf4jSimple -> Slf4jSimpleSlf4jBinding()
         else -> null
@@ -71,6 +72,7 @@ object Slf4jUtil {
                 "org.slf4j.reload4j.Reload4jLoggerFactory" -> Slf4jBinding.Reload4j
                 "org.slf4j.jul.JDK14LoggerFactory",
                 "org.slf4j.impl.JDK14LoggerFactory" -> Slf4jBinding.JavaUtilLog
+                "org.jboss.slf4j.JBossLoggerFactory", // slf4j 1
                 "org.slf4j.impl.Slf4jLoggerFactory" -> Slf4jBinding.JBossLogging // defined in org.jboss.slf4j:slf4j-jboss-logmanager
                 "org.slf4j.simple.SimpleLoggerFactory",
                 "org.slf4j.impl.SimpleLoggerFactory" -> Slf4jBinding.Slf4jSimple
