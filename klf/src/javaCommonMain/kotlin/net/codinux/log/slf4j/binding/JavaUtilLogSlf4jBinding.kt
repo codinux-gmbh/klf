@@ -31,7 +31,8 @@ open class JavaUtilLogSlf4jBinding : Slf4jBindingImplementation {
     open fun getJulLogger(logger: Logger) = getJulLogger(logger.name)
 
     open fun getJulLogger(loggerName: String): java.util.logging.Logger? =
-        java.util.logging.LogManager.getLogManager().getLogger(loggerName)
+        // do not use LogManager.getLogManager().getLogger(loggerName), it does not create the Logger if hasn't been created yet
+        java.util.logging.Logger.getLogger(loggerName)
 
 
     open fun mapToKlfLogLevel(level: Level): LogLevel = when (level) {
