@@ -17,7 +17,7 @@ open class Slf4jLoggerFactory : AppenderCollectionImpl(), ILoggerFactory {
     }
 
 
-    override val rootLogger = Slf4jLogger(org.slf4j.Logger.ROOT_LOGGER_NAME, this, LoggerFactory.effectiveConfig.rootLevel)
+    override val rootLogger = Slf4jRootLogger(LoggerFactory.effectiveConfig, this)
 
     override fun createLogger(name: String) =
         Slf4jLogger(name, this)

@@ -7,10 +7,7 @@ import assertk.assertions.isTrue
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import net.codinux.log.LogEvent
-import net.codinux.log.LogLevel
-import net.codinux.log.Logger
-import net.codinux.log.LoggerFactory
+import net.codinux.log.*
 import net.codinux.log.appender.Appender
 import net.codinux.log.slf4j.binding.Slf4jBindingImplementation
 import kotlin.reflect.KClass
@@ -51,7 +48,8 @@ abstract class Slf4jBindingTestBase(
     fun assertRootLoggerName() {
         val log = LoggerFactory.rootLogger
 
-        assertThat(log.name).isEqualTo(rootLoggerName)
+        assertThat(log.name).isEqualTo(DelegateToAppendersRootLogger.RootLoggerName)
+        assertThat((log as Slf4jLogger).slf4jLogger.name).isEqualTo(rootLoggerName)
     }
 
     @Test
@@ -106,11 +104,11 @@ abstract class Slf4jBindingTestBase(
         getSlf4jLogger(LoggerFactory.rootLogger)
 
     protected open fun getSlf4jLogger(log: Logger): org.slf4j.Logger {
-        return getFieldValue(log as Slf4jLogger, "slf4jLogger")
+        return getFieldValue(log as Slf4jLogger, "slf4jLogger", Slf4jLogger::class)
     }
 
-    protected open fun <T> getFieldValue(obj: Any, fieldName: String): T {
-        val slf4jLoggerField = obj::class.java.getDeclaredField(fieldName)
+    protected open fun <T> getFieldValue(obj: Any, fieldName: String, objClass: KClass<*> = obj::class): T {
+        val slf4jLoggerField = objClass.java.getDeclaredField(fieldName)
         slf4jLoggerField.isAccessible = true
 
         return slf4jLoggerField.get(obj) as T

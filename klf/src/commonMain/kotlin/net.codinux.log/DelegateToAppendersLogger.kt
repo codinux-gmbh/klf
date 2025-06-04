@@ -6,12 +6,12 @@ import kotlin.jvm.JvmOverloads
 
 open class DelegateToAppendersLogger @JvmOverloads constructor(
   name: String,
-  protected open val collection: AppenderCollection, // or use ILoggerFactory implementation directly?
+  protected open val appenders: AppenderCollection, // or use ILoggerFactory implementation directly?
   level: LogLevel? = null // do not set to RootLevel to enable late log level determination e.g. due to a changed RootLevel
 ) : LoggerBase(name, level) {
 
   override fun log(level: LogLevel, message: String, exception: Throwable?) {
-    collection.appendToAppenders(level, name, message, exception)
+    appenders.appendToAppenders(level, name, message, exception)
   }
 
 }

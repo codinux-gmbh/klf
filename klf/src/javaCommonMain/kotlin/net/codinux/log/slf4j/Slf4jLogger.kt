@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory
 
 
 open class Slf4jLogger(
-    protected open val slf4jLogger: org.slf4j.Logger,
+    open val slf4jLogger: org.slf4j.Logger,
     protected open val appenderCollection: AppenderCollection,
     level: LogLevel? = null
 ) : Logger {
